@@ -1,13 +1,19 @@
-
+from multimethod import multimethod
 
 class Producto:
-    def _init__(self, nombre: str, precio: float, tipoAnimal: str, cantidadUnidades: int):
+    @multimethod
+    def __init__(self, nombre: str, precio: float, tipoAnimal: str, cantidadUnidades: int):
         self._nombre = nombre
         self._precio = precio
         self._tipoAnimal = tipoAnimal
         self._cantidadUnidades = cantidadUnidades
 
-    #otro constructor
+    @multimethod
+    def __init__(self, nombre: str, precio: float, cantidadUnidades: int):
+        self._nombre = nombre
+        self._precio = precio
+        self._tipoAnimal = "Uso general"
+        self._cantidadUnidades = cantidadUnidades
 
 #METODOS GET Y SET
     def setNombre(self, nombre):
@@ -37,3 +43,11 @@ class Producto:
 #toString
     def __str__(self):
         return f"\nProducto: {self.getNombre()}\nPrecio: {self.getPrecio()}\nDirigido a: {self.getTipoAnimal()}\nCantidad unidades: {self.getCantidadUnidades()}\n"
+    
+
+#PRUEBAS DE USO
+producto1 = Producto("Alimento para perros", 50.0, "Perros", 20)
+producto2 = Producto("Juguete para gatos", 15.0, 10)
+
+print(producto1)
+print(producto2)
