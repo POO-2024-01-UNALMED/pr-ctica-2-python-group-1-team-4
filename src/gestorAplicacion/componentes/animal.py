@@ -8,7 +8,7 @@ class EstadoSalud(Enum):
 
 class Animal:
     @multimethod
-    def __init__(self, nombre: str, tipo: str, edad: int, sexo: str, estadoSalud: EstadoSalud):
+    def __init__(self, nombre: str, tipo: str, edad: int, sexo: str, estadoSalud : EstadoSalud):
         self._nombre = nombre
         self._tipo = tipo
         self._edad = edad  # Edad en meses
@@ -22,9 +22,10 @@ class Animal:
         self._edad = edad  # Edad en meses
         self._estadoSalud = None
         self._sexo = sexo
-        
+     
 
     # Métodos setter y getter
+
     def setNombre(self, nombre):
         self._nombre = nombre
 
