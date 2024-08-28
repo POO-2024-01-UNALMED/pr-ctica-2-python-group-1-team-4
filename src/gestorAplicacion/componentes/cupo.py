@@ -1,7 +1,7 @@
 from datetime import datetime
 
 #localDate de dia.
-class Cita:
+class Cupo:
     def __init__(self, dia: datetime, horaInicio: str, horaFin: str, disponible: bool):
         self._dia = dia
         self._horaInicio = horaInicio

@@ -34,10 +34,10 @@ class Animal:
     def getNombre(self):
         return self._nombre
 
-    def setTipo(self, tipo):
+    def setEspecie(self, tipo):
         self._tipo = tipo
 
-    def getTipo(self):
+    def getEspecie(self):
         return self._tipo
 
     def setEdad(self, edad):
@@ -61,11 +61,11 @@ class Animal:
     # Método para representar el objeto como cadena
     def __str__(self):
         if self._estadoSalud is not None:
-            return (f"Nombre: {self.getNombre()}, Especie: {self.getTipo()}, "
+            return (f"Nombre: {self.getNombre()}, Especie: {self.getEspecie()}, "
                     f"Edad (meses): {self.getEdad()}, Sexo: {self.getSexo()}, "
                     f"Estado de salud: {self.getEstadoSalud().value}")
         else:
-            return (f"Nombre: {self.getNombre()}, Especie: {self.getTipo()}, "
+            return (f"Nombre: {self.getNombre()}, Especie: {self.getEspecie()}, "
                     f"Edad (meses): {self.getEdad()}, Sexo: {self.getSexo()}")
 
 # Ejemplo de uso
