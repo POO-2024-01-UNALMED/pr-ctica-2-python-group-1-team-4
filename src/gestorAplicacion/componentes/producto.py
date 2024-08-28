@@ -45,7 +45,7 @@ class Producto:
         return f"\nProducto: {self.getNombre()}\nPrecio: {self.getPrecio()}\nDirigido a: {self.getTipoAnimal()}\nCantidad unidades: {self.getCantidadUnidades()}\n"
     
 
-#PRUEBAS DE USO
+#PRUEBAS
 producto1 = Producto("Alimento para perros", 50.0, "Perros", 20)
 producto2 = Producto("Juguete para gatos", 15.0, 10)
 

@@ -49,8 +49,8 @@ class Animal:
     def getSexo(self):
         return self._sexo
 
-    def setEstadoSalud(self, estado_salud):
-        self._estadoSalud = estado_salud
+    def setEstadoSalud(self, estadoSalud):
+        self._estadoSalud = estadoSalud
 
     def getEstadoSalud(self):
         return self._estadoSalud
