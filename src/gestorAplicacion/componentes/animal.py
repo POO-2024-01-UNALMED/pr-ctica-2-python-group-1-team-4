@@ -1,12 +1,14 @@
 from enum import Enum
 from multimethod import multimethod
 
+# Enumerado con los estados de salud posibles de un animal.
 class EstadoSalud(Enum):
     SANO = "Sano"
     ENFERMO = "Enfermo"
     ENTRATAMIENTO = "En tratamiento"
 
 class Animal:
+
     @multimethod
     def __init__(self, nombre: str, tipo: str, edad: int, sexo: str, estadoSalud : EstadoSalud):
         self._nombre = nombre
@@ -68,8 +70,11 @@ class Animal:
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    animal1 = Animal("Rex", "Perro", 24, "Masculino", EstadoSalud.SANO)
-    animal2 = Animal("Mia", "Gato", 12, "Femenino")
+    animal1 = Animal("Rex", "Perro", 24, "Masculino", EstadoSalud.SANO) #CONSTRUCTOR 1
+    animal2 = Animal("Mia", "Gato", 12, "Femenino") #CONSTRUCTOR 2
 
+    print()
     print(animal1)
     print(animal2)
+    print("La  sobrecarga de constructores funciona correctamente, ya está todo lo de JAVA\n")
+

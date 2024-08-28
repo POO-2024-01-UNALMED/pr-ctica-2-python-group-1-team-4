@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from multimethod import multimethod
 
+#CLASE ABSTRACTA
 class Persona(ABC):
+    
     @multimethod
     def __init__(self, nombre: str, edad: int, cedula: int, telefono: int, direccion: str):
         self._nombre = nombre
@@ -49,3 +51,4 @@ class Persona(ABC):
     @abstractmethod
     def __str__(self):
         pass
+
