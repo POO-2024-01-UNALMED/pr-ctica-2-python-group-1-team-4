@@ -6,7 +6,7 @@ from componentes.cliente import Cliente
 class Tienda:
 
     ##Atributo, la lista general de los productos 
-    listaProdutos = []
+    listaProductos = []
 
     ##Constructor -------------------------------------------------------------------------------
     def __init__(self, centroAdopcion : CentroAdopcion, empleado: Empleado) -> None:
@@ -18,16 +18,21 @@ class Tienda:
     def getEmpleados(self):
         return self._listaEmpleados 
 
-    def agregarEmpleados(self, *empleados : Empleado):
-        for i in empleados:
-            self._listaEmpleados.append(i) 
-        #Se agrega la cantidad de empleados que se hayan pasado
-
     def setCentro(self, centro):
         self._centro = centro
     
     def getCentro(self):
         return self._centro
+    
+    def agregarProductos(cls, *productos : Producto):
+        for i in productos:
+            cls.listaProductos.append(i) 
+        #Se agrega la cantidad de productos que se hayan pasado
+        
+    def agregarEmpleados(self, *empleados : Empleado):
+        for i in empleados:
+            self._listaEmpleados.append(i) 
+        #Se agrega la cantidad de empleados que se hayan pasado
     
     ##Métodos ---------------------------------------------------------------------------------
     def inventario(cls):
@@ -36,7 +41,7 @@ class Tienda:
         resultado = ""
         indice = 0
         #Recorrer la lista e ir concatenando
-        for i in cls.listaProdutos:
+        for i in cls.listaProductos:
             indice += 1
             resultado += str(indice)+". "
             resultado += str(i)+"\n"
@@ -50,7 +55,7 @@ class Tienda:
         resultado = "" 
         indice = 0
         #Recorrer la lista e ir concatenando
-        for i in cls.listaProdutos:
+        for i in cls.listaProductos:
             indice+=1
             tipo = i.getTipoAnimal()
             #Control para concatenar solo los prodcutos deseados
@@ -64,19 +69,19 @@ class Tienda:
     def compra(cls, indice: int, cliente: Cliente, cantidad = 1 ):
 
         #Control del índice
-        if indice<= len(cls.listaProdutos) and indice>=0:
+        if indice<= len(cls.listaProductos) and indice>=0:
             indice-=1
-            ProductoCantidad = cls.listaProdutos[indice].getCantidadUnidades()
+            ProductoCantidad = cls.listaProductos[indice].getCantidadUnidades()
 
             #Control de cantidad unidades
             if (ProductoCantidad>=cantidad):
-                producto = cls.listaProdutos[indice]
+                producto = cls.listaProductos[indice]
                 #Se actualiza la nueva cantidad de producto
                 producto.setCantidadUnidades(ProductoCantidad-cantidad)
 
                 #Se elimina el producto de la lista, si quedó sin unidades
                 if (producto.getCantidadUnidades==0):
-                    cls.listaProdutos.pop(indice)
+                    cls.listaProductos.pop(indice)
                 
                 #Control de las salidas
                 if (cantidad==1):
