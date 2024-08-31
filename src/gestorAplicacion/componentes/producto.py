@@ -44,10 +44,10 @@ class Producto:
     def __str__(self):
         return f"\nProducto: {self.getNombre()}\nPrecio: {self.getPrecio()}\nDirigido a: {self.getTipoAnimal()}\nCantidad unidades: {self.getCantidadUnidades()}\n"
     
-
-#PRUEBAS
-producto1 = Producto("Alimento para perros", 50.0, "Perros", 20)
-producto2 = Producto("Juguete para gatos", 15.0, 10)
-
-print(producto1)
-print(producto2)
+if __name__ == "__main__":
+    #PRUEBAS
+    producto1 = Producto("Alimento para perros", 50.0, "Perros", 20)
+    producto2 = Producto("Juguete para gatos", 15.0, 10)
+    
+    print(producto1)
+    print(producto2)

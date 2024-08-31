@@ -1,10 +1,8 @@
 from datetime import date
 
-from componentes.animal import Animal
-from componentes.cliente import Cliente
 
 class Adopcion:
-    def __init__(self, animal: Animal, cliente: Cliente):
+    def __init__(self, animal, cliente):
         fechaActual = date.today()
         self._animal = animal
         self._cliente = cliente
@@ -36,7 +34,7 @@ class Adopcion:
     def getCliente(self):
         return self._cliente
     
-    def setFechaAdopcion(self, fecha: date):
+    def setFechaAdopcion(self, fecha):
         self._fechaAdopcion = fecha
 
     def getFechaAdopcion(self):
@@ -49,3 +47,4 @@ class Adopcion:
                 f"\n- Mascota: {self._animal.getNombre()}"
                 f"\n- Tipo: {self._animal.getEspecie()}"
                 f"\n- Fecha: {self._fechaAdopcion}")
+    
