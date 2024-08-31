@@ -6,7 +6,7 @@ from cupo import Cupo
 # Enumeración para los roles de empleado
 class Rol(Enum):
     VETERINARIO = "Veterinario"
-    PELUQUERO = "Peluquero"
+    PELUQUERO = "Peluquero" 
     CUIDADOR = "Cuidador"
     TENDERO = "Tendero"
 

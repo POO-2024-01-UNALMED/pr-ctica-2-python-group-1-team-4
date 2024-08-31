@@ -1,12 +1,20 @@
 from abc import ABC, abstractmethod
-
 from multimethod import multimethod
+
+# OKY RUIZ DE LA ROSA
+# SALOMÉ MURILLO GAVIRIA
+# NICOLAS DAVID ZAMBRANO MURCIA
+#DANIEL ALBERTO ZAPATA CASTAÑO
+
+#DESCRIPCIÓN DE LA CLASE:
+#Representa a las personas relacionadas con el centro de adopción,
+# almacena información personal básica en común de Clientes y Empleados.
 
 #CLASE ABSTRACTA
 class Persona(ABC):
     
     @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int, telefono: int, direccion: str):
+    def __init__(self, nombre: str, edad: int, cedula: int, telefono:int, direccion: str):
         self._nombre = nombre
         self._edad = edad
         self._cedula = cedula
@@ -14,10 +22,12 @@ class Persona(ABC):
         self._direccion = direccion
 
     @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int):
+    def __init__(self, nombre:str, edad: int, cedula: int):
         self.__init__(nombre, edad, cedula, 0, "No aplica")
 
-    # Métodos setter y getter
+
+    # MÉTODOS SETTER Y GETTER ----
+
     def setNombre(self, nombre):
         self._nombre = nombre
 
@@ -48,7 +58,7 @@ class Persona(ABC):
     def getTelefono(self):
         return self._telefono
 
-    # Método abstracto
+    # Método abstracto (necesario para que sea abstracta)
     @abstractmethod
     def __str__(self):
         pass
