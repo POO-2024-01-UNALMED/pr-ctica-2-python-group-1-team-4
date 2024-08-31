@@ -1,6 +1,10 @@
 from datetime import date, timedelta
 from babel.dates import format_date # Para darle formato
 
+#DESCRIPCIÓN DE LA CLASE
+#Representa un bloque de tiempo disponible para citas por cada empleado.
+# Incluye información sobre el día, la hora de inicio y fin, y si está disponible.
+
 class Cupo:
     def __init__(self, dia: date, horaInicio: str, horaFin: str, disponible: bool):
         self._dia = dia
@@ -26,12 +30,12 @@ class Cupo:
     
 #OTROS METODOS
     
-    def __str__(self) -> str:
+    def __str__(self):
         # Mostrar la franja horaria del cupo
         return f"De {self._horaInicio} a {self._horaFin}"
 
     
-    def fechaFormateada(self) -> str:
+    def fechaFormateada(self):
         # Formatear la fecha en español
         return format_date(self._dia, format='long', locale='es_ES')
     

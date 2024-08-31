@@ -1,5 +1,6 @@
 from gestorAplicacion.componentes.animal import Animal, EstadoSalud
 from gestorAplicacion.componentes.cliente import Cliente
+from gestorAplicacion.componentes.empleado import Empleado, Rol
 from gestorAplicacion.administracion.adopcion import Adopcion
 
 #CREACION DE LOS CLIENTES --------------
@@ -84,7 +85,42 @@ print(adopcion1)
 print()
 print(adopcion2)
 
+#CREACIÓN DE EMPLEADO Y PRUEBA DE MÉTODOS --------------
 
+empleado1 = Empleado("Juan Pérez", 30, 123456789, 987654321, "Calle Falsa 123", Rol.VETERINARIO)
+
+print()
+# Probar métodos
+print(empleado1)  #Imprimir información del empleado
+
+print()
+
+print("Profesión:", empleado1.getProfesion().value)
+
+print()
+
+print("¿Tiene cupos disponibles?", empleado1.tiene_cupos())
+
+# Mostrar cupos disponibles para el lunes (0)
+
+print()
+lunes_cupos = empleado1.cupos_disponibles(0)
+
+print("Cupos disponibles el lunes:")
+
+for cupo in lunes_cupos:
+    print(cupo.getDia(), cupo, cupo.isDisponible())
+
+
+# Actualizar agenda y mostrar resultados
+empleado1.actualizar_agenda()
+print("\nAgenda actualizada para el empleado 1, para la siguiente semana:\n")
+
+for dia in empleado1.getCupo():
+    for cupo in dia:
+        print(cupo.fechaFormateada(),cupo, cupo.isDisponible())
+
+    print()
 
 
 
