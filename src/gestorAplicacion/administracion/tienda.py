@@ -1,6 +1,6 @@
 from componentes.producto import Producto
 from componentes.empleado import Empleado
-from centroAdopcion import CentroAdopcion
+from .centroAdopcion import CentroAdopcion
 from componentes.cliente import Cliente
 
 class Tienda:
@@ -15,6 +15,7 @@ class Tienda:
         _listaEmpleados.append(empleado)
 
     ##Setter and Getter -------------------------------------------------------------------------
+    
     def getEmpleados(self):
         return self._listaEmpleados 
 
@@ -57,7 +58,7 @@ class Tienda:
         #Recorrer la lista e ir concatenando
         for i in cls.listaProductos:
             indice+=1
-            tipo = i.getTipoAnimal()
+            tipo = i.getEspecie()
             #Control para concatenar solo los prodcutos deseados
             if tipo=="Uso general" or tipo==filtro:
                 resultado += str(indice)+". "

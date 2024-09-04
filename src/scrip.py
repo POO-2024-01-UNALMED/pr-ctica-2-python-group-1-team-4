@@ -121,6 +121,3 @@ for dia in empleado1.getCupo():
         print(cupo.fechaFormateada(),cupo, cupo.isDisponible())
 
     print()
-
-
-

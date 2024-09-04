@@ -23,12 +23,15 @@ class Cita:
         else:
             self._costo = 0
 
+#METODO PARA APLICAR EL DESCUENTO
     def aplicarDescuento(self):
         self._costo -= (self._costo * 0.1)
 
+#METODO GET
     def getAnimal(self):
         return self._animal
     
+#toString
     def __str__(self):
         profesion = ""
 
