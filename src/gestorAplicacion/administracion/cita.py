@@ -3,7 +3,7 @@ from componentes.animal import Animal
 from componentes.cliente import Cliente
 from componentes.empleado import Empleado
 from componentes.cupo import Cupo
-from multimethod import multimethod # type: ignore
+from multimethod import multimethod 
 
 class Cita:
     def __init__(self, cliente: Cliente, animal: Animal, empleado: Empleado, cupo: Cupo, servicio: int):

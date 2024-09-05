@@ -1,5 +1,5 @@
 from enum import Enum
-from multimethod import multimethod # type: ignore
+from multimethod import multimethod 
 
 # Enumerado con los estados de salud posibles de un animal.
 class EstadoSalud(Enum):
