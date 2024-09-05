@@ -56,22 +56,22 @@ print("")
 
 # PROBAR MÉTODOS DE ANIMAL
 print("Información del Animal 1:")
-print(animal1)  # Usando el método __str__
+#print(animal1)  # Usando el método __str__
 
 print("\nInformación del Animal 2:")
-print(animal2)  # Usando el método __str__
+#print(animal2)  # Usando el método __str__
 
 # Actualizar datos del Animal 1
 animal1.setEdad(25)
 animal1.setEstadoSalud(EstadoSalud.ENFERMO)
 print("\nDespués de actualizar datos del Animal 1:")
-print(animal1)
+#print(animal1)
 
 # Actualizar datos del Animal 2
 animal2.setSexo("Macho")
 animal2.setEstadoSalud(EstadoSalud.ENTRATAMIENTO)
 print("\nDespués de actualizar datos del Animal 2:")
-print(animal2)
+#print(animal2)
 
 print("")
 
