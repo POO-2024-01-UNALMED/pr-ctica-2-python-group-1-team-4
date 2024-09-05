@@ -3,6 +3,14 @@ from typing import List
 from animal import Animal
 from cliente import Cliente
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+	
+#DESCRIPCIÓN DE LA CLASE:
+#Representa a los animales que han fallecido, almacenando información sobre el dueño, fecha de fallecimiento y mensajes de recuerdo.
+
 class Muerto:
     def __init__(self, animal: Animal, fecha: str, mensaje: str, dueño: Cliente, tiempo: str, tipo: str):
         self._animal = animal

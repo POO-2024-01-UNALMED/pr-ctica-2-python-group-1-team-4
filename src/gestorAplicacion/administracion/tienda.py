@@ -3,6 +3,14 @@ from componentes.empleado import Empleado
 from .centroAdopcion import CentroAdopcion
 from componentes.cliente import Cliente
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+	
+#DESCRIPCIÓN DE LA CLASE:
+#Gestiona el inventario de productos disponibles para la venta, permitiendo a los clientes realizar compras.
+
 class Tienda:
 
     ##Atributo, la lista general de los productos 

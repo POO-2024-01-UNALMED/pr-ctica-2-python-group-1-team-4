@@ -5,6 +5,15 @@ from componentes.empleado import Empleado
 from componentes.cupo import Cupo
 from multimethod import multimethod 
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+
+#DESCRIPCIÓN DE LA CLASE:
+#Almacena información sobre las citas agendadas para servicios como veterinaria, guardería o peluquería, incluyendo el animal, cliente, empleado y costo.
+
+
 class Cita:
     def __init__(self, cliente: Cliente, animal: Animal, empleado: Empleado, cupo: Cupo, servicio: int):
         self._cliente = cliente

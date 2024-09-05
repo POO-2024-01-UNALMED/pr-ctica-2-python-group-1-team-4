@@ -1,5 +1,13 @@
 from centroAdopcion import CentroAdopcion
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+	
+#DESCRIPCIÓN DE LA CLASE:
+#Proporcionar servicios de cremación y entierro para mascotas fallecidas, gestionando la memoria de los animales.
+
 class Funeraria: 
 
     ##Atributos

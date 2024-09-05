@@ -1,5 +1,14 @@
 from multimethod import multimethod
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+
+#DESCRIPCIÓN DE LA CLASE:
+#Representa los artículos en venta en la tienda, incluyendo nombre, precio, tipo de animal y cantidad disponible. 
+
+
 class Producto:
     @multimethod
     def __init__(self, nombre: str, precio: float, tipoAnimal: str, cantidadUnidades: int):

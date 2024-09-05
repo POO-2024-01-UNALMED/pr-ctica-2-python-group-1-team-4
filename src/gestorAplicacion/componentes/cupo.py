@@ -1,6 +1,11 @@
 from datetime import date, timedelta
 from babel.dates import format_date # Para darle formato
 
+#DANIEL ALBERTO ZAPATA CASTAÑO
+#OKY RUIZ DE LA ROSA
+#SALOMÉ MURILLO GAVIRIA
+#NICOLAS DAVID ZAMBRANO MURCIA
+
 #DESCRIPCIÓN DE LA CLASE
 #Representa un bloque de tiempo disponible para citas por cada empleado.
 # Incluye información sobre el día, la hora de inicio y fin, y si está disponible.
