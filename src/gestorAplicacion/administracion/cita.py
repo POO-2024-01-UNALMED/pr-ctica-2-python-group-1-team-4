@@ -1,7 +1,9 @@
+from datetime import timedelta
 from componentes.animal import Animal
 from componentes.cliente import Cliente
 from componentes.empleado import Empleado
 from componentes.cupo import Cupo
+from multimethod import multimethod # type: ignore
 
 class Cita:
     def __init__(self, cliente: Cliente, animal: Animal, empleado: Empleado, cupo: Cupo, servicio: int):
@@ -10,7 +12,7 @@ class Cita:
         self._empleado = empleado
         cupo.setDisponible(False)
         self._cupo = cupo
-
+    
         if servicio == 1:
             self._costo = 10000
             self._cliente.agregar_puntos(3)
@@ -22,16 +24,32 @@ class Cita:
             self._cliente.agregar_puntos(4)
         else:
             self._costo = 0
-
-#METODO PARA APLICAR EL DESCUENTO
+    
+    @multimethod
+    def __init__(self, cliente: Cliente, animal: Animal, cliente2: Cliente, animal2: Animal, fecha):
+        self._cliente = cliente
+        self._cliente2 = cliente2
+        self._animal=cliente.getMascota()
+        self._animal2=cliente2.getMascota()
+        self._fecha=fecha
+        self._estado = "pendiente"
+        
+    
+    def actualizar_estado(self, nuevo_estado):
+        if nuevo_estado in ["aceptada", "rechazada", "aplazada"]:
+            self.estado = nuevo_estado
+            if nuevo_estado == "aplazada":
+                # Aplazar la cita al día siguiente
+                self.fecha += timedelta(days=1)
+        else:
+            print("Estado no válido")
+    
     def aplicarDescuento(self):
         self._costo -= (self._costo * 0.1)
 
-#METODO GET
     def getAnimal(self):
         return self._animal
     
-#toString
     def __str__(self):
         profesion = ""
 

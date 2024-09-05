@@ -2,7 +2,6 @@ from gestorAplicacion.administracion.cita import Cita
 from gestorAplicacion.componentes.animal import Animal
 from gestorAplicacion.componentes.cliente import Cliente
 
-
 class socializar:
     def __init__(self):
         clientes=[] #Lista para albergar clientes participantes
