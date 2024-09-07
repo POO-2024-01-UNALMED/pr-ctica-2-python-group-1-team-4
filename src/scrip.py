@@ -2,6 +2,7 @@ from gestorAplicacion.componentes.animal import Animal, EstadoSalud
 from gestorAplicacion.componentes.cliente import Cliente
 from gestorAplicacion.componentes.empleado import Empleado, Rol
 from gestorAplicacion.administracion.adopcion import Adopcion
+from gestorAplicacion.administracion.socializar import Socializar
 
 #CREACION DE LOS CLIENTES --------------
 
@@ -121,3 +122,41 @@ for dia in empleado1.getCupo():
         print(cupo.fechaFormateada(),cupo, cupo.isDisponible())
 
     print()
+
+if __name__ == "__main__":
+    x=input("registrar o match")
+    if x=="registrar":
+        nombre=input("nombre")
+        edad= int (input ("e"))
+        celular=input("c")
+        participar= bool (input("True/false"))
+        print("mascota")
+        nombrem=input("n")
+        edadm= int(input("edadm"))
+        caracteristicas= input("separa comas")
+        mascota= Animal(nombrem,edadm,caracteristicas)
+        socializar=Socializar()
+        cliente = Cliente(nombre,edad,celular,participar,mascota)
+        socializar.registrar_cliente(cliente) 
+    elif x=="match":
+        registro=input("si/no")
+        socializar=Socializar()
+        if registro=="si":
+            print(socializar.clientes)
+            socializar.match()
+
+        elif registro=="no":
+            nombre=input("nombre")
+            edad= int (input ("e"))
+            celular=input("c")
+            participar= bool (input("True/false"))
+            socializar.clientes.append(Cliente)
+            print("mascota")
+            nombrem=input("n")
+            edadm= int(input("edadm"))
+            caracteristicas= input("separa comas")
+            mascota= Animal(nombre,edad,caracteristicas)
+            cliente = Cliente(nombre,edad,celular,participar,mascota)
+
+print (cliente.getNombre())
+print (mascota.getNombre())

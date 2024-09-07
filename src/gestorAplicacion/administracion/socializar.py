@@ -43,7 +43,7 @@ if __name__ == "__main__":
         edad= int (input ("e"))
         celular=input("c")
         participar= bool (input("True/false"))
-        socializar.clientes.append(Cliente)
+        Socializar.clientes.append(Cliente)
         print("mascota")
         nombrem=input("n")
         edadm= int(input("edadm"))
@@ -53,15 +53,15 @@ if __name__ == "__main__":
     elif x=="match":
         registro=input("si/no")
         if registro=="si":
-            print(socializar.clientes)
-            socializar.match()
+            print(Socializar.clientes)
+            Socializar.match()
 
         elif registro=="no":
             nombre=input("nombre")
             edad= int (input ("e"))
             celular=input("c")
             participar= bool (input("True/false"))
-            socializar.clientes.append(Cliente)
+            Socializar.clientes.append(Cliente)
             print("mascota")
             nombrem=input("n")
             edadm= int(input("edadm"))
