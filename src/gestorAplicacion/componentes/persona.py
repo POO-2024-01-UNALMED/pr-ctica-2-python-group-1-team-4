@@ -14,7 +14,7 @@ from multimethod import multimethod
 class Persona(ABC):
     
     @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int, telefono:int, direccion: str):
+    def __init__(self, nombre: str, edad: int, cedula: int, telefono:str, direccion: str):
         self._nombre = nombre
         self._edad = edad
         self._cedula = cedula
@@ -24,6 +24,12 @@ class Persona(ABC):
     @multimethod
     def __init__(self, nombre:str, edad: int, cedula: int):
         self.__init__(nombre, edad, cedula, 0, "No aplica")
+    
+    @multimethod
+    def __init__(self, nombre: str, edad: int, telefono:str):
+        self._nombre = nombre
+        self._edad = edad
+        self._telefono = telefono
 
 
     # MÉTODOS SETTER Y GETTER ----

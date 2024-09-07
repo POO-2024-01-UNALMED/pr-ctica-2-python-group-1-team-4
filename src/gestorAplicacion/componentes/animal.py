@@ -26,14 +26,11 @@ class Animal:
         self._sexo = sexo
     
     @multimethod
-    def __init__(self, nombre: str, tipo: str, edad: int, sexo: str, caracteristicas: str, puntaje: int):
+    def __init__(self, nombre: str, edad: int, caracteristicas: str):
         self._nombre = nombre
-        self._tipo = tipo
         self._edad = edad  # Edad en meses
-        self._estadoSalud = None
-        self._sexo = sexo
         self.caracteristicas= [carac.strip() for carac in caracteristicas.split(',')]
-        self.puntaje= puntaje
+    #    self.puntaje= 100
 
     # Métodos setter y getter
 

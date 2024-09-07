@@ -1,4 +1,5 @@
 from multimethod import multimethod
+from ..componentes.animal import Animal
 from .persona import Persona 
 # con ".persona" le indicamos al scrip que Persona está en el mismo paquete de Cliente.
 
@@ -20,8 +21,9 @@ class Cliente(Persona):
         self._mascota = None
     
     @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int):
-        super().__init__(nombre, edad, cedula)
+    def __init__(self, nombre: str, edad: int, telefono: str, participar : bool, mascota: Animal):
+        super().__init__(nombre, edad, telefono)
+        self._participar=participar
         self._puntos = 0
         self._mascota = None
 
