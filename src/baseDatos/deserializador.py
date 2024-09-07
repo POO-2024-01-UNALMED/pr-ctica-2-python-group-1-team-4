@@ -27,13 +27,13 @@ class Deserializador:
             print(f"No se encuentra el archivo {nombre}.txt")
         except IOError:
             print(f"Error en el flujo de lectura del archivo {nombre}.txt")
-        except pickle.UnpicklingError:
-            print("Error en la deserialización")
-        except Exception as e:
-            print(f"Ocurrió un error inesperado: {e}")
+        # except pickle.UnpicklingError:
+        #     print("Error en la deserialización")
+        # except Exception as e:
+        #     print(f"Ocurrió un error inesperado: {e}")
 
     @staticmethod
-    def deserializar_listas():
+    def deserializarListas():
         # Métodos estáticos
         ##Deserializador.deserializar(Main.sedes, "Sedes")
         Deserializador.deserializar(CentroAdopcion.getClientes(), "Clientes")
@@ -41,6 +41,9 @@ class Deserializador:
         Deserializador.deserializar(Funeraria.getCenizas(), "Cenizas")
         Deserializador.deserializar(Tienda.getProductos(), "Productos")
         Deserializador.deserializar(Tienda.getEmpleados(), "Empleados_Tienda")  #lista de empleados debería ser de clase
+
+        #probar
+        #Deserializador.deserializar(Muerto.getFlores(), "Flores")
 
         # Métodos no estáticos
         m = Muerto()

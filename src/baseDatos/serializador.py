@@ -36,6 +36,9 @@ class Serializador:
         Serializador.serializar(Tienda.getProductos(), "Productos")
         Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
 
+        #probar
+        #Serializador.serializar(Muerto.getFlores(), "Flores")
+
         # Métodos no estáticos
         m = Muerto()
         Serializador.serializar(m.getFlores(), "Flores")
