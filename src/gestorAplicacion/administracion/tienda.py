@@ -26,6 +26,10 @@ class Tienda:
     
     def getEmpleados(self):
         return self._listaEmpleados 
+    
+    @classmethod
+    def getProductos(cls):
+        return cls.listaProductos
 
     def setCentro(self, centro):
         self._centro = centro

@@ -1,4 +1,7 @@
+from typing import List
 from centroAdopcion import CentroAdopcion
+from src.gestorAplicacion.componentes.cliente import Cliente
+from src.gestorAplicacion.componentes.muerto import Muerto
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
 #OKY RUIZ DE LA ROSA
@@ -11,8 +14,8 @@ from centroAdopcion import CentroAdopcion
 class Funeraria: 
 
     ##Atributos
-    tumbas = []
-    cenizas = []
+    tumbas: List['Muerto'] = []
+    cenizas: List['Cliente'] = []
 
     ##Constructor ----------------------------------------------------------------------------
     def __init__(self, centro: CentroAdopcion):
@@ -27,6 +30,14 @@ class Funeraria:
 
     def getNombre(self):
         return self._centro.getNombre()
+    
+    @classmethod
+    def getTumbas(cls):
+        return cls.tumbas
+    
+    @classmethod
+    def getCenizas(cls):
+        return cls.cenizas
     
     ##Métodos --------------------------------------------------------------------------------
     def espacioTumbas(self):

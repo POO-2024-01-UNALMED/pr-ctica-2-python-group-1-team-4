@@ -146,10 +146,10 @@ class CentroAdopcion:
         return self._animales
 
     @classmethod
-    def get_clientes(cls):
+    def getClientes(cls):
         return cls.clientes_AdoptaLove
 
-    def get_citas(self):
+    def getCitas(self):
         return self._citas_agendadas
 
 #MÉTODO toString
