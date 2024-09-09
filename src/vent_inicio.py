@@ -57,17 +57,17 @@ def salir():
     vent_inicio.quit()
 
 
-hojas_de_vida = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de Sotavento Córdoba"
+hojas_de_vida = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de Sotavento Córdoba "
                  "estudiante de ingeniería de sistemas e informática en la Universidad Nacional"
                  "de Colombia",
 
-                 "Salomé Murillo Gaviria, xx años, de medellín Antioquia"
+                 "Salomé Murillo Gaviria, xx años, de medellín Antioquia "
                  "estudiante de ingeniería de sistema en la universidad nacional de Colombia", 
 
-                 "Daniel Zapata, xx años, de medellín Antioquia"
+                 "Daniel Zapata, xx años, de medellín Antioquia "
                  "estudiante de ingeniería de sistema en la universidad nacional de Colombia",
 
-                 "Nicolas Zambrano, xx años, de medellín Antioquia"
+                 "Nicolas Zambrano, xx años, de medellín Antioquia "
                  "estudiante de ingeniería de sistema en la universidad nacional de Colombia"]
 
 
