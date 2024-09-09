@@ -95,17 +95,11 @@ def actualizar_hojaVida_Imagenes(event):
     # Obtener las imagenes según el desarrollador
     lista_imagenes = imagenes[contador_click]
 
-    # Imagenes Originales
-    #imagen1_original = Image.open(lista_imagenes[0])
-    #imagen2_original = Image.open(lista_imagenes[1])
-    #imagen3_original = Image.open(lista_imagenes[2])
-    #imagen4_original = Image.open(lista_imagenes[3])
-
     # Redimencionar imagenes
-    imagen1_redi = Image.open(lista_imagenes[0]).resize((200,150), Image.LANCZOS)
-    imagen2_redi = Image.open(lista_imagenes[1]).resize((200,150), Image.LANCZOS)
-    imagen3_redi = Image.open(lista_imagenes[2]).resize((200,150), Image.LANCZOS)
-    imagen4_redi = Image.open(lista_imagenes[3]).resize((200,150), Image.LANCZOS)
+    imagen1_redi = Image.open(lista_imagenes[0]).resize((200,180), Image.LANCZOS)
+    imagen2_redi = Image.open(lista_imagenes[1]).resize((200,180), Image.LANCZOS)
+    imagen3_redi = Image.open(lista_imagenes[2]).resize((200,180), Image.LANCZOS)
+    imagen4_redi = Image.open(lista_imagenes[3]).resize((200,180), Image.LANCZOS)
 
     # Imagenes redimensionadas
     imagen1 = ImageTk.PhotoImage(imagen1_redi)
@@ -171,7 +165,7 @@ frame_left_top.pack_propagate(False)  # Evitar que el frame cambie su tamaño co
 frame_left_bottom = tk.Frame(frame_left,bg = "white", bd ="1", relief= "solid")
 
 # empaquetar el frame p4 en el frame p1                                            #ipady para aumentar la altura
-frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady=55)
+frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady=85)
 
 # -------
 
@@ -196,7 +190,7 @@ hojas_vida.bind("<Button-1>", actualizar_hojaVida_Imagenes)
 frame_right_bottom = tk.Frame(frame_right,bg = "white", bd ="1", relief= "solid")
 
 #empaquetar el frame p6 en el frame p2                                             #ipady para aumentar la altura
-frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 50 )
+frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 80 )
 
 
 # ------------------------------------------
