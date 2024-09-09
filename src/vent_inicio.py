@@ -1,4 +1,5 @@
 import tkinter as tk 
+from PIL import Image, ImageTk  # Importar módulos necesarios de Pillow
 
 # Creamos la ventana de inicio
 vent_inicio = tk.Tk()
@@ -71,21 +72,55 @@ hojas_de_vida = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de Sotavento Có
 
 
 imagenes = [["src/imagenes/Oky1.png","src/imagenes/Oky2.png","src/imagenes/Oky3.png","src/imagenes/Oky4.png"],
-            ["src/imagenes/Daniel1.png","src/imagenes/Daniel2.png","src/imagenes/Daniel3.png","src/imagenes/Daniel4.png"],
             ["src/imagenes/Salome1.png","src/imagenes/Salome2.png","src/imagenes/Salome3.png","src/imagenes/Salome4.png"],
+            ["src/imagenes/Daniel1.png","src/imagenes/Daniel2.png","src/imagenes/Daniel3.png","src/imagenes/Daniel4.png"],
             ["src/imagenes/Nico1.png", "src/imagenes/Nico2.png","src/imagenes/Nico3.png", "src/imagenes/Nico4.png"]]
 
+# Declarar las variables globales para almacenar las referencias de las imágenes
+imagenes_labels = []
 
 contador_click = 0
 
 def actualizar_hojaVida_Imagenes(event):
-    global contador_click
+    global contador_click, imagenes_labels
 
-    # cambiar el contenido de Text (hojas_vida) en p5
+    # cambiar el contenido de Text (hojas_vida) en p5 -----
     hojas_vida.config(state= 'normal')
     hojas_vida.delete(1.0, 'end')
     hojas_vida.insert(1.0, hojas_de_vida[contador_click])
     hojas_vida.config(state="disabled")
+
+    #Asignar las imagenes a los label de los sub frames de p6 -----
+
+    # Obtener las imagenes según el desarrollador
+    lista_imagenes = imagenes[contador_click]
+
+    # Imagenes Originales
+    #imagen1_original = Image.open(lista_imagenes[0])
+    #imagen2_original = Image.open(lista_imagenes[1])
+    #imagen3_original = Image.open(lista_imagenes[2])
+    #imagen4_original = Image.open(lista_imagenes[3])
+
+    # Redimencionar imagenes
+    imagen1_redi = Image.open(lista_imagenes[0]).resize((200,150), Image.LANCZOS)
+    imagen2_redi = Image.open(lista_imagenes[1]).resize((200,150), Image.LANCZOS)
+    imagen3_redi = Image.open(lista_imagenes[2]).resize((200,150), Image.LANCZOS)
+    imagen4_redi = Image.open(lista_imagenes[3]).resize((200,150), Image.LANCZOS)
+
+    # Imagenes redimensionadas
+    imagen1 = ImageTk.PhotoImage(imagen1_redi)
+    imagen2 = ImageTk.PhotoImage(imagen2_redi)
+    imagen3 = ImageTk.PhotoImage(imagen3_redi)
+    imagen4 = ImageTk.PhotoImage(imagen4_redi)
+
+    # Actualizar el label con su imagen
+    label_p6_tl.config(image = imagen1)
+    label_p6_tr.config(image = imagen2)
+    label_p6_bl.config(image = imagen3)
+    label_p6_br.config(image = imagen4)
+
+     # Almacenar las referencias de las imágenes para evitar que sean recolectadas
+    imagenes_labels = [imagen1, imagen2, imagen3, imagen4]
 
     # Aumentar el indice
     contador_click = (contador_click + 1) % (len(hojas_de_vida))
@@ -173,10 +208,10 @@ frame_right_bottom.grid_columnconfigure(0, weight = 1)  # Columna 0
 frame_right_bottom.grid_columnconfigure(1, weight = 1)  # Columna 1
 
 # Crear los sub-frames de p6:
-frame_p6_tl = tk.Frame(frame_right_bottom, bg = "lightblue", bd = "1", relief = "solid") # superior izquierdo
-frame_p6_tr = tk.Frame(frame_right_bottom, bg = "lightgreen", bd = "1", relief = "solid") # superior derecho
-frame_p6_bl = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # inferior izquierdo
-frame_p6_br = tk.Frame(frame_right_bottom, bg = "orange", bd = "1", relief = "solid") # inferior derecho
+frame_p6_tl = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # superior izquierdo
+frame_p6_tr = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # superior derecho
+frame_p6_bl = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # inferior izquierdo
+frame_p6_br = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # inferior derecho
 
 # Evitar que los sub-frames cambien de tamaño con sus contenidos
 frame_p6_tl.pack_propagate(False)
@@ -192,16 +227,16 @@ frame_p6_br.grid(row=1, column=1, padx=2, pady=2, sticky="nsew")
 
 #crear los label que contendran las imagenes en los sub-frames de p6
 
-label_p6_tl= tk.Label(frame_p6_tl, bg = "pink")
+label_p6_tl= tk.Label(frame_p6_tl, bg = "white")
 label_p6_tl.pack(expand = True, fill= "both", padx=5, pady=5)
 
-label_p6_tr= tk.Label(frame_p6_tr, bg = "orange")
+label_p6_tr= tk.Label(frame_p6_tr, bg = "white")
 label_p6_tr.pack(expand = True, fill= "both", padx=5, pady=5)
 
-label_p6_bl= tk.Label(frame_p6_bl, bg = "lightblue")
+label_p6_bl= tk.Label(frame_p6_bl, bg = "white")
 label_p6_bl.pack(expand = True, fill= "both", padx=5, pady=5)
 
-label_p6_br= tk.Label(frame_p6_br, bg = "lightgreen")
+label_p6_br= tk.Label(frame_p6_br, bg = "white")
 label_p6_br.pack(expand = True, fill= "both", padx=5, pady=5)
 
 # mostrar la venta y sus componentes
