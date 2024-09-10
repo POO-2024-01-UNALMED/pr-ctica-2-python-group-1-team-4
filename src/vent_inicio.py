@@ -135,7 +135,7 @@ nueva_imagen = None
 def cambiar_imagen_sistema(event):
     global salidas_p4, nueva_imagen
 
-    imagen_siguiente= Image.open(rutas_imagen_sistema[salidas_p4]).resize((550,380), Image.LANCZOS)
+    imagen_siguiente= Image.open(rutas_imagen_sistema[salidas_p4]).resize((550,350), Image.LANCZOS)
     imagen_siguiente = ImageTk.PhotoImage(imagen_siguiente)
 
     # actualizar imagen
@@ -196,11 +196,11 @@ frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill 
 frame_left_bottom.pack_propagate(False) # Evitar que el frame cambie su tamaño
 
 # crear el widget (Label) que va a tener las imagenes del sistema
-imagen_sistema = tk.Label(frame_left_bottom, bg = "white")
+imagen_sistema = tk.Button(frame_left_bottom, text = "Click para dirigirse a la ventana principal", compound= "top",bg = "pink", font=("Arial",11))
 imagen_sistema.pack(expand=True, fill= "both")
 
 # Agregar la primera imagen que se visualizará al iniciar
-primer_imagen = Image.open("src/imagenes/sistema1.png").resize((550,380), Image.LANCZOS)
+primer_imagen = Image.open("src/imagenes/sistema1.png").resize((550,350), Image.LANCZOS)
 primer_imagen = ImageTk.PhotoImage(primer_imagen)
 imagen_sistema.config(image = primer_imagen)
 
