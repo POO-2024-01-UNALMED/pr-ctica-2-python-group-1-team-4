@@ -165,13 +165,13 @@ menu_1.add_command(label = "Salir", command= salir)
 # --- -------- Crear los frames principales (p1) y (p2) -----------
 
 # Frame grande izquierdo (p1):
-frame_left= tk.Frame(vent_inicio, bg = 'turquoise1', bd = "1", relief = "solid")
+frame_left= tk.Frame(vent_inicio, bg = 'white', bd = "1", relief = "solid")
 
 # empaquetar el frame izquierdo en la ventana
 frame_left.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
 
 # Frame grande derecho (p2):
-frame_right= tk.Frame(vent_inicio, bg = 'turquoise1', bd = "1", relief ="solid")
+frame_right= tk.Frame(vent_inicio, bg = 'white', bd = "1", relief ="solid")
 
 # empaquetar el frame derecho en la ventana
 frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
@@ -196,7 +196,7 @@ frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill 
 frame_left_bottom.pack_propagate(False) # Evitar que el frame cambie su tamaño
 
 # crear el widget (Label) que va a tener las imagenes del sistema
-imagen_sistema = tk.Label(frame_left_bottom, bg = "pink")
+imagen_sistema = tk.Label(frame_left_bottom, bg = "white")
 imagen_sistema.pack(expand=True, fill= "both")
 
 # Agregar la primera imagen que se visualizará al iniciar
