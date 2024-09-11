@@ -27,7 +27,7 @@ def mostrar_bienvenida():
         widget.destroy()
     
     # Crear un Text widget para mostrar la bienvenida con altura y anchura fija:
-    text_bienvenida = tk.Text(frame_left_top, bg = "white", wrap = "word", height = 10, width = 40, font = ("Arial", 11))
+    text_bienvenida = tk.Text(frame_left_top, bg = "pink", wrap = "word", height = 10, width = 40, font = ("Arial", 11))
     text_bienvenida.insert("1.0", bienvenida)
     text_bienvenida.config(state = "disabled")  # Hacer el Text de solo lectura
     text_bienvenida.pack(expand=True, fill = "both")
@@ -52,7 +52,7 @@ def mostrar_descripcion():
         widget.destroy()
     
     # Crear un Text widget para mostrar la descripción con altura y anchura fija
-    text_descripcion = tk.Text(frame_left_top, bg = "white", wrap="word", height=10, width=40, font=("Arial", 11))
+    text_descripcion = tk.Text(frame_left_top, bg = "pink", wrap="word", height=10, width=40, font=("Arial", 11))
     text_descripcion.insert("1.0", descripcion)
     text_descripcion.config(state = "disabled")  # Hacer el Text de solo lectura
     text_descripcion.pack(expand=True, fill="both")
@@ -165,13 +165,13 @@ menu_1.add_command(label = "Salir", command= salir)
 # --- -------- Crear los frames principales (p1) y (p2) -----------
 
 # Frame grande izquierdo (p1):
-frame_left= tk.Frame(vent_inicio, bg = 'white', bd = "1", relief = "solid")
+frame_left= tk.Frame(vent_inicio, bg = 'pink', bd = "1", relief = "solid")
 
 # empaquetar el frame izquierdo en la ventana
 frame_left.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
 
 # Frame grande derecho (p2):
-frame_right= tk.Frame(vent_inicio, bg = 'white', bd = "1", relief ="solid")
+frame_right= tk.Frame(vent_inicio, bg = 'pink', bd = "1", relief ="solid")
 
 # empaquetar el frame derecho en la ventana
 frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
@@ -182,7 +182,7 @@ frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both"
 # Crear los sub - frames dentro del frame izquiedo (p1):
 
 # frame superior (p3)
-frame_left_top = tk.Frame(frame_left, bg = "white", bd ="1", relief= "solid")
+frame_left_top = tk.Frame(frame_left, bg = "pink", bd ="1", relief= "solid")
 
 # empaquetar el frame p3 en el frame p1
 frame_left_top.pack(side = "top", padx = 5, pady = 5, expand = True, fill = "both")
@@ -212,21 +212,21 @@ imagen_sistema.bind("<Leave>",cambiar_imagen_sistema)
 # crear los sub - frames dentro del frame derecho(p2):
 
 # frame superior (p5)
-frame_right_top = tk.Frame(frame_right, bg = "white", bd ="1", relief= "solid")
+frame_right_top = tk.Frame(frame_right, bg = "pink", bd ="1", relief= "solid")
 
 #empaquetar el frame p5 en el frame p2
 frame_right_top.pack(side = "top", padx = 5, pady = 5, expand = True, fill = "both")
 frame_right_top.pack_propagate(False)  # Evitar que el frame cambie su tamaño con los widgets internos
 
 # Crear el widget que va a tener las hojas de vida de los desarrolladores en (p5)
-hojas_vida = tk.Text(frame_right_top, bg= "white", wrap="word", height = 10, width = 40, font=("Arial", 11))
+hojas_vida = tk.Text(frame_right_top, bg= "pink", wrap="word", height = 10, width = 40, font=("Arial", 11))
 hojas_vida.insert(1.0, "\n\n\n\n\n" + (25*"  ") + "Hojas de vida de los desarrolladores")
 hojas_vida.config(state="disabled")
 hojas_vida.pack(expand=True, fill="both")
 hojas_vida.bind("<Button-1>", actualizar_hojaVida_Imagenes) # asignarle el oyente al evento
 
 # frame inferior (p6)
-frame_right_bottom = tk.Frame(frame_right,bg = "white", bd ="1", relief= "solid")
+frame_right_bottom = tk.Frame(frame_right,bg = "pink", bd ="1", relief= "solid")
 
 #empaquetar el frame p6 en el frame p2                                             #ipady para aumentar la altura
 frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 90 )
@@ -240,10 +240,10 @@ frame_right_bottom.grid_columnconfigure(0, weight = 1)  # Columna 0
 frame_right_bottom.grid_columnconfigure(1, weight = 1)  # Columna 1
 
 # Crear los sub-frames de p6:
-frame_p6_tl = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # superior izquierdo
-frame_p6_tr = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # superior derecho
-frame_p6_bl = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # inferior izquierdo
-frame_p6_br = tk.Frame(frame_right_bottom, bg = "white", bd = "1", relief = "solid") # inferior derecho
+frame_p6_tl = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # superior izquierdo
+frame_p6_tr = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # superior derecho
+frame_p6_bl = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # inferior izquierdo
+frame_p6_br = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # inferior derecho
 
 # Evitar que los sub-frames cambien de tamaño con sus contenidos
 frame_p6_tl.pack_propagate(False)
@@ -259,16 +259,16 @@ frame_p6_br.grid(row=1, column=1, padx=2, pady=2, sticky="nsew")
 
 # crear los label que contendran las imagenes en los sub-frames de p6
 
-label_p6_tl= tk.Label(frame_p6_tl, bg = "white")
+label_p6_tl= tk.Label(frame_p6_tl, bg = "pink")
 label_p6_tl.pack(expand = True, fill= "both", padx=2, pady=2)
 
-label_p6_tr= tk.Label(frame_p6_tr, bg = "white")
+label_p6_tr= tk.Label(frame_p6_tr, bg = "pink")
 label_p6_tr.pack(expand = True, fill= "both", padx=2, pady=2)
 
-label_p6_bl= tk.Label(frame_p6_bl, bg = "white")
+label_p6_bl= tk.Label(frame_p6_bl, bg = "pink")
 label_p6_bl.pack(expand = True, fill= "both", padx=2, pady=2)
 
-label_p6_br= tk.Label(frame_p6_br, bg = "white")
+label_p6_br= tk.Label(frame_p6_br, bg = "pink")
 label_p6_br.pack(expand = True, fill= "both", padx=2, pady=2)
 
 # mostrar la venta y sus componentes
