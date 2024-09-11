@@ -1,8 +1,15 @@
 import tkinter as tk 
 from PIL import Image, ImageTk  # Importar módulos necesarios de Pillow
+import vent_principal
 
 # Creamos la ventana de inicio
 vent_inicio = tk.Tk()
+
+# asignar un titulo
+vent_inicio.title("AdoptaLove")
+
+# Dimensiones iniciales
+vent_inicio.geometry("640x440")
 
 # Darle un color a la ventana de inicio
 vent_inicio.configure(bg='pink') 
@@ -14,7 +21,7 @@ vent_inicio.config(padx = 5, pady = 5)
 
 def mostrar_bienvenida():
 
-    # Crear o actualizar el texto en el frame_left_top (p3) con la bienvenida
+    # Crear y actualizar el texto en el frame_left_top (p3) con la bienvenida
     bienvenida = (
         "¡Bienvenido a AdoptaLove! \n\n"
         "Estamos encantados de que estés aquí. Este es un centro integral para el cuidado de mascotas, "
@@ -34,7 +41,7 @@ def mostrar_bienvenida():
 
 def mostrar_descripcion():
 
-    # Crear o actualizar el texto en el frame_left_top (p3) cuando se elija la opción "Descripcion"
+    # Crear y actualizar el texto en el frame_left_top (p3) cuando se elija la opción "Descripcion"
     descripcion = (
         "El proyecto AdoptaLove es un centro integral para el cuidado de mascotas que ofrece una "
         "variedad de servicios y productos diseñados para satisfacer las necesidades de los animales "
@@ -83,7 +90,7 @@ imagenes = [["src/imagenes/Oky1.png","src/imagenes/Oky2.png","src/imagenes/Oky3.
             ["src/imagenes/Daniel1.png","src/imagenes/Daniel2.png","src/imagenes/Daniel3.png","src/imagenes/Daniel4.png"],
             ["src/imagenes/Nico1.png", "src/imagenes/Nico2.png","src/imagenes/Nico3.png", "src/imagenes/Nico4.png"]]
 
-# Declarar las variables globales para almacenar las referencias de las imágenes y el contador de click's
+# Declarar las variables globales para almacenar las referencias de las imágenes y el contador de click's en p5
 imagenes_labels = []
 contador_click = 0
 
@@ -91,7 +98,6 @@ def actualizar_hojaVida_Imagenes(event):
     global contador_click, imagenes_labels
 
     # cambiar el contenido de Text (hojas_vida) en p5 -----
-
     hojas_vida.config(state= 'normal')
     hojas_vida.delete(1.0, 'end')
     hojas_vida.insert(1.0, hojas_de_vida[contador_click])
@@ -126,6 +132,7 @@ def actualizar_hojaVida_Imagenes(event):
     # Aumentar el indice
     contador_click = (contador_click + 1) % (len(hojas_de_vida))
 
+
 # Rutas de las imagenes del sistema
 rutas_imagen_sistema =["src/imagenes/sistema1.png", "src/imagenes/sistema2.png","src/imagenes/sistema3.png",
                        "src/imagenes/sistema4.png","src/imagenes/sistema5.png"]
@@ -146,6 +153,11 @@ def cambiar_imagen_sistema(event):
 
     # Aumenta el indice de salidas
     salidas_p4 = (salidas_p4 + 1) % len(rutas_imagen_sistema)
+
+def abrir_vent_principal():
+    vent_inicio.withdraw() #ocultar la ventana de inicio
+
+    vent_principal.abrir_ventana(vent_inicio)
 
 #---------------- MENÚ --------------------
 
@@ -176,7 +188,6 @@ frame_right= tk.Frame(vent_inicio, bg = 'pink', bd = "1", relief ="solid")
 # empaquetar el frame derecho en la ventana
 frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
 
-
 # ------------------------------------------
 
 # Crear los sub - frames dentro del frame izquiedo (p1):
@@ -195,8 +206,8 @@ frame_left_bottom = tk.Frame(frame_left,bg = "white", bd ="1", relief= "solid")
 frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady=95)
 frame_left_bottom.pack_propagate(False) # Evitar que el frame cambie su tamaño
 
-# crear el widget (Label) que va a tener las imagenes del sistema
-imagen_sistema = tk.Button(frame_left_bottom, text = "Click para dirigirse a la ventana principal\n", compound= "top",bg = "pink", font=("Arial",11))
+# crear el botón que va a tener las imagenes del sistema
+imagen_sistema = tk.Button(frame_left_bottom, text = "Click para dirigirse a la ventana principal\n",command= abrir_vent_principal,compound= "top",bg = "pink", font=("Arial",11))
 imagen_sistema.pack(expand=True, fill= "both")
 
 # Agregar la primera imagen que se visualizará al iniciar
