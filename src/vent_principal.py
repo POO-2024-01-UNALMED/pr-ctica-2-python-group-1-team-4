@@ -15,7 +15,7 @@ def abrir_ventana(vent_inicio):
     # ------ EVENTOS ------
     
     def descripcion_aplicacion():
-         messagebox.showinfo("Aplicación"," falta esto")
+         messagebox.showinfo("Aplicación","Sabemos que cada momento de tu compañero es importante, tanto su llegada, como su despedida; es por eso que creamos AdoptaLove, para acompañarte y ayudarte a encontrar o despedir a tu compañero de vida. Además te brindamos servicios para el bienestar de tu compañero; podrás agendar citas de peluqueria, veterinaria o guarderia; y, si quieres conocer nuevos amigos podrás socializar con nuestros clientes y sus mascotas; además, si deseas encontrar regalos para tu compañero, en nuestra tienda, encontrarás lo mejor para el.")
 
     def cerrar_ventana():
         vent_principal.destroy()  # Cerrar la ventana principal
