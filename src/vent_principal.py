@@ -84,6 +84,10 @@ def abrir_ventana(vent_inicio):
     # Frame superior (en el principal)
     frame_top = tk.Frame(frame_principal, bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
     frame_top.pack(side = "top", padx=10, pady=10, expand= True, fill= "both")
+    frame_top.pack_propagate(False)
+
+    titulo_1 = tk.Label(frame_top, text = "AdoptaLove", font=("Lucida Handwriting", 45, "bold"), fg = "purple4", bg = "thistle1")
+    titulo_1.pack(pady=10)
   
     # Frame inferior (en el principal)-------
     frame_bottom = tk.Frame(frame_principal, bg = "#B89AD6")
@@ -120,7 +124,7 @@ def abrir_ventana(vent_inicio):
     titulo_3.pack(side="top", padx=5, pady=5)
 
     explicacion_hace = (
-        "Las acciones más desctacadas que se podrán realizar se encuentran en el\n menú procesos y consultas, dentro de las opciones "
+        "Las acciones más destacadas que se podrán realizar se encuentran en el\n menú procesos y consultas, dentro de las opciones "
         "que se brindan\n podrás adoptar una mascota, agendar servicios como citas veterinarias\n de peluquería y guardería, también"
         "podrás visitar la tienda para comprar\n productos para tu mascota, socializar con otros dueños y acceder a\n servicios funerarios "
         "si es necesario."
@@ -128,6 +132,11 @@ def abrir_ventana(vent_inicio):
 
     texto_3 = tk.Label (frame_b_right, text = explicacion_hace,font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
     texto_3.pack(side="top", padx=5, pady=5)
+
+
+    
+
+
 
 
 
