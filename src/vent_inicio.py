@@ -1,21 +1,16 @@
 import tkinter as tk 
 from PIL import Image, ImageTk  # Importar módulos necesarios de Pillow
-import vent_principal
+import vent_principal  
 
 # Creamos la ventana de inicio
 vent_inicio = tk.Tk()
 
-# asignar un titulo
+# Asignar titulo, dimenciones iniciales y color de fondo
 vent_inicio.title("AdoptaLove")
+vent_inicio.geometry("1100x500")
+vent_inicio.configure(bg='LightBlue1') 
 
-# Dimensiones iniciales
-vent_inicio.geometry("640x440")
-
-# Darle un color a la ventana de inicio
-vent_inicio.configure(bg='pink') 
-
-# Establecer el espacio entre los bordes de la ventana y los widgets que contenga
-vent_inicio.config(padx = 5, pady = 5)
+vent_inicio.config(padx = 3, pady = 3) # Establecer el espacio entre los bordes de la ventana y los widgets que contenga
 
 # -------------------- EVENTOS -------------------------
 
@@ -33,8 +28,8 @@ def mostrar_bienvenida():
     for widget in frame_left_top.winfo_children():
         widget.destroy()
     
-    # Crear un Text widget para mostrar la bienvenida con altura y anchura fija:
-    text_bienvenida = tk.Text(frame_left_top, bg = "pink", wrap = "word", height = 10, width = 40, font = ("Arial", 11))
+    # Crear un Text widget (Text) para mostrar la bienvenida con altura y anchura fija:
+    text_bienvenida = tk.Text(frame_left_top, bg = "thistle1", wrap = "word", height = 10, width = 40, font = ("Times New Roman", 13), fg= "purple")
     text_bienvenida.insert("1.0", bienvenida)
     text_bienvenida.config(state = "disabled")  # Hacer el Text de solo lectura
     text_bienvenida.pack(expand=True, fill = "both")
@@ -43,15 +38,15 @@ def mostrar_descripcion():
 
     # Crear y actualizar el texto en el frame_left_top (p3) cuando se elija la opción "Descripcion"
     descripcion = (
-        "El proyecto AdoptaLove es un centro integral para el cuidado de mascotas que ofrece una "
+        "AdoptaLove es un centro integral para el cuidado de mascotas que ofrece una "
         "variedad de servicios y productos diseñados para satisfacer las necesidades de los animales "
         "y sus dueños. Su objetivo principal es facilitar y promover la adopción responsable de "
         "mascotas, conectando de manera efectiva a animales en busca de un hogar con personas "
         "interesadas en brindarles amor y cuidado. \n"
-        "Además de los servicios de adopción, AdoptaLove proporciona atención veterinaria, "
-        "peluquería y guardería para mascotas, asegurando el bienestar y la comodidad de los "
-        "animales. Para complementar esta oferta, AdoptaLove cuenta con tiendas donde los dueños "
-        "pueden adquirir productos esenciales para el cuidado de sus mascotas."
+        "AdoptaLove también proporciona atención veterinaria, peluquería y guardería para mascotas, "
+        "asegurando el bienestar y la comodidad de los animales. Para complementar la oferta, "
+        "cuenta con tiendas donde los dueños pueden adquirir productos esenciales"
+        "para el cuidado de sus mascotas."
     )
 
     # Limpiar cualquier texto previo si existe:
@@ -59,7 +54,7 @@ def mostrar_descripcion():
         widget.destroy()
     
     # Crear un Text widget para mostrar la descripción con altura y anchura fija
-    text_descripcion = tk.Text(frame_left_top, bg = "pink", wrap="word", height=10, width=40, font=("Arial", 11))
+    text_descripcion = tk.Text(frame_left_top, bg = "thistle1", wrap="word", height=10, width=40, font = ("Times New Roman", 13), fg= "purple")
     text_descripcion.insert("1.0", descripcion)
     text_descripcion.config(state = "disabled")  # Hacer el Text de solo lectura
     text_descripcion.pack(expand=True, fill="both")
@@ -71,17 +66,17 @@ def salir():
 
 # Hojas de vida de los desarrolladores
 hojas_de_vida = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de Sotavento Córdoba "
-                 "estudiante de ingeniería de sistemas e informática en la Universidad Nacional"
+                 "estudiante de ingeniería de sistemas e informática en la Universidad Nacional "
                  "de Colombia",
 
                  "Salomé Murillo Gaviria, xx años, de medellín Antioquia "
-                 "estudiante de ingeniería de sistema en la universidad nacional de Colombia", 
+                 "estudiante de ingeniería de sistemas en la Universidad nacional de Colombia", 
 
                  "Daniel Zapata, xx años, de medellín Antioquia "
-                 "estudiante de ingeniería de sistema en la universidad nacional de Colombia",
+                 "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia",
 
                  "Nicolas Zambrano, xx años, de medellín Antioquia "
-                 "estudiante de ingeniería de sistema en la universidad nacional de Colombia"]
+                 "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia"]
 
 
 # Rutas de las imagenes de los desarrolladores
@@ -109,10 +104,10 @@ def actualizar_hojaVida_Imagenes(event):
     lista_imagenes = imagenes[contador_click]
 
     # Redimencionar imagenes
-    imagen1_redi = Image.open(lista_imagenes[0]).resize((300,190), Image.LANCZOS)
-    imagen2_redi = Image.open(lista_imagenes[1]).resize((300,190), Image.LANCZOS)
-    imagen3_redi = Image.open(lista_imagenes[2]).resize((300,190), Image.LANCZOS)
-    imagen4_redi = Image.open(lista_imagenes[3]).resize((300,190), Image.LANCZOS)
+    imagen1_redi = Image.open(lista_imagenes[0]).resize((300,197), Image.LANCZOS)
+    imagen2_redi = Image.open(lista_imagenes[1]).resize((300,197), Image.LANCZOS)
+    imagen3_redi = Image.open(lista_imagenes[2]).resize((300,198), Image.LANCZOS)
+    imagen4_redi = Image.open(lista_imagenes[3]).resize((300,198), Image.LANCZOS)
 
     # Imagenes redimensionadas
     imagen1 = ImageTk.PhotoImage(imagen1_redi)
@@ -167,7 +162,7 @@ menu_bar = tk.Menu(vent_inicio)
 # asociar la barra de menú con la ventana de inicio
 vent_inicio.config(menu=menu_bar)
 
-menu_1 = tk.Menu(menu_bar, tearoff=0, font=("Arial",10))
+menu_1 = tk.Menu(menu_bar, tearoff=0, font=("Arial", 9))
 menu_bar.add_cascade(label = "Inicio", menu = menu_1)
 
 menu_1.add_command(label = "Descripción", command = mostrar_descripcion)
@@ -177,13 +172,13 @@ menu_1.add_command(label = "Salir", command= salir)
 # --- -------- Crear los frames principales (p1) y (p2) -----------
 
 # Frame grande izquierdo (p1):
-frame_left= tk.Frame(vent_inicio, bg = 'pink', bd = "1", relief = "solid")
+frame_left= tk.Frame(vent_inicio, bg = '#B89AD6')
 
 # empaquetar el frame izquierdo en la ventana
 frame_left.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
 
 # Frame grande derecho (p2):
-frame_right= tk.Frame(vent_inicio, bg = 'pink', bd = "1", relief ="solid")
+frame_right= tk.Frame(vent_inicio, bg = '#B89AD6')
 
 # empaquetar el frame derecho en la ventana
 frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both")
@@ -193,25 +188,25 @@ frame_right.pack(side = "left", padx = 5, pady = 5, expand = True, fill = "both"
 # Crear los sub - frames dentro del frame izquiedo (p1):
 
 # frame superior (p3)
-frame_left_top = tk.Frame(frame_left, bg = "pink", bd ="1", relief= "solid")
+frame_left_top = tk.Frame(frame_left, bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
 
 # empaquetar el frame p3 en el frame p1
 frame_left_top.pack(side = "top", padx = 5, pady = 5, expand = True, fill = "both")
 frame_left_top.pack_propagate(False)  # Evitar que el frame cambie su tamaño con los widgets internos
 
 # frame inferior (p4)
-frame_left_bottom = tk.Frame(frame_left,bg = "white", bd ="1", relief= "solid")
+frame_left_bottom = tk.Frame(frame_left,bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
 
 # empaquetar el frame p4 en el frame p1                                            #ipady para aumentar la altura
-frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady=95)
+frame_left_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady=105)
 frame_left_bottom.pack_propagate(False) # Evitar que el frame cambie su tamaño
 
 # crear el botón que va a tener las imagenes del sistema
-imagen_sistema = tk.Button(frame_left_bottom, text = "Click para dirigirse a la ventana principal\n",command= abrir_vent_principal,compound= "top",bg = "pink", font=("Arial",11))
+imagen_sistema = tk.Button(frame_left_bottom, text = "Click para ingresar al sistema\n", bg = "thistle1", command= abrir_vent_principal, compound= "top", font = ("Times New Roman", 14), fg= "purple4")
 imagen_sistema.pack(expand=True, fill= "both")
 
 # Agregar la primera imagen que se visualizará al iniciar
-primer_imagen = Image.open("src/imagenes/sistema1.png").resize((603,380), Image.LANCZOS)
+primer_imagen = Image.open("src/imagenes/sistema1.png").resize((610,380), Image.LANCZOS)
 primer_imagen = ImageTk.PhotoImage(primer_imagen)
 imagen_sistema.config(image = primer_imagen)
 
@@ -223,24 +218,24 @@ imagen_sistema.bind("<Leave>",cambiar_imagen_sistema)
 # crear los sub - frames dentro del frame derecho(p2):
 
 # frame superior (p5)
-frame_right_top = tk.Frame(frame_right, bg = "pink", bd ="1", relief= "solid")
+frame_right_top = tk.Frame(frame_right, bg = "thistle1", highlightbackground="purple4", highlightthickness=2, highlightcolor="purple4")
 
 #empaquetar el frame p5 en el frame p2
 frame_right_top.pack(side = "top", padx = 5, pady = 5, expand = True, fill = "both")
 frame_right_top.pack_propagate(False)  # Evitar que el frame cambie su tamaño con los widgets internos
 
 # Crear el widget que va a tener las hojas de vida de los desarrolladores en (p5)
-hojas_vida = tk.Text(frame_right_top, bg= "pink", wrap="word", height = 10, width = 40, font=("Arial", 11))
-hojas_vida.insert(1.0, "\n\n\n\n\n" + (25*"  ") + "Hojas de vida de los desarrolladores")
+hojas_vida = tk.Text(frame_right_top, bg= "thistle1", wrap="word", height = 10, width = 40, font = ("Times New Roman", 13), fg= "purple")
+hojas_vida.insert(1.0, "\n\n\n" + (25*"  ") + "Hojas de vida de los desarrolladores")
 hojas_vida.config(state="disabled")
 hojas_vida.pack(expand=True, fill="both")
 hojas_vida.bind("<Button-1>", actualizar_hojaVida_Imagenes) # asignarle el oyente al evento
 
 # frame inferior (p6)
-frame_right_bottom = tk.Frame(frame_right,bg = "pink", bd ="1", relief= "solid")
+frame_right_bottom = tk.Frame(frame_right,bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
 
 #empaquetar el frame p6 en el frame p2                                             #ipady para aumentar la altura
-frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 90 )
+frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 120 )
 
 # ------------------------------------------
 
@@ -251,10 +246,10 @@ frame_right_bottom.grid_columnconfigure(0, weight = 1)  # Columna 0
 frame_right_bottom.grid_columnconfigure(1, weight = 1)  # Columna 1
 
 # Crear los sub-frames de p6:
-frame_p6_tl = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # superior izquierdo
-frame_p6_tr = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # superior derecho
-frame_p6_bl = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # inferior izquierdo
-frame_p6_br = tk.Frame(frame_right_bottom, bg = "pink", bd = "1", relief = "solid") # inferior derecho
+frame_p6_tl = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # superior izquierdo
+frame_p6_tr = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # superior derecho
+frame_p6_bl = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # inferior izquierdo
+frame_p6_br = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # inferior derecho
 
 # Evitar que los sub-frames cambien de tamaño con sus contenidos
 frame_p6_tl.pack_propagate(False)
@@ -263,24 +258,24 @@ frame_p6_bl.pack_propagate(False)
 frame_p6_br.pack_propagate(False)
 
 # Agregar los sub-frames a su cuadrícula en p6
-frame_p6_tl.grid(row=0, column=0, padx=2, pady=2, sticky="nsew")
-frame_p6_tr.grid(row=0, column=1, padx=2, pady=2, sticky="nsew")
-frame_p6_bl.grid(row=1, column=0, padx=2, pady=2, sticky="nsew")
-frame_p6_br.grid(row=1, column=1, padx=2, pady=2, sticky="nsew")
+frame_p6_tl.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
+frame_p6_tr.grid(row=0, column=1, padx=4, pady=4, sticky="nsew")
+frame_p6_bl.grid(row=1, column=0, padx=4, pady=4, sticky="nsew")
+frame_p6_br.grid(row=1, column=1, padx=4, pady=4, sticky="nsew")
 
 # crear los label que contendran las imagenes en los sub-frames de p6
 
 label_p6_tl= tk.Label(frame_p6_tl, bg = "pink")
-label_p6_tl.pack(expand = True, fill= "both", padx=2, pady=2)
+label_p6_tl.pack(expand = True, fill= "both")
 
 label_p6_tr= tk.Label(frame_p6_tr, bg = "pink")
-label_p6_tr.pack(expand = True, fill= "both", padx=2, pady=2)
+label_p6_tr.pack(expand = True, fill= "both")
 
 label_p6_bl= tk.Label(frame_p6_bl, bg = "pink")
-label_p6_bl.pack(expand = True, fill= "both", padx=2, pady=2)
+label_p6_bl.pack(expand = True, fill= "both")
 
 label_p6_br= tk.Label(frame_p6_br, bg = "pink")
-label_p6_br.pack(expand = True, fill= "both", padx=2, pady=2)
+label_p6_br.pack(expand = True, fill= "both")
 
 # mostrar la venta y sus componentes
 mostrar_bienvenida()  # Mostrar el texto de bienvenida al iniciar la aplicación
