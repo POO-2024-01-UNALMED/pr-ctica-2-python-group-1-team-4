@@ -1,69 +1,57 @@
-from tkinter import *
 import tkinter as tk
-from multimethod import multimethod
+from tkinter import*
+from tkinter import ttk
 
 class FieldFrame(Frame):
+    
+    # CONSTRUCTOR FIELDFRAME
+    def __init__(self, frame_principal, titulo_campos, campos, titulo_entradas, habilatado, Valores = None, combobox = None ):
+        #CONTRUCTOR DEL FRAME PADRE
+        super().__init__(frame_principal, height= 260 , width=300, bg ="thistle1", highlightbackground="purple4", highlightthickness=2 )
 
-     # Constructor para formularios -------------------------------------------------------------
-    def __init__(self, ventana, listaCampo, listaEditables, listaValores = None):
-        # Creación del frame
-        super().__init__(ventana, bg="cyan", height=260, width=230)
+        self.titulo_campos = titulo_campos  
+        self.campos = campos
+        self.titulo_entradas = titulo_entradas
+        self.habilitado = habilatado
+        self.valores = Valores
+        self.combobox_items = combobox or {}
 
-        # Se guardan las listas (ésto es para más adelante cuando se haga el control de las entradas)
-        self._listaTextosEditables = [] 
-        self._listaEntradasEditables = []
-        contadorCiclos = 0  
-        self.botónAceptar = None
+        self.elementos = []
 
-        # Creación de los label y las entradas
-        for i in range(len(listaCampo)):
-            texto = tk.Label(self, text=listaCampo[i], font=("Calibri", 12) , bg="white")
-            texto.grid(row=i, column=0, padx=10, pady=10)
-
-            if (listaEditables[i]==False):
-                entrada = tk.Entry(self,textvariable=tk.StringVar(ventana), state=DISABLED)
-                entrada.grid(row=i, column= 1, padx=20, pady=10)
-                if (listaValores!=None):
-                    entrada.insert(0, listaValores[i])
-            else:
-                # Se guardan en listas los nombres de los campos editables (para luego ser consultados más fácil)
-                self._listaTextosEditables.append(listaCampo[i])
-                entrada = tk.Entry(self,textvariable=tk.StringVar(ventana))
-                entrada.grid(row=i, column= 1, padx=20, pady=10)
-                if (listaValores!=None):
-                    entrada.insert(0, listaValores[i])
-                self._listaEntradasEditables.append(entrada) # Lista de entradas editables
-
-            contadorCiclos += 1 # Variable utilizada para acomodar los botones al final 
-
-        # Botón para eliminar texto de las entradas
-        borrar = tk.Button(self, text="Borrar", font=("Calibri", 12), fg="black", bg="white", command=self.borrar, width=5)
-        borrar.grid(row=contadorCiclos, column=1, padx=20, pady=3)
+        # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS
+        Label_titulo_criterios = tk.Label(self, text = self.titulo_campos, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
+        Label_titulo_criterios.grid(row=0, column=0)
         
-        # Botón de aceptar
-        aceptar = tk.Button(self, text="Aceptar", font=("Calibri", 12), fg="black", bg="white", command=None, width=6)
-        aceptar.grid(row=contadorCiclos, column=0, padx=20, pady=3)
+        Label_titulo_entradas = tk.Label(self, text = self.titulo_entradas, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
+        Label_titulo_entradas.grid(row=0, column=1)
+        
+        for i in range(0, len(self.campos)):
 
-        self.botónAceptar = aceptar # Guardamos nuestro botón de aceptar, para que se pueda acceder luego 
+            # LABEL CRITERIOS
+            label_criterio = tk.Label(self, text=self.campos[i], font=("Times New Roman",10), bg="plum3", fg="purple")
+            label_criterio.grid(row=i+1, column=0)
 
-    # Métodos ----------------------------------------------------------------------------------------
-    # Darle una función al botón de aceptar
-    def ConfigurarAceptar(self, commando):
-        self.botónAceptar.config(command=commando)
+            #CAMPOS DE TEXTO ENTRADAS
+            if self.campos[i] in self.combobox_items:
+                entradaValor = ttk.Combobox(self, values=self.combobox_items[campos[i]])
+                entradaValor.grid(row=i+1, column=1)
+                if self.valores is not None:
+                    entradaValor.set(self.valores[i])
+            else:
+                entradaValor = tk.Entry(self)
+                entradaValor.grid(column=1, row=i+1)
+                if self.valores is not None:
+                    entradaValor.insert(0, self.valores[i])
 
-    # Función para obtener un valor 
-    def getValue(self, NombreValor): # Nombre Valor debe ser un string 
-        index = self._listaTextosEditables.index(NombreValor)
-        return self._listaEntradasEditables[index].get()
+                if self.habilitado is not None and not self.habilitado[i]:
+                    entradaValor.configure(state=tk.DISABLED)
+            
+            self.elementos.append(entradaValor)
+        
+        tk.Button(self, text="Borrar", font=("Verdana", 12), bg="white", width=5, height=2).grid(column=1, row=len(self.campos)+1)
 
-    # Función para el botón borrar 
-    def borrar(self):
-        for entrada in self._listaEntradasEditables:
-            entrada.delete("0","end")
-
-    # Método para comprobar que si se están guardando bien los textos y los entry editables (no prestar atención)
-    def getCamposEditables(self):
-        resultado = ""
-        for i in range(0, len(self._listaTextosEditables)):
-            resultado += "Registro"+str(i+1)+" "+str(self._listaTextosEditables[i])+str(self._listaEntradasEditables[i])+"\n"
-        return resultado
+    def funborrar(self):
+        for entrada in self.elementos:
+            entrada.delete("0", "end")
+            
+# -----------------------------------------------------
