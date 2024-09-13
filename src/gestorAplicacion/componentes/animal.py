@@ -75,7 +75,7 @@ class Animal:
                     f"Edad (meses): {self.getEdad()}, Sexo: {self.getSexo()}")
 
     #Método para actualizar puntaje
-    def __str__(self,calificacion):
+    def defpuntaje (self,calificacion):
         if calificacion == 1:
             penalizacion = 10
         elif calificacion == 2:
