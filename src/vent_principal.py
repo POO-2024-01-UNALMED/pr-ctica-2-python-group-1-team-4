@@ -81,5 +81,5 @@ def abrir_ventana(vent_inicio):
 
 
     # Botón para cerrar la Ventana 2 y restaurar la Ventana 1
-    boton_cerrar = tk.Button(vent_principal, text="Cerrar Ventana principal", command=lambda: cerrar_ventana(vent_principal, vent_inicio))
+    boton_cerrar = tk.Button(vent_principal, text="Cerrar Ventana principal", command=lambda: cerrar_ventana())
     boton_cerrar.pack(padx=20, pady=20)
