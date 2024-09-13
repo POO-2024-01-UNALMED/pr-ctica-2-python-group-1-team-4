@@ -136,7 +136,7 @@ def crear_frame_nueva_escena():
 # Ventana principal
 vent_inicio = tk.Tk()
 vent_inicio.title("Ventana Principal")
-vent_inicio.geometry("300x300")
+vent_inicio.geometry("1400x800")
 
 # Configurar el grid para que todos los frames ocupen el mismo espacio
 vent_inicio.rowconfigure(0, weight=1)

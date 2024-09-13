@@ -7,7 +7,7 @@ vent_inicio = tk.Tk()
 
 # Asignar titulo, dimenciones iniciales y color de fondo
 vent_inicio.title("AdoptaLove")
-vent_inicio.geometry("1100x500")
+vent_inicio.geometry("1400x800")
 vent_inicio.configure(bg='LightBlue1') 
 
 vent_inicio.config(padx = 3, pady = 3) # Establecer el espacio entre los bordes de la ventana y los widgets que contenga

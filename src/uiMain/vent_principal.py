@@ -8,7 +8,7 @@ def abrir_ventana(vent_inicio):
 
     # asignarle el nombre, dimenciones iniciales y color de fondo
     vent_principal.title("AdoptaLove")
-    vent_principal.geometry("1100x500")
+    vent_principal.geometry("1400x800")
     vent_principal.configure(bg='LightBlue1') 
     vent_principal.config(padx = 15, pady = 15)
 
