@@ -1,6 +1,6 @@
 import tkinter as tk 
 from PIL import Image, ImageTk  # Importar módulos necesarios de Pillow
-import vent_principal  
+import vent_principal 
 
 # Creamos la ventana de inicio
 vent_inicio = tk.Tk()

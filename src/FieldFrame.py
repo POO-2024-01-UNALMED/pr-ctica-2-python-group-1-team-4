@@ -20,10 +20,10 @@ class FieldFrame(Frame):
 
         # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS
         Label_titulo_criterios = tk.Label(self, text = self.titulo_campos, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
-        Label_titulo_criterios.grid(row=0, column=0)
+        Label_titulo_criterios.grid(row=0, column=0, padx=5, pady=5)
         
         Label_titulo_entradas = tk.Label(self, text = self.titulo_entradas, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
-        Label_titulo_entradas.grid(row=0, column=1)
+        Label_titulo_entradas.grid(row=0, column=1, padx=5, pady=5)
         
         for i in range(0, len(self.campos)):
 
@@ -34,12 +34,12 @@ class FieldFrame(Frame):
             #CAMPOS DE TEXTO ENTRADAS
             if self.campos[i] in self.combobox_items:
                 entradaValor = ttk.Combobox(self, values=self.combobox_items[campos[i]])
-                entradaValor.grid(row=i+1, column=1)
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=5)
                 if self.valores is not None:
                     entradaValor.set(self.valores[i])
             else:
                 entradaValor = tk.Entry(self)
-                entradaValor.grid(column=1, row=i+1)
+                entradaValor.grid(column=1, row=i+1, padx = 5, pady = 5)
                 if self.valores is not None:
                     entradaValor.insert(0, self.valores[i])
 

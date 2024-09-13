@@ -12,13 +12,13 @@ ventana.geometry("300x315")
 
 listaCampos = ["Nombre", "Cédula", "Dirección",  "Sexo"]
 listaEditables = [True, True, False, True]
-listaValores = ["Fulanito", "3303022", "Hola", "Nunca"]
+listaValores = ["", "", "", ""]
 combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"]}
 
 
 
 frame = FieldFrame(ventana, "Persona" ,listaCampos, "Sus datos", listaEditables, listaValores, combobox_items)
-frame.place(x=10, y=10)
+frame.place(x= 10, y = 10)
 
 
 ventana.mainloop()

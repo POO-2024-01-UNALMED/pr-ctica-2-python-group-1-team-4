@@ -1,15 +1,18 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from gestorAplicacion.componentes.animal import Animal, EstadoSalud
 from gestorAplicacion.componentes.cliente import Cliente
 from gestorAplicacion.componentes.empleado import Empleado, Rol
 from gestorAplicacion.administracion.adopcion import Adopcion
 from gestorAplicacion.administracion.socializar import Socializar
 
+print("")
 #CREACION DE LOS CLIENTES --------------
 
 cliente1 = Cliente("Juan Pérez", 30, 123456789, 987654321, "Calle Falsa 123") #CONSTRUCTOR 1
 cliente2= Cliente("María López", 25, 987654321) #CONSTRUCTOR 2
-
-print("")
 
 # PROBAR MÉTODOS DE CLIENTE
 print("Información del Cliente 1:")
@@ -57,22 +60,22 @@ print("")
 
 # PROBAR MÉTODOS DE ANIMAL
 print("Información del Animal 1:")
-#print(animal1)  # Usando el método __str__
+print(animal1)  # Usando el método __str__
 
 print("\nInformación del Animal 2:")
-#print(animal2)  # Usando el método __str__
+print(animal2)  # Usando el método __str__
 
 # Actualizar datos del Animal 1
 animal1.setEdad(25)
 animal1.setEstadoSalud(EstadoSalud.ENFERMO)
 print("\nDespués de actualizar datos del Animal 1:")
-#print(animal1)
+print(animal1)
 
 # Actualizar datos del Animal 2
 animal2.setSexo("Macho")
 animal2.setEstadoSalud(EstadoSalud.ENTRATAMIENTO)
 print("\nDespués de actualizar datos del Animal 2:")
-#print(animal2)
+print(animal2)
 
 print("")
 
@@ -160,3 +163,5 @@ if __name__ == "__main__":
 
 print (cliente.getNombre())
 print (mascota.getNombre())
+
+

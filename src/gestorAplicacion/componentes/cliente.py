@@ -1,6 +1,6 @@
 from multimethod import multimethod
 from ..componentes.animal import Animal
-from .persona import Persona 
+from ..componentes.persona import Persona 
 # con ".persona" le indicamos al scrip que Persona está en el mismo paquete de Cliente.
 
 # OKY RUIZ DE LA ROSA
@@ -14,18 +14,16 @@ from .persona import Persona
 
 class Cliente(Persona):
 
-    @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int, telefono: int, direccion: str):
+       # Constructor único que maneja todos los casos con argumentos opcionales
+    def __init__(self, nombre, edad, cedula=0, telefono=0, direccion= "No aplica", participar=None, mascota=None):
+        
+        # Llamamos al constructor de la clase base (Persona)
         super().__init__(nombre, edad, cedula, telefono, direccion)
+
+        # Asignamos los atributos específicos de Cliente
         self._puntos = 0
-        self._mascota = None
-    
-    @multimethod
-    def __init__(self, nombre: str, edad: int, telefono: str, participar : bool, mascota: Animal):
-        super().__init__(nombre, edad, telefono)
-        self._participar=participar
-        self._puntos = 0
-        self._mascota = None
+        self._mascota = mascota
+        self._participar = participar
 
     def actualizar_datos(self, edad, telefono, direccion):
         self.setEdad(edad)
@@ -47,12 +45,13 @@ class Cliente(Persona):
     def getMascota(self):
         return self._mascota
     
-    #DEFINIENDO EL MÉTODO ABSTRACTO DE PERSONA
+    # Implementando el método abstracto de Persona
     def __str__(self):
         mascota_info = f", Mascota: {self.getMascota()}" if self._mascota else ""
-
         return (f"Nombre: {self.getNombre()}, Edad: {self.getEdad()}, Cédula: {self.getCedula()}, "
                 f"Teléfono: {self.getTelefono()}, Dirección: {self.getDireccion()}, "
                 f"Puntos: {self.getPuntos()}{mascota_info}\n")
+
+
 
 

@@ -13,27 +13,14 @@ from multimethod import multimethod
 #CLASE ABSTRACTA
 class Persona(ABC):
     
-    @multimethod
-    def __init__(self, nombre: str, edad: int, cedula: int, telefono:str, direccion: str):
+    def __init__(self, nombre, edad, cedula= None, telefono= None, direccion= "No aplica"):
         self._nombre = nombre
         self._edad = edad
         self._cedula = cedula
         self._telefono = telefono
         self._direccion = direccion
 
-    @multimethod
-    def __init__(self, nombre:str, edad: int, cedula: int):
-        self.__init__(nombre, edad, cedula, 0, "No aplica")
-    
-    @multimethod
-    def __init__(self, nombre: str, edad: int, telefono:str):
-        self._nombre = nombre
-        self._edad = edad
-        self._telefono = telefono
-
-
     # MÉTODOS SETTER Y GETTER ----
-
     def setNombre(self, nombre):
         self._nombre = nombre
 
@@ -64,8 +51,7 @@ class Persona(ABC):
     def getTelefono(self):
         return self._telefono
 
-    # Método abstracto (necesario para que sea abstracta)
+    # Método abstracto
     @abstractmethod
     def __str__(self):
         pass
-
