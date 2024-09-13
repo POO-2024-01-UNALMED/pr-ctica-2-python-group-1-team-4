@@ -12,7 +12,7 @@ vent_inicio.configure(bg='LightBlue1')
 
 vent_inicio.config(padx = 3, pady = 3) # Establecer el espacio entre los bordes de la ventana y los widgets que contenga
 
-# -------------------- EVENTOS -------------------------
+#  -------------------- EVENTOS -------------------------
 
 def mostrar_bienvenida():
 
@@ -154,7 +154,7 @@ def abrir_vent_principal():
 
     vent_principal.abrir_ventana(vent_inicio)
 
-#---------------- MENÚ --------------------
+#  ---------------- MENÚ --------------------
 
 # Crear la barra de menú 
 menu_bar = tk.Menu(vent_inicio)
