@@ -1,10 +1,10 @@
 import os
 import pickle
 
-from centroAdopcion import CentroAdopcion
-from funeraria import Funeraria
-from src.gestorAplicacion.componentes.muerto import Muerto
-from tienda import Tienda
+from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
+from gestorAplicacion.administracion.funeraria import Funeraria
+from gestorAplicacion.administracion.tienda import Tienda
+from gestorAplicacion.componentes.muerto import Muerto
 
 class Serializador:
 
@@ -28,13 +28,14 @@ class Serializador:
 
     @staticmethod
     def serializarListas():
+
         # Métodos estáticos
         ##Serializador.serializar(Main.sedes, "Sedes")
         Serializador.serializar(CentroAdopcion.getClientes(), "Clientes")
-        Serializador.serializar(Funeraria.getTumbas(), "Tumbas")
-        Serializador.serializar(Funeraria.getCenizas(), "Cenizas")
-        Serializador.serializar(Tienda.getProductos(), "Productos")
-        Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
+        #Serializador.serializar(Funeraria.getTumbas(), "Tumbas")
+        #Serializador.serializar(Funeraria.getCenizas(), "Cenizas")
+        #Serializador.serializar(Tienda.getProductos(), "Productos")
+        #Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
 
         #probar
         #Serializador.serializar(Muerto.getFlores(), "Flores")

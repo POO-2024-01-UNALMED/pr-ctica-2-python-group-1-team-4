@@ -1,7 +1,8 @@
 from typing import List
-from centroAdopcion import CentroAdopcion
-from src.gestorAplicacion.componentes.cliente import Cliente
-from src.gestorAplicacion.componentes.muerto import Muerto
+
+from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
+from gestorAplicacion.componentes.cliente import Cliente
+from gestorAplicacion.componentes.muerto import Muerto
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
 #OKY RUIZ DE LA ROSA

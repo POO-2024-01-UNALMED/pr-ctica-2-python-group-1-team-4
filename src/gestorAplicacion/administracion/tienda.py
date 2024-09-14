@@ -1,7 +1,11 @@
-from componentes.producto import Producto
-from componentes.empleado import Empleado
-from .centroAdopcion import CentroAdopcion
-from componentes.cliente import Cliente
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from gestorAplicacion.componentes.producto import Producto
+    from gestorAplicacion.componentes.empleado import Empleado
+    from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
+    from componentes.cliente import Cliente
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
 #OKY RUIZ DE LA ROSA

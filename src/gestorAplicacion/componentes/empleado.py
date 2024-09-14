@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from enum import Enum
+
 from .persona import Persona # para indicar que se encuentra el mismo paquete
 from .cupo import Cupo #para indicar que se encuentra en el mismo paqute
 

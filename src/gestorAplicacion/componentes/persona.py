@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from multimethod import multimethod
 
 # OKY RUIZ DE LA ROSA
 # SALOMÉ MURILLO GAVIRIA

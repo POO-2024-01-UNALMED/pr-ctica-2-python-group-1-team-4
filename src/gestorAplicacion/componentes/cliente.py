@@ -1,4 +1,5 @@
 from multimethod import multimethod
+
 from ..componentes.animal import Animal
 from ..componentes.persona import Persona 
 # con ".persona" le indicamos al scrip que Persona está en el mismo paquete de Cliente.

@@ -1,13 +1,15 @@
+from __future__ import annotations
 from enum import Enum
-from typing import List
+from typing import List, TYPE_CHECKING
 from multimethod import multimethod
 
-from componentes.animal import Animal, EstadoSalud
-from componentes.cliente import Cliente
-from componentes.empleado import Empleado
-from .adopcion import Adopcion
-from .cita import Cita
-from .tienda import Tienda
+if TYPE_CHECKING:
+    from gestorAplicacion.componentes.animal import Animal, EstadoSalud
+    from gestorAplicacion.componentes.cliente import Cliente
+    from gestorAplicacion.componentes.empleado import Empleado
+    from .adopcion import Adopcion
+    from .cita import Cita
+    from .tienda import Tienda
 
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
