@@ -31,7 +31,7 @@ class FieldFrame(Frame):
 
             # LABEL CRITERIOS
             label_criterio = tk.Label(self, text=self.lista_criterios[i], font=("Times New Roman",10), bg="plum3", fg="purple")
-            label_criterio.grid(row=i+1, column=0, padx= 350, pady=15)
+            label_criterio.grid(row=i+1, column=0, padx= 380, pady=15)
 
             #CAMPOS DE TEXTO ENTRADAS
             if self.lista_criterios[i] in self.combobox_items:
@@ -90,7 +90,7 @@ class FieldFrame(Frame):
                     listaValores.append(valor)
 
         if (len(listaVacios)>0):
-            messagebox.showerror("Error","Hay lista_entradas sin llenar: " + listaVacios)
+            messagebox.showerror("Error","Hay entradas sin llenar: " + listaVacios)
             return False
         else:
             return listaValores

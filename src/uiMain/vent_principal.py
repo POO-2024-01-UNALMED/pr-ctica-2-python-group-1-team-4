@@ -47,15 +47,19 @@ def abrir_ventana(vent_inicio):
         listaEditables = [True, True, False,True, True, True]
         listaValores = ["", "", "", "","", ""]
         dicTipos = {"Nombre": str, "Cédula": int, "Dirección": str,"edad": int, "Sexo": str, "pregunta":str}
+
         combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"], "pregunta":["Messi", "Cristiano"]}
+
         frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, dicTipos, listaValores, combobox_items)
-        frame.place(x =0, y = 0, width=1236, height= 418)
+        #frame.place(x =0, y = 0 , width=1236, height= 418)
+        frame.pack(expand=True, fill="both")
 
         def funcionAnimal():
             datos_cliente = frame.getEntradas()
 
             def mostrarCliente():
                  datos_animal = frame_Animal.getEntradas()
+
                  if datos_animal != False:
 
                     cliente = Cliente(datos_cliente[0], datos_cliente[2], datos_cliente[1])
@@ -69,11 +73,12 @@ def abrir_ventana(vent_inicio):
                     frame_Animal.destroy()
 
                     frame.funborrar()
-                    frame.place(x=0, y=0, width=1236, height=418) 
+                    #frame.place(x=0, y=0, width=1236, height=418) 
+                    frame.pack(expand=True, fill="both")
 
             if datos_cliente != False:
 
-                frame.place_forget()  # Ocultar el frame de Persona actual en lugar de destruirlo
+                frame.pack_forget()  # Ocultar el frame de Persona actual en lugar de destruirlo
 
                  #frame.destroy()
                 listaAnimal = ["Nombre perro", "Sexo perro", "Edad perro"]
@@ -81,7 +86,8 @@ def abrir_ventana(vent_inicio):
                 dicTipos = {"Nombre perro": str, "Sexo perro": str, "Edad perro": int}
 
                 frame_Animal = FieldFrame(frame_bottom, "Animal", listaAnimal, "sus datos", listaEditables, dicTipos)
-                frame_Animal.place(x =0, y = 0, width=1236, height= 418)
+                #frame_Animal.place(x =0, y = 0, width=1236, height= 418)
+                frame_Animal.pack(expand=True, fill="both")
 
                 frame_Animal.funAceptar(mostrarCliente)
 
@@ -152,6 +158,7 @@ def abrir_ventana(vent_inicio):
     # Frame inferior (en el principal)-------
     frame_bottom = tk.Frame(frame_principal, bg = "#B89AD6")
     frame_bottom.pack(side = "bottom", padx=5, pady=5, expand= True, fill= "both",ipady= 130)
+    frame_bottom.pack_propagate(False)
 
     # sub frame izquierdo de frame inferior
     frame_b_left= tk.Frame(frame_bottom, bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
