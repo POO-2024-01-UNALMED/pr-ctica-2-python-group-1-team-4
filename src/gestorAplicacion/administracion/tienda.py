@@ -34,10 +34,13 @@ class Tienda:
     def getProductos(cls):
         return cls.listaProductos
     
-    def agregarProductos(cls, *productos : Producto):
-        for i in productos:
-            cls.listaProductos.append(i) 
-        #Se agrega la cantidad de productos que se hayan pasado
+    def agregarProducto(cls, producto: Producto):
+        # Se le pasa un producto y este lo agrega a la lista 
+        cls.listaProductos.append(producto)
+
+    def agregarProductosLista(cls, productos):
+        # Se le pasa una lista y esta reemplaza a listaProductos
+        cls.listaProductos = productos
         
     def agregarEmpleados(self, *empleados : Empleado):
         for i in empleados:
@@ -92,12 +95,22 @@ class Tienda:
                 #Se elimina el producto de la lista, si quedó sin unidades
                 if (producto.getCantidadUnidades==0):
                     cls.listaProductos.pop(indice)
-                
+
                 #Control de las salidas
                 if (cantidad==1):
-                    return f"Se ha comprado una unidad de: {producto.getNombre()}, total a pagar: {producto.getPrecio()}."
+                    cliente_compra = CentroAdopcion.is_cliente(cliente)
+                    if cliente_compra.getPuntos()>=15:
+                        cliente_compra.disminuir_puntos(15)
+                        return f"Se ha comprado una unidad de: {producto.getNombre()}, total a pagar: {str(producto.getPrecio()-(producto.getPrecio()*0.1))}, haciendo uso de 15 de tus puntos de descuento, total puntos actuales: {str(cliente_compra.getPuntos())}."
+                    else:
+                        return f"Se ha comprado una unidad de: {producto.getNombre()}, total a pagar: {str(producto.getPrecio())}."
                 else:
-                    return f"Se han comprado, {cantidad} unidades de {producto.getNombre()}, total a pagar: {producto.getPrecio()*cantidad}."
+                    cliente_compra = CentroAdopcion.is_cliente(cliente)
+                    if cliente_compra.getPuntos()>=15:
+                        cliente_compra.disminuir_puntos(15)
+                        return f"Se han comprado, {str(cantidad)} unidades de {producto.getNombre()}, total a pagar: {str((producto.getPrecio()*cantidad)-((producto.getPrecio()*cantidad)*0.1))}, haciendo uso de 15 de tus puntos de descuento, total puntos actuales: {str(cliente_compra.getPuntos())}."
+                    else:
+                        return f"Se han comprado, {str(cantidad)} unidades de {producto.getNombre()}, total a pagar: {str(producto.getPrecio()*cantidad)}."
                 
             else:
                 return "Cantidad inválida, no se pudo realizar la compra"

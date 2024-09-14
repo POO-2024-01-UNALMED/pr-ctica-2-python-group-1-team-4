@@ -1,5 +1,3 @@
-from multimethod import multimethod
-
 #DANIEL ALBERTO ZAPATA CASTAÑO
 #OKY RUIZ DE LA ROSA
 #SALOMÉ MURILLO GAVIRIA
@@ -10,18 +8,12 @@ from multimethod import multimethod
 
 
 class Producto:
-    @multimethod
-    def __init__(self, nombre: str, precio: float, tipoAnimal: str, cantidadUnidades: int):
+
+    # Constructor 
+    def __init__(self, nombre: str, precio: float, cantidadUnidades: int, tipoAnimal = "Uso general"):
         self._nombre = nombre
         self._precio = precio
         self._tipoAnimal = tipoAnimal
-        self._cantidadUnidades = cantidadUnidades
-
-    @multimethod
-    def __init__(self, nombre: str, precio: float, cantidadUnidades: int):
-        self._nombre = nombre
-        self._precio = precio
-        self._tipoAnimal = "Uso general"
         self._cantidadUnidades = cantidadUnidades
 
 #METODOS GET Y SET

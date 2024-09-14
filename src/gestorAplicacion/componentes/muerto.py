@@ -1,5 +1,4 @@
 from typing import List
-from multimethod import multimethod
 
 from gestorAplicacion.componentes.animal import Animal
 from gestorAplicacion.componentes.cliente import Cliente
@@ -13,17 +12,8 @@ from gestorAplicacion.componentes.cliente import Cliente
 #Representa a los animales que han fallecido, almacenando información sobre el dueño, fecha de fallecimiento y mensajes de recuerdo.
 
 class Muerto:
-    @multimethod
-    def __init__(self, animal: Animal, fecha: str, mensaje: str, dueño: Cliente, tiempo: str, tipo: str):
-        self._animal = animal
-        self._fecha = fecha
-        self._mensaje = mensaje
-        self._dueño = dueño
-        self._tiempo = tiempo
-        self._tipo = tipo
-        self._flores: List[str] = ["No hay flores aquí."]
 
-    @multimethod
+    # Constructor 
     def __init__(self):
         self._animal = None
         self._fecha = ""

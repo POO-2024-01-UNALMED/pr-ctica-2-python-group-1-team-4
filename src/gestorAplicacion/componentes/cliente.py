@@ -20,7 +20,6 @@ class Cliente(Persona):
         
         # Llamamos al constructor de la clase base (Persona)
         super().__init__(nombre, edad, cedula, telefono, direccion)
-
         # Asignamos los atributos específicos de Cliente
         self._puntos = 0
         self._mascota = mascota
