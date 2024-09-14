@@ -153,7 +153,7 @@ def abrir_ventana(vent_inicio):
     frame_top.pack_propagate(False)
 
     titulo_1 = tk.Label(frame_top, text = "AdoptaLove", font=("Lucida Handwriting", 45, "bold"), fg = "purple4", bg = "thistle1")
-    titulo_1.pack(pady=10)
+    titulo_1.pack(pady=10, anchor='center', expand=True)
   
     # Frame inferior (en el principal)-------
     frame_bottom = tk.Frame(frame_principal, bg = "#B89AD6")
