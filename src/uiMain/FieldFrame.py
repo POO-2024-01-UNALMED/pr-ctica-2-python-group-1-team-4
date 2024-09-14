@@ -37,7 +37,7 @@ class FieldFrame(Frame):
             # CAMPOS DE TEXTO ENTRADAS
             if self.lista_criterios[i] in self.combobox_items:
                 entradaValor = ttk.Combobox(self, values=self.combobox_items[self.lista_criterios[i]], state="readonly")
-                entradaValor.grid(row=i+1, column=1, padx=5, pady=5)
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10,sticky= "ns")
                 if self.lista_valores is not None:
                     entradaValor.set(self.lista_valores[i])
             else:
