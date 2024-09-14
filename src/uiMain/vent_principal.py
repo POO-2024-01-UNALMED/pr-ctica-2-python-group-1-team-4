@@ -3,6 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from gestorAplicacion.componentes.cliente import Cliente
+from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
 import tkinter as tk
 from tkinter import messagebox
 
@@ -17,6 +18,7 @@ def abrir_ventana(vent_inicio):
     vent_principal.geometry("1400x800")
     vent_principal.configure(bg='LightBlue1') 
     vent_principal.config(padx = 15, pady = 15)
+
 
     # ------ EVENTOS ------
     
@@ -37,6 +39,7 @@ def abrir_ventana(vent_inicio):
             widget.destroy()
 
     def adoptar_mascota():
+
         clear_frame_bottom()
         
         # Creación de un objeto Field Frame
@@ -54,12 +57,25 @@ def abrir_ventana(vent_inicio):
             def mostrarCliente():
                  datos_animal = frame_Animal.getEntradas()
                  if datos_animal != False:
-                    cliente = Cliente(datos_cliente[0], datos_cliente[2], datos_cliente[1])
-                    messagebox.showinfo("DATOS CLIENTE", cliente.__str__())
 
+                    cliente = Cliente(datos_cliente[0], datos_cliente[2], datos_cliente[1])
+                    CentroAdopcion.clientes_AdoptaLove.append(cliente)
+
+                    for i in CentroAdopcion.clientes_AdoptaLove:
+                        #messagebox.showinfo("DATOS CLIENTE", cliente.__str__())
+                        print(i)
+
+                    # Ocultar frame de datos del animal y volver al frame de cliente
+                    frame_Animal.destroy()
+
+                    frame.funborrar()
+                    frame.place(x=0, y=0, width=1236, height=418) 
 
             if datos_cliente != False:
-                frame.destroy()
+
+                frame.place_forget()  # Ocultar el frame de Persona actual en lugar de destruirlo
+
+                 #frame.destroy()
                 listaAnimal = ["Nombre perro", "Sexo perro", "Edad perro"]
                 listaEditables = [True, True, True]
                 dicTipos = {"Nombre perro": str, "Sexo perro": str, "Edad perro": int}
@@ -69,9 +85,6 @@ def abrir_ventana(vent_inicio):
 
                 frame_Animal.funAceptar(mostrarCliente)
 
-                
-
-    
         
         frame.funAceptar(funcionAnimal)
 
