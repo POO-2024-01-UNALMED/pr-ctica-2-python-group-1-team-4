@@ -1,3 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from gestorAplicacion.componentes.cliente import Cliente
 import tkinter as tk
 from tkinter import messagebox
 
@@ -35,12 +40,40 @@ def abrir_ventana(vent_inicio):
         clear_frame_bottom()
         
         # Creación de un objeto Field Frame
-        listaCampos = ["Nombre", "Cédula", "Dirección",  "Sexo"]
-        listaEditables = [True, True, False, True]
-        listaValores = ["", "", "", ""]
-        combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"]}
-        frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, listaValores, combobox_items)
+        listaCampos = ["Nombre", "Cédula", "Dirección","edad" ,"Sexo", "pregunta"]
+        listaEditables = [True, True, False,True, True, True]
+        listaValores = ["", "", "", "","", ""]
+        dicTipos = {"Nombre": str, "Cédula": int, "Dirección": str,"edad": int, "Sexo": str, "pregunta":str}
+        combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"], "pregunta":["Messi", "Cristiano"]}
+        frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, dicTipos, listaValores, combobox_items)
         frame.place(x =0, y = 0, width=1236, height= 418)
+
+        def funcionAnimal():
+            datos_cliente = frame.getEntradas()
+
+            def mostrarCliente():
+                 datos_animal = frame_Animal.getEntradas()
+                 if datos_animal != False:
+                    cliente = Cliente(datos_cliente[0], datos_cliente[2], datos_cliente[1])
+                    messagebox.showinfo("DATOS CLIENTE", cliente.__str__())
+
+
+            if datos_cliente != False:
+                frame.destroy()
+                listaAnimal = ["Nombre perro", "Sexo perro", "Edad perro"]
+                listaEditables = [True, True, True]
+                dicTipos = {"Nombre perro": str, "Sexo perro": str, "Edad perro": int}
+
+                frame_Animal = FieldFrame(frame_bottom, "Animal", listaAnimal, "sus datos", listaEditables, dicTipos)
+                frame_Animal.place(x =0, y = 0, width=1236, height= 418)
+
+                frame_Animal.funAceptar(mostrarCliente)
+
+                
+
+    
+        
+        frame.funAceptar(funcionAnimal)
 
     def agendar_servicio():
         pass

@@ -123,6 +123,7 @@ def actualizar_hojaVida_Imagenes(event):
 
      # Almacenar las referencias de las imágenes para evitar que sean recolectadas
     imagenes_labels = [imagen1, imagen2, imagen3, imagen4]
+    
 
     # Aumentar el indice
     contador_click = (contador_click + 1) % (len(hojas_de_vida))
