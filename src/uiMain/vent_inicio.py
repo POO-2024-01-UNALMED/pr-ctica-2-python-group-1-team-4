@@ -151,9 +151,8 @@ def cambiar_imagen_sistema(event):
 
 def abrir_vent_principal():
     vent_inicio.withdraw() #ocultar la ventana de inicio
-
+    
     vent_principal.abrir_ventana(vent_inicio)
-
 #  ---------------- MENÚ --------------------
 
 # Crear la barra de menú 
@@ -255,7 +254,7 @@ frame_p6_br = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="Me
 frame_p6_tl.pack_propagate(False)
 frame_p6_tr.pack_propagate(False)
 frame_p6_bl.pack_propagate(False)
-frame_p6_br.pack_propagate(False)
+frame_p6_br.pack_propagate(False) 
 
 # Agregar los sub-frames a su cuadrícula en p6
 frame_p6_tl.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")

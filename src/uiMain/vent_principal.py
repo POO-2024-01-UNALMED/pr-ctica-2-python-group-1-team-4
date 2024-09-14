@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
+from FieldFrame import FieldFrame
 def abrir_ventana(vent_inicio):
 
     # crear la ventana principal
@@ -25,8 +26,21 @@ def abrir_ventana(vent_inicio):
         messagebox.showinfo("Autores de la aplicación","Oky Ruiz De La Rosa\nSalomé murillo Gaviria\nNicolas David Zambrano Murcia\nDaniel Alberto Zapata Castaño")
 
     # ----- funcionalidades -------
+
+    def clear_frame_bottom():
+        for widget in frame_bottom.winfo_children():
+            widget.destroy()
+
     def adoptar_mascota():
-        pass
+        clear_frame_bottom()
+        
+        # Creación de un objeto Field Frame
+        listaCampos = ["Nombre", "Cédula", "Dirección",  "Sexo"]
+        listaEditables = [True, True, False, True]
+        listaValores = ["", "", "", ""]
+        combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"]}
+        frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, listaValores, combobox_items)
+        frame.place(x =0, y = 0, width=1236, height= 418)
 
     def agendar_servicio():
         pass
@@ -132,6 +146,8 @@ def abrir_ventana(vent_inicio):
 
     texto_3 = tk.Label (frame_b_right, text = explicacion_hace,font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
     texto_3.pack(side="top", padx=5, pady=5)
+
+
 
 
     
