@@ -22,27 +22,27 @@ class FieldFrame(Frame):
 
         # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS
         Label_titulo_criterios = tk.Label(self, text = self.titulo_campos, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
-        Label_titulo_criterios.grid(row=0, column=0, padx=5, pady=10)
+        Label_titulo_criterios.grid(row=0, column=0, padx=200, pady=10, sticky= "nsew")
         
         Label_titulo_entradas = tk.Label(self, text = self.titulo_entradas, font=("Lucida Handwriting", 11, "bold"), fg = "purple4", bg = "plum1")
-        Label_titulo_entradas.grid(row=0, column=1, padx=5, pady=10)
+        Label_titulo_entradas.grid(row=0, column=1, padx=200, pady=10,sticky= "nsew")
         
         for i in range(0, len(self.lista_criterios)):
 
             # LABEL CRITERIOS
             label_criterio = tk.Label(self, text=self.lista_criterios[i], font=("Times New Roman",10), bg="plum3", fg="purple")
-            label_criterio.grid(row=i+1, column=0, padx= 380, pady=15)
+            label_criterio.grid(row=i+1, column=0, padx= 5, pady=10, sticky= "ns")
 
             #CAMPOS DE TEXTO ENTRADAS
             if self.lista_criterios[i] in self.combobox_items:
                 entradaValor = ttk.Combobox(self, values=self.combobox_items[self.lista_criterios[i]], state="readonly")
-                entradaValor.grid(row=i+1, column=1, padx=5, pady=5)
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10,sticky= "ns")
                 if self.lista_valores is not None:
                     entradaValor.set(self.lista_valores[i])
 
             else:
                 entradaValor = tk.Entry(self)
-                entradaValor.grid(column=1, row=i+1, padx = 5, pady = 5)
+                entradaValor.grid(column=1, row=i+1, padx = 5, pady = 10, sticky= "ns")
                 if self.lista_valores is not None:
                     entradaValor.insert(0, self.lista_valores[i])
 
@@ -52,7 +52,7 @@ class FieldFrame(Frame):
             self.lista_entradas.append(entradaValor)
 
         # BOTÓN ACEPTAR 
-        self.boton_aceptar = tk.Button(self, text="aceptar", font=("Verdana", 10), bg="white", width=6, height=1)
+        self.boton_aceptar = tk.Button(self, text="Aceptar", font=("Verdana", 10), bg="white", width=6, height=1)
         self.boton_aceptar.grid(column=1, row=len(self.lista_criterios)+1)
 
         # BOTÓN LIMPIAR
