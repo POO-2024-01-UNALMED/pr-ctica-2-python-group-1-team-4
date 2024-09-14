@@ -1,7 +1,7 @@
 class ErrorAplicacion(Exception):
     # Se dispara cuando se detecta un error en la aplicación
     def __init__(self, mensajeEspecifico):
-        self.mensajeBase = "Manejo de errores de la Aplicación"
+        self.mensajeBase = "Error: "
         # Mensaje de error que se mostrará al usuario, se concatena con el mensaje específico
         super().__init__(f"{self.mensajeBase}: {mensajeEspecifico}")
 
@@ -50,14 +50,4 @@ class ErrorFormularioVacio(ErrorGenerativo):
     # Se dispara cuando el usuario no rellena todos los espacios del formulario y da click en aceptar
     def __init__(self, espacios):
         super().__init__(f"Espacios sin rellenar ({', '.join(espacios)})")
-
-#---------------------------------------------------------------------------------------
-
-#pruebas de que se imprimen los mensajes de error
-def pruebasExcepciones():
-    try:
-        raise ErrorSerivicioImpedido()
-    except ErrorAplicacion as e:
-        print(e)
-pruebasExcepciones()
 

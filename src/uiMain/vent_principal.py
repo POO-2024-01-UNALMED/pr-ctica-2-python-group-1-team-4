@@ -2,18 +2,158 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from gestorAplicacion.componentes.cliente import Cliente
-from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
+from tkinter import *
 
-from FieldFrame import FieldFrame
+# IMPORTACIÓN ADMINISTRADORES
+from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
+from gestorAplicacion.administracion.centroAdopcion import TipoServicio
+from gestorAplicacion.administracion.adopcion import Adopcion
+from gestorAplicacion.administracion.cita import Cita
+from gestorAplicacion.administracion.tienda import Tienda
+from gestorAplicacion.administracion.funeraria import Funeraria
+from gestorAplicacion.administracion.socializar import Socializar
+
+# IMPORTACIÓN COMPONENTES
+#from gestorAplicacion.componentes.persona import Persona
+from gestorAplicacion.componentes.cliente import Cliente
+from gestorAplicacion.componentes.animal import Animal
+from gestorAplicacion.componentes.animal import EstadoSalud
+from gestorAplicacion.componentes.cupo import Cupo
+from gestorAplicacion.componentes.empleado import Empleado
+from gestorAplicacion.componentes.muerto import Muerto
+from gestorAplicacion.componentes.producto import Producto
+from gestorAplicacion.componentes.empleado import Rol
+
+#IMPORTACIÓN BASE DE DATOS
+from baseDatos.deserializador import Deserializador
+from baseDatos.serializador import Serializador
+
+#IMPORTACIÓN DE EXCEPCIONES
+from gestorExcepciones.ErrorAplicacion import ErrorAplicacion
+from gestorExcepciones.ErrorAplicacion import ErrorFormularioVacio
+
+# CREACIÓN DE OBJETOS BASE -----------------------------
+
+
+# FIELDFRAME -----------------------
+
+class FieldFrame(Frame):
+    
+    # CONSTRUCTOR FIELDFRAME
+    def __init__(self, frame_principal, titulo_campos, lista_criterios, titulo_entradas, lista_habilitados, tipos_esperados=None, Valores=None, combobox=None):
+        # CONSTRUCTOR DEL FRAME PADRE
+        super().__init__(frame_principal, bg="thistle1", highlightbackground="purple4", highlightthickness=2)
+        self.titulo_campos = titulo_campos  # Título de criterios
+        self.lista_criterios = lista_criterios # Nombres de cada criterio
+        self.titulo_entradas = titulo_entradas # Título de las entradas
+        self.lista_habilitados = lista_habilitados
+        self.lista_valores = Valores # Lista de valores por defecto de las entradas
+        self.combobox_items = combobox or {}
+
+        self.tipos_esperados = tipos_esperados or {}  # Diccionario con los tipos esperados por campo
+        self.lista_entradas = [] # Lista que guarda las Entrys o comboboxes
+
+        # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS
+        Label_titulo_criterios = tk.Label(self, text=self.titulo_campos, font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg = "thistle1")
+        Label_titulo_criterios.grid(row=0, column=0, padx=5, pady=10)
+        
+        Label_titulo_entradas = tk.Label(self, text=self.titulo_entradas, font=("Times New Roman", 14, "bold", "underline" ), fg="purple4", bg = "thistle1")
+        Label_titulo_entradas.grid(row=0, column=1, padx=5, pady=10)
+
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=1)
+
+        for i in range(len(self.lista_criterios)):
+            # LABEL CRITERIOS
+            label_criterio = tk.Label(self, text=self.lista_criterios[i], font=("Times New Roman", 12), bg="plum1", fg="purple4")
+            label_criterio.grid(row=i+1, column=0, padx=5, pady=10)
+
+            # CAMPOS DE TEXTO ENTRADAS
+            if self.lista_criterios[i] in self.combobox_items:
+                entradaValor = ttk.Combobox(self, values=self.combobox_items[self.lista_criterios[i]], state="readonly")
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10)
+                if self.lista_valores is not None:
+                    entradaValor.set(self.lista_valores[i])
+            else:
+                entradaValor = tk.Entry(self)
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10)
+                if self.lista_valores is not None:
+                    entradaValor.insert(0, self.lista_valores[i])
+
+                if self.lista_habilitados is not None and not self.lista_habilitados[i]:
+                    entradaValor.configure(state=tk.DISABLED)
+            
+            self.lista_entradas.append(entradaValor)
+
+        # BOTÓN ACEPTAR 
+        self.boton_aceptar = tk.Button(self, text="Aceptar", font=("Verdana", 10), bg="white", width=8, height=1)
+        self.boton_aceptar.grid(row=len(self.lista_criterios)+1, column=1, padx=5, pady=2)
+
+        # BOTÓN LIMPIAR
+        tk.Button(self, text="Limpiar", font=("Verdana", 10), bg="white", width=6, height=1, command=self.funborrar).grid(row=len(self.lista_criterios)+1, column=0, padx=5, pady=2)
+
+        self.grid_rowconfigure(len(self.lista_criterios)+1, weight=1)
+
+    def funborrar(self):
+        for entrada in self.lista_entradas:
+            if isinstance(entrada, ttk.Combobox):  # SI ES UN COMBOBOX
+                entrada.set('')  # RESTABLECER EL COMBOBOX
+            else:
+                entrada.delete("0", "end")  # BORRAR ENTRADAS NORMALES
+
+    def funAceptar(self, funcion, texto = "Aceptar"):
+        self.boton_aceptar.config(command=funcion, text=texto)
+
+    def getValue(self, Criterio):
+        index = self.lista_criterios.index(Criterio)
+        return self.lista_entradas[index].get()
+    
+    def getEntradas(self):
+        listaValores = []
+        listaVacios = []
+        for i in range(len(self.lista_criterios)):
+            if self.lista_habilitados[i] == True:
+                valor = self.getValue(self.lista_criterios[i])
+                if valor == "":
+                    listaVacios.append(self.lista_criterios[i])
+                else:
+                    # VALIDAR EL TIPO DE DATO ESPERADO
+                    tipo_esperado = self.tipos_esperados.get(self.lista_criterios[i], str)
+
+                    if not self.validar_tipo(valor, tipo_esperado):
+                        messagebox.showerror("Error: Tipo de dato incorrecto", f"El campo {self.lista_criterios[i]} debe ser de tipo entero.")
+                  
+                        return False
+                    listaValores.append(valor)
+
+        if len(listaVacios) > 0:
+            messagebox.showerror("Error",ErrorFormularioVacio(listaVacios))
+            return False
+        else:
+            return listaValores
+    
+    def validar_tipo(self, valor, tipo_esperado):
+        try:
+            tipo_esperado(valor)
+            return True
+        
+        except ValueError:
+            return False
+
+
+
+# -----------------------------------
+
 def abrir_ventana(vent_inicio):
 
-    # crear la ventana principal
-    vent_principal = tk.Toplevel(vent_inicio)  # Crear una ventana secundaria
+    # CREAR LA VENTANA PRINCIPAL (SECUNDARIA)
+    vent_principal = tk.Toplevel(vent_inicio) 
 
-    # asignarle el nombre, dimenciones iniciales y color de fondo
+
+    # ASIGNARLE EL NOMBRE. DIMENCIONES INICIALES Y COLOR DE FONDO
     vent_principal.title("AdoptaLove")
     vent_principal.geometry("1400x800")
     vent_principal.configure(bg='LightBlue1') 
@@ -32,7 +172,7 @@ def abrir_ventana(vent_inicio):
     def info_desarrolladores():
         messagebox.showinfo("Autores de la aplicación","Oky Ruiz De La Rosa\nSalomé murillo Gaviria\nNicolas David Zambrano Murcia\nDaniel Alberto Zapata Castaño")
 
-    # ----- funcionalidades -------
+    # ------ FUNCIONALIDADES -------
 
     def clear_frame_bottom():
         for widget in frame_bottom.winfo_children():
@@ -89,10 +229,10 @@ def abrir_ventana(vent_inicio):
                 #frame_Animal.place(x =0, y = 0, width=1236, height= 418)
                 frame_Animal.pack(expand=True, fill="both")
 
-                frame_Animal.funAceptar(mostrarCliente)
+                frame_Animal.funAceptar(mostrarCliente, "Finalizar")
 
         
-        frame.funAceptar(funcionAnimal)
+        frame.funAceptar(funcionAnimal, "Continuar")
 
     def agendar_servicio():
         pass

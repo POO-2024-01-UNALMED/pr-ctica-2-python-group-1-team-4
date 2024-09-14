@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from gestorAplicacion.componentes.empleado import Empleado
     from .adopcion import Adopcion
     from .cita import Cita
-    from .tienda import Tienda
+    from gestorAplicacion.administracion.tienda import Tienda
 
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
@@ -30,7 +30,7 @@ class TipoServicio(Enum):
 class CentroAdopcion:
     clientes_AdoptaLove: List['Cliente'] = []
 
-#SOBRECARGA CONSTRUCTORES
+# SOBRECARGA CONSTRUCTORES
     @multimethod
     def __init__(self, nombre: str, espacios: int, servicio: TipoServicio, tienda: Tienda):
         self._nombre = nombre
@@ -160,3 +160,4 @@ class CentroAdopcion:
             return f"Nombre: {self.getNombre()}, Espacios Disponibles: {self.getEspacios()}, Servicio: {self.getServicio().value}, tienda: si"
         else:
             return f"Nombre: {self.getNombre()}, Espacios Disponibles: {self.getEspacios()}, Servicio: {self.getServicio().value}, tienda: no"    
+        

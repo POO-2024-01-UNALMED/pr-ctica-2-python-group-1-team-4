@@ -21,8 +21,7 @@ class Tienda:
     listaProductos = []
 
     ##Constructor -------------------------------------------------------------------------------
-    def __init__(self, centroAdopcion : CentroAdopcion, empleado: Empleado) -> None:
-        _centro = centroAdopcion 
+    def __init__(self, empleado: Empleado) -> None:
         _listaEmpleados = []
         _listaEmpleados.append(empleado)
 
@@ -34,12 +33,6 @@ class Tienda:
     @classmethod
     def getProductos(cls):
         return cls.listaProductos
-
-    def setCentro(self, centro):
-        self._centro = centro
-    
-    def getCentro(self):
-        return self._centro
     
     def agregarProductos(cls, *productos : Producto):
         for i in productos:
