@@ -169,6 +169,7 @@ Tienda.agregarProducto(Producto("Heno", 23000, 20, "conejos"))
 Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
 
 
+
 # FIELDFRAME -----------------------
 
 class FieldFrame(Frame):
@@ -309,9 +310,19 @@ def abrir_ventana(vent_inicio):
         for widget in frame_bottom.winfo_children():
             widget.destroy()
 
+    def clear_frame_top(titulo, texto):
+        titulo_1.config(text = titulo, font= ("Lucida Handwriting", 20, "bold"))
+
+        descripcionFun = tk.Label(frame_top, text = texto, font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
+        descripcionFun.pack(side = "bottom", expand=True, fill = "both", pady =3)
+
     def adoptar_mascota():
 
         clear_frame_bottom()
+
+        texto = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las\n industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló\nde tal manera que logró hacer un libro de textos especimen.\n "
+
+        clear_frame_top("Funcionalidad adoptar Mascota", texto)
         
         # Creación de un objeto Field Frame
         listaCampos = ["Nombre", "Cédula", "Dirección","edad" ,"Sexo", "pregunta"]
@@ -366,7 +377,10 @@ def abrir_ventana(vent_inicio):
         frame.funAceptar(funcionAnimal, "Continuar")
 
     def adoptarAnimal():
-        pass
+
+        #LIMPIAR EL CONTENIDO DEL FRAME_BOTTOM
+        clear_frame_bottom()
+
 
     def agendar_servicio():
         pass
