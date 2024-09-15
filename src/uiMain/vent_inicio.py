@@ -84,10 +84,10 @@ descripcion_desarrolladores = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia"]
 
 # RUTAS DE LAS IMAGENES DE LOS DESARROLLADORES
-imagenes_desarroladores = [["src/imagenes_desarroladores/Oky1.png","src/imagenes_desarroladores/Oky2.png","src/imagenes_desarroladores/Oky3.png","src/imagenes_desarroladores/Oky4.png"],
-            ["src/imagenes_desarroladores/Salome1.png","src/imagenes_desarroladores/Salome2.png","src/imagenes_desarroladores/Salome3.png","src/imagenes_desarroladores/Salome4.png"],
-            ["src/imagenes_desarroladores/Daniel1.png","src/imagenes_desarroladores/Daniel2.png","src/imagenes_desarroladores/Daniel3.png","src/imagenes_desarroladores/Daniel4.png"],
-            ["src/imagenes_desarroladores/Nico1.png", "src/imagenes_desarroladores/Nico2.png","src/imagenes_desarroladores/Nico3.png", "src/imagenes_desarroladores/Nico4.png"]]
+imagenes_desarrolladores = [["src/imagenes/Oky1.png","src/imagenes/Oky2.png","src/imagenes/Oky3.png","src/imagenes/Oky4.png"],
+            ["src/imagenes/Salome1.png","src/imagenes/Salome2.png","src/imagenes/Salome3.png","src/imagenes/Salome4.png"],
+            ["src/imagenes/Daniel1.png","src/imagenes/Daniel2.png","src/imagenes/Daniel3.png","src/imagenes/Daniel4.png"],
+            ["src/imagenes/Nico1.png", "src/imagenes/Nico2.png","src/imagenes/Nico3.png", "src/imagenes/Nico4.png"]]
 
 # DECLARAR LAS VARIABLES GLOBALES PARA ALMACENAR LAS REFERENCIA DE LAS IMÁGENES Y EL CONTADOR DE CLICK´S EN P5 (frame_right_top)
 imagenes_labels = []
@@ -107,7 +107,7 @@ def actualizar_hojaVida_Imagenes(event):
     # ASIGNAR LAS IMAGENES_DESARROLLADORES A LOS LABEL DE LOS SUB FRAME DE P6 (frame_right_bottom) ----
 
     # OBTENER LAS IMAGENES_DESARROLLADORES SEGÚN EL DESARROLLADOR
-    lista_imagenes = imagenes_desarroladores[contador_click]
+    lista_imagenes = imagenes_desarrolladores[contador_click]
 
     # REDIMENSIONAR IMAGENES
     imagen1 = ImageTk.PhotoImage(Image.open(lista_imagenes[0]).resize((300,197), Image.LANCZOS))
@@ -128,8 +128,8 @@ def actualizar_hojaVida_Imagenes(event):
     contador_click = (contador_click + 1) % (len(descripcion_desarrolladores))
 
 #RUTAS DE LAS IMAGENES DEL SISTEMA
-rutas_imagen_sistema =["src/imagenes_desarroladores/sistema1.png", "src/imagenes_desarroladores/sistema2.png","src/imagenes_desarroladores/sistema3.png",
-                       "src/imagenes_desarroladores/sistema4.png","src/imagenes_desarroladores/sistema5.png"]
+rutas_imagen_sistema =["src/imagenes/sistema1.png", "src/imagenes/sistema2.png","src/imagenes/sistema3.png",
+                       "src/imagenes/sistema4.png","src/imagenes/sistema5.png"]
 
 salidas_p4 = 1 # CONTADOR DE LAS VECES QUE EL CURSOR SALE DE P4
 nueva_imagen = None # VARIABLE PARA EVITAR QUE LA IMAGEN SEA RECOLECTADA
@@ -209,7 +209,7 @@ imagen_sistema = tk.Button(frame_left_bottom, text = "Click para ingresar al sis
 imagen_sistema.pack(expand=True, fill= "both")
 
 # AGREGAR LA PRIMERA IMAGEN QUE SE VISUALIZARÁ AL INICIAR 
-primer_imagen = Image.open("src/imagenes_desarroladores/sistema1.png").resize((610,380), Image.LANCZOS)
+primer_imagen = Image.open("src/imagenes/sistema1.png").resize((610,380), Image.LANCZOS)
 primer_imagen = ImageTk.PhotoImage(primer_imagen)
 imagen_sistema.config(image = primer_imagen)
 
@@ -218,58 +218,57 @@ imagen_sistema.bind("<Leave>",cambiar_imagen_sistema)
 
 # ------------------------------------------
 
-# crear los sub - frames dentro del frame derecho(p2):
+# CREAR LOS SUB FRAMES DENTRO DEL FRAME DERECHO (P2)
 
-# frame superior (p5)
+# CREAR Y EMPAQUETAR EL FRAME SUPERIOR (P5) EN P1
 frame_right_top = tk.Frame(frame_right, bg = "thistle1", highlightbackground="purple4", highlightthickness=2, highlightcolor="purple4")
 
-#empaquetar el frame p5 en el frame p2
 frame_right_top.pack(side = "top", padx = 5, pady = 5, expand = True, fill = "both")
 frame_right_top.pack_propagate(False)  # Evitar que el frame cambie su tamaño con los widgets internos
 
-# Crear el widget que va a tener las hojas de vida de los desarrolladores en (p5)
+# CREAR EL TEXT QUE VA A TENER LAS HOJAS DE VIDA DE LOS DESARROLLADORES EN (P5)
 hojas_vida = tk.Text(frame_right_top, bg= "thistle1", wrap="word", height = 10, width = 40, font = ("Times New Roman", 13), fg= "purple")
 hojas_vida.pack(expand=True, fill="both")
 hojas_vida.tag_configure("center", justify='center')
+
+# DARLE UN TEXTO INICIAL
 hojas_vida.insert("1.0", "\n\n\n    Click para acceder a información sobre los desarrolladores")
 hojas_vida.tag_add("center", "1.0", "end")
 hojas_vida.config(state="disabled")
 hojas_vida.bind("<Button-1>", actualizar_hojaVida_Imagenes) # asignarle el oyente al evento
 
-# frame inferior (p6)
-frame_right_bottom = tk.Frame(frame_right,bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
 
-#empaquetar el frame p6 en el frame p2                                             #ipady para aumentar la altura
-frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 120 )
+# CREAR Y EMPAQUETAR EL FRAME INFERIOR (P6) EN P2
+frame_right_bottom = tk.Frame(frame_right,bg = "thistle1", highlightbackground="purple4", highlightthickness=2)
+frame_right_bottom.pack(side = "bottom", padx = 5, pady = 5, expand = True, fill = "both", ipady = 120 ) #ipady para aumentar la altura
 
 # ------------------------------------------
 
-# Configurar las proporciones de las filas y columnas en  p6 (frame_right_bottom) para las 4 fotos de cada desarrollador
+# CONFIGURAR LAS PROPORCIONES DE LAS FILAS Y COLUMNAS EN P6 (frame_right_bottom) PARA LAS 4 FOTOS DE CADA DESARROLLADOR
 frame_right_bottom.grid_rowconfigure(0, weight = 1)  # Fila 0
 frame_right_bottom.grid_rowconfigure(1, weight = 1)  # Fila 1
 frame_right_bottom.grid_columnconfigure(0, weight = 1)  # Columna 0
 frame_right_bottom.grid_columnconfigure(1, weight = 1)  # Columna 1
 
-# Crear los sub-frames de p6:
+# CREAR LOS SUB - FRAMES DE P6
 frame_p6_tl = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # superior izquierdo
 frame_p6_tr = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # superior derecho
 frame_p6_bl = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # inferior izquierdo
 frame_p6_br = tk.Frame(frame_right_bottom, bg = "white", highlightbackground="MediumOrchid1", highlightthickness=3) # inferior derecho
 
-# Evitar que los sub-frames cambien de tamaño con sus contenidos
+# EVITAR QUE LOS SUB FRAME CAMBIEN DE TAMAÑO
 frame_p6_tl.pack_propagate(False)
 frame_p6_tr.pack_propagate(False)
 frame_p6_bl.pack_propagate(False)
 frame_p6_br.pack_propagate(False) 
 
-# Agregar los sub-frames a su cuadrícula en p6
+# AGREGAR LOS SUBFRAMES A SU CUADRICULA CORRESPONDIENTE EN P6
 frame_p6_tl.grid(row=0, column=0, padx=4, pady=4, sticky="nsew")
 frame_p6_tr.grid(row=0, column=1, padx=4, pady=4, sticky="nsew")
 frame_p6_bl.grid(row=1, column=0, padx=4, pady=4, sticky="nsew")
 frame_p6_br.grid(row=1, column=1, padx=4, pady=4, sticky="nsew")
 
-# crear los label que contendran las imagenes_desarroladores en los sub-frames de p6
-
+# CREAR LOS LABEL QUE CONTENDRAN LAS IMAGENES_DESARROLLADORES EN LOS SUB_FRAMES DE P6
 label_p6_tl= tk.Label(frame_p6_tl, bg = "pink")
 label_p6_tl.pack(expand = True, fill= "both")
 
@@ -283,10 +282,10 @@ label_p6_br= tk.Label(frame_p6_br, bg = "pink")
 label_p6_br.pack(expand = True, fill= "both")
 
 #CREAR LAS PRIMERA IMAGENES DE LOS 4 DESARROLLADORES
-imagen_tl = ImageTk.PhotoImage(Image.open("src/imagenes_desarroladores/Oky1.png").resize((300,197), Image.LANCZOS))
-imagen_tr = ImageTk.PhotoImage(Image.open("src/imagenes_desarroladores/Salome1.png").resize((300,197), Image.LANCZOS))
-imagen_bl = ImageTk.PhotoImage(Image.open("src/imagenes_desarroladores/Nico1.png").resize((300,197), Image.LANCZOS))
-imagen_br = ImageTk.PhotoImage(Image.open("src/imagenes_desarroladores/Daniel1.png").resize((300,197), Image.LANCZOS))
+imagen_tl = ImageTk.PhotoImage(Image.open("src/imagenes/Oky1.png").resize((300,197), Image.LANCZOS))
+imagen_tr = ImageTk.PhotoImage(Image.open("src/imagenes/Salome1.png").resize((300,197), Image.LANCZOS))
+imagen_bl = ImageTk.PhotoImage(Image.open("src/imagenes/Nico1.png").resize((300,197), Image.LANCZOS))
+imagen_br = ImageTk.PhotoImage(Image.open("src/imagenes/Daniel1.png").resize((300,197), Image.LANCZOS))
 
 # # AGREGAR CADA IMAGEN A SU LABEL CORRESPONDIENTE
 label_p6_tl.config(image=imagen_tl)
