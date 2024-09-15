@@ -310,7 +310,7 @@ def abrir_ventana(vent_inicio):
         for widget in frame_bottom.winfo_children():
             widget.destroy()
 
-    def clear_frame_top(titulo, texto):
+    def formato_frame_top(titulo, texto):
         titulo_1.config(text = titulo, font= ("Lucida Handwriting", 20, "bold"))
 
         descripcionFun = tk.Label(frame_top, text = texto, font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
@@ -322,7 +322,7 @@ def abrir_ventana(vent_inicio):
 
         texto = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las\n industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló\nde tal manera que logró hacer un libro de textos especimen.\n "
 
-        clear_frame_top("Funcionalidad adoptar Mascota", texto)
+        formato_frame_top("Funcionalidad adoptar Mascota", texto)
         
         # Creación de un objeto Field Frame
         listaCampos = ["Nombre", "Cédula", "Dirección","edad" ,"Sexo", "pregunta"]
