@@ -18,9 +18,9 @@ class ErrorUnidadesInsuficientes(ErrorGenerativo):
     def __init__(self):
         super().__init__("Error generado al seleccionar más unidades de las existentes.")
 
-class ErrorSerivicioImpedido(ErrorGenerativo):
+class ErrorFueraRango(ErrorGenerativo):
     def __init__(self):
-        super().__init__("Error generado al seleccionar un tipo de mascota no autorizado.")
+        super().__init__("Error generado al ingresar un número fuera del rango socilitado.")
 
 # Error sugerido 1 (Búsqueda sin resultados)
 class ErrorBusquedaInvalida(ErrorGenerativo):
@@ -35,10 +35,10 @@ class ErrorAccionUsuario(ErrorAplicacion):
     def __init__(self, mensaje="Error generado por una acción del usuario."):
         super().__init__(mensaje)
 
-class ErrorSeleccionDesplegable(ErrorAccionUsuario):
+class ErrorDigitos_Cel_CC(ErrorAccionUsuario):
     # Se dispara cuando el usuario no selecciona un elemento de un menú desplegable y da click en aceptar
-    def __init__(self):
-        super().__init__("Hay al menos un elemento del menú desplegable sin seleccionar.")
+    def __init__(self, numero, digitos):
+        super().__init__(f"El número de {numero} está incorrecto. Debe tener al menos {digitos} digitos.")
 
 class ErrorUsuarioMenor(ErrorAccionUsuario):
     # Se disparará cuando el usuario ingresa una edad menor a 18 años.
@@ -46,7 +46,7 @@ class ErrorUsuarioMenor(ErrorAccionUsuario):
         super().__init__("La edad del usuario debe ser mayor o igual a 18 años.")
 
 # Error sugerido 2 (espacios sin rellenar en FieldFrame)
-class ErrorFormularioVacio(ErrorGenerativo):
+class ErrorFormularioVacio(ErrorAccionUsuario):
     # Se dispara cuando el usuario no rellena todos los espacios del formulario y da click en aceptar
     def __init__(self, espacios):
         super().__init__(f"Espacios sin rellenar ({', '.join(espacios)})")

@@ -365,6 +365,9 @@ def abrir_ventana(vent_inicio):
         
         frame.funAceptar(funcionAnimal, "Continuar")
 
+    def adoptarAnimal():
+        pass
+
     def agendar_servicio():
         pass
 
