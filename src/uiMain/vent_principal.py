@@ -168,7 +168,7 @@ Tienda.agregarProducto(Producto("Ruedas", 22000, 10, "hamsters"))
 Tienda.agregarProducto(Producto("Heno", 23000, 20, "conejos"))
 Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
 
-
+tienda1 = Tienda(sede1.getEmpleados()[0])
 
 # FIELDFRAME -----------------------
 
@@ -386,7 +386,65 @@ def abrir_ventana(vent_inicio):
         pass
 
     def tienda():
-        pass
+
+        # Limpiamos el frame botom y añadimos un título
+        clear_frame_bottom()
+        formato_frame_top("Tienda para mascotas", "En AdoptaLove ofrecemos todo lo que su mascota necesita para garantizar su bienestar y felicidad.\n Contamos con una amplia selección de productos de la más alta calidad, asegurando los mejores precios para su conveniencia.")
+        
+        # Inicio de la tienda -----------------------------------------------------------------------------
+        listacampo = ["Elección"]
+        listahabilitado = [True]
+        DicTipos = {"Elección": str}
+        valor = [""]
+        diccionario ={"Elección":["Filtrar por tipo", "Mostrar todo"]}
+
+        inicioTienda = FieldFrame(frame_bottom, "¿Cómo desea ver los productos?", listacampo, "Su elección", listahabilitado, DicTipos, valor, diccionario)
+        inicioTienda.pack(expand=True, fill="both")
+        
+        def proceso_2_Tienda():
+            filtro = inicioTienda.getEntradas()
+            if filtro != False:
+                if filtro[0] == "Mostrar todo":
+                    inicioTienda.pack_forget()
+
+                    productos = tienda1.getProductos()
+                    comunas = 0
+                    filas = 0
+                    lista_comobox = []
+                    frame_produtos = tk.Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2)
+                    frame_produtos.pack(expand=True, fill="both")
+                    for i in productos:
+                        lista_comobox.append(i.getNombre())
+                        tk.Label(frame_produtos, text=i.__str__(), font = ("Times New Roman", 8), fg= "purple", bg = "thistle1").grid(row=filas, column=comunas, padx=8, pady=10, sticky="nsew")
+                        filas+=1
+                        if filas == 4:
+                            comunas+=1
+                            filas = 0
+
+                    # Entradas para comprar producto
+                    tk.Label(frame_produtos, text="Seleccione el producto:",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=0, column=7, padx=15)
+                    selec_producto = ttk.Combobox(frame_produtos, values=lista_comobox, state="readonly")
+                    selec_producto.grid(row=0, column=8, padx=15, sticky="ew")
+
+                    tk.Label(frame_produtos, text="Unidades del producto",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=1, column=7, padx=15)
+                    indice_producto = tk.Entry(frame_produtos)
+                    indice_producto.grid(row=1, column=8, padx=15)
+
+                    # Funcion borrar
+                    def funborrar(): 
+                        selec_producto.set('')  # RESTABLECER EL COMBOBOX
+                        indice_producto.delete("0", "end")  # BORRAR ENTRADAS NORMALES
+
+                    # Botones
+                    limpiar = tk.Button(frame_bottom, text="Limpiar", font=("Verdana", 10), bg="white", width=6, height=1, command=funborrar)
+                    limpiar.grid(row=2, column=7, padx=15)
+
+
+        inicioTienda.funAceptar(proceso_2_Tienda)
+
+    
+
+
 
     def socializar():
         pass
@@ -487,6 +545,7 @@ def abrir_ventana(vent_inicio):
 
     texto_3 = tk.Label (frame_b_right, text = explicacion_hace,font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
     texto_3.pack(side="top", padx=5, pady=5)
+
 
 
 
