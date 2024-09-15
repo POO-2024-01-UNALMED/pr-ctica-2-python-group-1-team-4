@@ -16,6 +16,7 @@ from multimethod import multimethod
 
 
 class Cita:
+    @multimethod
     def __init__(self, cliente: Cliente, animal: Animal, empleado: Empleado, cupo: Cupo, servicio: int):
         self._cliente = cliente
         self._animal = animal

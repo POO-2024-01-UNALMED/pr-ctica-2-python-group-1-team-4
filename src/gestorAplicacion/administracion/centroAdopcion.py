@@ -30,9 +30,7 @@ class TipoServicio(Enum):
 class CentroAdopcion:
     clientes_AdoptaLove: List['Cliente'] = []
 
-# SOBRECARGA CONSTRUCTORES
-    @multimethod
-    def __init__(self, nombre: str, espacios: int, servicio: TipoServicio, tienda: Tienda):
+    def __init__(self, nombre= None, espacios = 0, servicio = None, tienda = None):
         self._nombre = nombre
         self._espaciosDisponibles = espacios
         self._servicio = servicio
@@ -42,9 +40,6 @@ class CentroAdopcion:
         self._adopciones: List['Adopcion'] = []
         self._citas_agendadas: List['Cita'] = []
 
-    @multimethod
-    def __init__(self, nombre: str, espacios: int, servicio: TipoServicio):
-        self.__init__(nombre, espacios, servicio, None)
     
 #SOBRECARGA DE MÉTODOS
     @multimethod

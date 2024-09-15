@@ -10,7 +10,7 @@
 class Producto:
 
     # Constructor 
-    def __init__(self, nombre: str, precio: float, cantidadUnidades: int, tipoAnimal = "Uso general"):
+    def __init__(self, nombre = "", precio = 0.0, cantidadUnidades = 0, tipoAnimal = "Uso general"):
         self._nombre = nombre
         self._precio = precio
         self._tipoAnimal = tipoAnimal

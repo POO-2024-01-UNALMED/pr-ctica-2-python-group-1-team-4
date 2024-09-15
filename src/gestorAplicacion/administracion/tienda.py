@@ -34,10 +34,12 @@ class Tienda:
     def getProductos(cls):
         return cls.listaProductos
     
+    @classmethod
     def agregarProducto(cls, producto: Producto):
         # Se le pasa un producto y este lo agrega a la lista 
         cls.listaProductos.append(producto)
 
+    @classmethod
     def agregarProductosLista(cls, productos):
         # Se le pasa una lista y esta reemplaza a listaProductos
         cls.listaProductos = productos

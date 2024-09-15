@@ -14,14 +14,15 @@ from gestorAplicacion.componentes.cliente import Cliente
 class Muerto:
 
     # Constructor 
-    def __init__(self):
-        self._animal = None
-        self._fecha = ""
-        self._mensaje = ""
-        self._dueño = None
-        self._tiempo = ""
-        self._tipo = ""
-        self._flores = ["No hay flores aquí."]
+
+    def __init__(self, animal = None, fecha = "", mensaje = "", dueño = None, tiempo = "", tipo = ""):
+        self._animal = animal
+        self._fecha = fecha
+        self._mensaje = mensaje
+        self._dueño = dueño
+        self._tiempo = tiempo
+        self._tipo = tipo
+        self._flores: List[str] = ["No hay flores aquí."]
 
 
 #METODOS GET Y SET

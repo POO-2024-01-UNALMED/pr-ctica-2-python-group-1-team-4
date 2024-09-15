@@ -6,6 +6,7 @@ from gestorAplicacion.administracion.funeraria import Funeraria
 from gestorAplicacion.administracion.tienda import Tienda
 from gestorAplicacion.componentes.muerto import Muerto
 
+
 class Serializador:
 
     @staticmethod
@@ -28,14 +29,14 @@ class Serializador:
 
     @staticmethod
     def serializarListas():
-
+        from uiMain.prueba import Prueba
         # Métodos estáticos
-        ##Serializador.serializar(Main.sedes, "Sedes")
+        Serializador.serializar(Prueba.sedes, "Sedes")
         Serializador.serializar(CentroAdopcion.getClientes(), "Clientes")
-        #Serializador.serializar(Funeraria.getTumbas(), "Tumbas")
-        #Serializador.serializar(Funeraria.getCenizas(), "Cenizas")
-        #Serializador.serializar(Tienda.getProductos(), "Productos")
-        #Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
+        Serializador.serializar(Funeraria.getTumbas(), "Tumbas")
+        Serializador.serializar(Funeraria.getCenizas(), "Cenizas")
+        Serializador.serializar(Tienda.getProductos(), "Productos")
+        Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
 
         #probar
         #Serializador.serializar(Muerto.getFlores(), "Flores")
