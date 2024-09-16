@@ -1,3 +1,6 @@
+from tkinter import messagebox
+
+
 class ErrorAplicacion(Exception):
     # Se dispara cuando se detecta un error en la aplicación
     def __init__(self, mensajeEspecifico):
@@ -36,9 +39,16 @@ class ErrorAccionUsuario(ErrorAplicacion):
         super().__init__(mensaje)
 
 class ErrorDigitos_Cel_CC(ErrorAccionUsuario):
-    # Se dispara cuando el usuario no selecciona un elemento de un menú desplegable y da click en aceptar
+   # Se dispara cuando el usuario no selecciona un elemento de un menú desplegable y da click en aceptar
     def __init__(self, numero, digitos):
         super().__init__(f"El número de {numero} está incorrecto. Debe tener al menos {digitos} digitos.")
+        self._numero = numero
+        self._digitos =digitos
+
+    def mostrarMensaje(self):
+        messagebox.showerror("Error","El número de " +str(self._numero) + " está incorrecto. Debe tener al menos " + str(self._digitos) + " digitos.")
+
+
 
 class ErrorUsuarioMenor(ErrorAccionUsuario):
     # Se disparará cuando el usuario ingresa una edad menor a 18 años.
