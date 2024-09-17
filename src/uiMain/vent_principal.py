@@ -808,7 +808,7 @@ def abrir_ventana(vent_inicio):
 
         # LIMPIAMOS EL FRAME BOTTOM Y AÑADIMOS LA DESCRIPCIÓN
         clear_frame_bottom()
-        formato_frame_top("Agendar Servicio", "En las diferentes sedes de AdoptaLove ofrecemos distintos servicios.\nPor favor selecciona una sede para comenzar a agendar un servicio de los ofertados para tu máscota")
+        formato_frame_top("Agendar Servicio", "En AdoptaLove, cada una de nuestras sedes ofrece una variedad de servicios diseñados para el bienestar y cuidado de tu mascota.\n Desde atención veterinaria hasta servicios especializados, estamos comprometidos con ofrecer la mejor experiencia.\n Selecciona la sede de tu preferencia para empezar a agendar el servicio ideal para tu mascota y brindarle la atención que se merece.")
 
     
         #FIELDFRAME PARA ESCOGER SEDE
