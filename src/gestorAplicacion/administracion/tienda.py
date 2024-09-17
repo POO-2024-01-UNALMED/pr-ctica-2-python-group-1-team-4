@@ -19,13 +19,20 @@ class Tienda:
 
     ##Atributo, la lista general de los productos 
     listaProductos = []
+    lista_tienda =[]
 
     ##Constructor -------------------------------------------------------------------------------
     def __init__(self, empleado: Empleado = None):
         self._listaEmpleados = []
         self._listaEmpleados.append(empleado)
+        Tienda.lista_tienda.append(self)
+        
 
     ##Setter and Getter -------------------------------------------------------------------------
+
+    @classmethod
+    def getTiendas(cls):
+        return cls.lista_tienda
     
     def getEmpleados(self):
         return self._listaEmpleados 

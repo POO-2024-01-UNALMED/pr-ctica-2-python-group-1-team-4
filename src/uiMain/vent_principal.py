@@ -43,137 +43,138 @@ from gestorExcepciones.ErrorAplicacion import ErrorUnidadesInsuficientes
 
 #--------------------------------------SEDES, EMPLEADOS Y ANIMALES------------------------------
 # Lista donde se guardarán las sedes
-sedes = CentroAdopcion.getSedes()
 
-# Creando las instancias de CentroAdopcion
-sede1 = CentroAdopcion("SEDE BELLO", 25, TipoServicio.GUARDERIA)
-#sedes.append(sede1)
-sede2 = CentroAdopcion("SEDE ITAGÜI", 20, TipoServicio.VETERINARIA)
-#sedes.append(sede2)
-sede3 = CentroAdopcion("SEDE MEDELLÍN", 20, TipoServicio.PELUQUERIA)
-#sedes.append(sede3)
 
-# Agregar animales a cada sede
-# Sede 1
-sede1.agregar_animal(Animal("Capitán", "Canario", 2, "Macho", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Rocky", "Conejo", 2, "Macho", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Sky", "Conejo", 3, "Hembra", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Reina", "Gato", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede1.agregar_animal(Animal("Rey", "Gato", 3, "Macho", EstadoSalud.ENFERMO))
-sede1.agregar_animal(Animal("Rolly", "Hámster", 1, "Hembra", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Tobi", "Perro", 5, "Macho", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Dino", "Perro", 4, "Macho", EstadoSalud.ENTRATAMIENTO))
+# # Creando las instancias de CentroAdopcion
+# sede1 = CentroAdopcion("SEDE BELLO", 25, TipoServicio.GUARDERIA)
+# #sedes.append(sede1)
+# sede2 = CentroAdopcion("SEDE ITAGÜI", 20, TipoServicio.VETERINARIA)
+# #sedes.append(sede2)
+# sede3 = CentroAdopcion("SEDE MEDELLÍN", 20, TipoServicio.PELUQUERIA)
+# #sedes.append(sede3)
 
-# Sede 2
-sede2.agregar_animal(Animal("Golfo", "Conejo", 3, "Macho", EstadoSalud.ENFERMO))
-sede2.agregar_animal(Animal("Luna", "Conejo", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede2.agregar_animal(Animal("Frapee", "Canario", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede2.agregar_animal(Animal("emma", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
-sede2.agregar_animal(Animal("Everest", "Gato", 4, "Hembra", EstadoSalud.SANO))
-sede2.agregar_animal(Animal("Junior", "Hámster", 2, "Macho", EstadoSalud.SANO))
-#sede2.agregar_animal(Animal("Puppy", "Hámster", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# # Agregar animales a cada sede
+# # Sede 1
+# sede1.agregar_animal(Animal("Capitán", "Canario", 2, "Macho", EstadoSalud.SANO))
+# sede1.agregar_animal(Animal("Rocky", "Conejo", 2, "Macho", EstadoSalud.SANO))
+# sede1.agregar_animal(Animal("Sky", "Conejo", 3, "Hembra", EstadoSalud.SANO))
+# sede1.agregar_animal(Animal("Reina", "Gato", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# sede1.agregar_animal(Animal("Rey", "Gato", 3, "Macho", EstadoSalud.ENFERMO))
+# sede1.agregar_animal(Animal("Rolly", "Hámster", 1, "Hembra", EstadoSalud.SANO))
+# sede1.agregar_animal(Animal("Tobi", "Perro", 5, "Macho", EstadoSalud.SANO))
+# sede1.agregar_animal(Animal("Dino", "Perro", 4, "Macho", EstadoSalud.ENTRATAMIENTO))
 
-# Sede 3
-sede3.agregar_animal(Animal("Thor", "Perro", 6, "Macho", EstadoSalud.SANO))
-sede3.agregar_animal(Animal("Teo", "Perro", 7, "Macho", EstadoSalud.SANO))
-sede3.agregar_animal(Animal("Mia", "Gato", 4, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede3.agregar_animal(Animal("Lola", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
-sede3.agregar_animal(Animal("Sony", "Conejo", 3, "Macho", EstadoSalud.SANO))
-sede3.agregar_animal(Animal("River", "Conejo", 4, "Macho", EstadoSalud.SANO))
-sede3.agregar_animal(Animal("Kira", "Canario", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede3.agregar_animal(Animal("Furry", "Canario", 4, "Macho", EstadoSalud.ENFERMO))
-#sede3.agregar_animal(Animal("Princea", "Hámster", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# # Sede 2
+# sede2.agregar_animal(Animal("Golfo", "Conejo", 3, "Macho", EstadoSalud.ENFERMO))
+# sede2.agregar_animal(Animal("Luna", "Conejo", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# sede2.agregar_animal(Animal("Frapee", "Canario", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# sede2.agregar_animal(Animal("emma", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
+# sede2.agregar_animal(Animal("Everest", "Gato", 4, "Hembra", EstadoSalud.SANO))
+# sede2.agregar_animal(Animal("Junior", "Hámster", 2, "Macho", EstadoSalud.SANO))
+# #sede2.agregar_animal(Animal("Puppy", "Hámster", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
 
-# Agregar empleados a cada sede
-# Sede 1 (Guardería)
-sede1.agregar_empleado(Empleado("Juan Zapata", 25, 21491118, 313775896, "Carrera 30", Rol.CUIDADOR))
-sede1.agregar_empleado(Empleado("Julieta Vanegas", 21, 58941118, 310789651, "Calle 96", Rol.CUIDADOR))
-sede1.agregar_empleado(Empleado("Andres Garcia", 34, 10278056, 300845962, "Calle 80", Rol.CUIDADOR))
-sede1.agregar_empleado(Empleado("Ana Restrepo", 28, 47889566, 315986487, "Carrera Septima", Rol.CUIDADOR))
-sede1.agregar_empleado(Empleado("Wilson Jimenez", 36, 70925845, 313153964, "Carrera 72a", Rol.CUIDADOR))
-sede1.agregar_empleado(Empleado("Mateo Munera", 25, 56892347, 311567832, "Carrera 68", Rol.CUIDADOR))
+# # Sede 3
+# sede3.agregar_animal(Animal("Thor", "Perro", 6, "Macho", EstadoSalud.SANO))
+# sede3.agregar_animal(Animal("Teo", "Perro", 7, "Macho", EstadoSalud.SANO))
+# sede3.agregar_animal(Animal("Mia", "Gato", 4, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# sede3.agregar_animal(Animal("Lola", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
+# sede3.agregar_animal(Animal("Sony", "Conejo", 3, "Macho", EstadoSalud.SANO))
+# sede3.agregar_animal(Animal("River", "Conejo", 4, "Macho", EstadoSalud.SANO))
+# sede3.agregar_animal(Animal("Kira", "Canario", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
+# sede3.agregar_animal(Animal("Furry", "Canario", 4, "Macho", EstadoSalud.ENFERMO))
+# #sede3.agregar_animal(Animal("Princea", "Hámster", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
 
-# Sede 2 (Veterinaria)
-sede2.agregar_empleado(Empleado("Carlos Rivera", 23, 12307004, 328748995, "Carrera 30", Rol.VETERINARIO))
-sede2.agregar_empleado(Empleado("Marta Puerta", 28, 66973892, 304236021, "Calle 90", Rol.VETERINARIO))
-sede2.agregar_empleado(Empleado("Karen Diaz", 32, 11277768, 314943886, "Calle 86", Rol.VETERINARIO))
-sede2.agregar_empleado(Empleado("Mario Martinez", 30, 79698181, 300564603, "Carrera 67b", Rol.VETERINARIO))
+# # Agregar empleados a cada sede
+# # Sede 1 (Guardería)
+# sede1.agregar_empleado(Empleado("Juan Zapata", 25, 21491118, 313775896, "Carrera 30", Rol.CUIDADOR))
+# sede1.agregar_empleado(Empleado("Julieta Vanegas", 21, 58941118, 310789651, "Calle 96", Rol.CUIDADOR))
+# sede1.agregar_empleado(Empleado("Andres Garcia", 34, 10278056, 300845962, "Calle 80", Rol.CUIDADOR))
+# sede1.agregar_empleado(Empleado("Ana Restrepo", 28, 47889566, 315986487, "Carrera Septima", Rol.CUIDADOR))
+# sede1.agregar_empleado(Empleado("Wilson Jimenez", 36, 70925845, 313153964, "Carrera 72a", Rol.CUIDADOR))
+# sede1.agregar_empleado(Empleado("Mateo Munera", 25, 56892347, 311567832, "Carrera 68", Rol.CUIDADOR))
 
-# Sede 3 (Peluquería)
-sede3.agregar_empleado(Empleado("Natalia Fernandez", 26, 70233557, 318529646, "Calle 63", Rol.PELUQUERO))
-sede3.agregar_empleado(Empleado("Jose Bueno", 39, 50270440, 306537090, "Calle 50", Rol.PELUQUERO))
-sede3.agregar_empleado(Empleado("Diana Henao", 28, 69620661, 330175882, "Carrera Sexta", Rol.PELUQUERO))
-sede3.agregar_empleado(Empleado("Julian Taborda", 36, 37664642, 332773881, "Carrera 72c", Rol.PELUQUERO))
-sede3.agregar_empleado(Empleado("Andrea Higuita", 21, 55000283, 332697785, "Carrera 61", Rol.PELUQUERO))
+# # Sede 2 (Veterinaria)
+# sede2.agregar_empleado(Empleado("Carlos Rivera", 23, 12307004, 328748995, "Carrera 30", Rol.VETERINARIO))
+# sede2.agregar_empleado(Empleado("Marta Puerta", 28, 66973892, 304236021, "Calle 90", Rol.VETERINARIO))
+# sede2.agregar_empleado(Empleado("Karen Diaz", 32, 11277768, 314943886, "Calle 86", Rol.VETERINARIO))
+# sede2.agregar_empleado(Empleado("Mario Martinez", 30, 79698181, 300564603, "Carrera 67b", Rol.VETERINARIO))
 
-# Crear cliente y agregar puntos
-cliente1 = Cliente("Oky", 18, 1072253440, 3106762877, "Medellín")
-cliente1.agregar_puntos(20)
+# # Sede 3 (Peluquería)
+# sede3.agregar_empleado(Empleado("Natalia Fernandez", 26, 70233557, 318529646, "Calle 63", Rol.PELUQUERO))
+# sede3.agregar_empleado(Empleado("Jose Bueno", 39, 50270440, 306537090, "Calle 50", Rol.PELUQUERO))
+# sede3.agregar_empleado(Empleado("Diana Henao", 28, 69620661, 330175882, "Carrera Sexta", Rol.PELUQUERO))
+# sede3.agregar_empleado(Empleado("Julian Taborda", 36, 37664642, 332773881, "Carrera 72c", Rol.PELUQUERO))
+# sede3.agregar_empleado(Empleado("Andrea Higuita", 21, 55000283, 332697785, "Carrera 61", Rol.PELUQUERO))
 
-#-----------------------------------OBJETOS DE LA FUNERARIA-------------------------------------
+# # Crear cliente y agregar puntos
+# cliente1 = Cliente("Oky", 18, 1072253440, 3106762877, "Medellín")
+# cliente1.agregar_puntos(20)
 
-# CLIENTES BY DEFAULT
-c1 = Cliente("Miguel Cortés", 19, 1020349)
-c2 = Cliente("Julian Sanchéz", 18, 234933)
-c3 = Cliente("Catalina Salazar", 18, 666)
-c4 = Cliente("Nico Murcia", 19, 3335632)
-c5 = Cliente("Richard Pérez", 19, 339393)
+# #-----------------------------------OBJETOS DE LA FUNERARIA-------------------------------------
 
-# ANIMALES BY DEFAULT
-b1 = Animal("Rocky", "Perro", 8, "Macho")
-b2 = Animal("Zimba", "Gato", 13, "Macho")
-b3 = Animal("Coco", "Pato", 15, "Hembra")
-b4 = Animal("Lucero", "Vaca", 9, "Macho")
-b5 = Animal("Milo", "Hamster", 16, "Hembra")
+# # CLIENTES BY DEFAULT
+# c1 = Cliente("Miguel Cortés", 19, 1020349)
+# c2 = Cliente("Julian Sanchéz", 18, 234933)
+# c3 = Cliente("Catalina Salazar", 18, 666)
+# c4 = Cliente("Nico Murcia", 19, 3335632)
+# c5 = Cliente("Richard Pérez", 19, 339393)
 
-# MUERTOS BY DEFAULT
-a1 = Muerto(b1, "18/08/2022", "Eres nuestro ángel de cuatro patas, siempre en nuestros corazones.", c1, "Permanente", "tumba")
-a2 = Muerto(b2, "23/01/2023", "Tu lealtad y amor nunca serán olvidados.", c2, "4 años", "tumba")
-a3 = Muerto(b3, "07/05/2022", "Eternamente en nuestros pensamientos.", c3, "Permanente", "Osario")
-a4 = Muerto(b4, "21/07/2021", "Fuiste la vaca más bonita de mi rancho.", c4, "7 años", "tumba")
-a5 = Muerto(b5, "18/08/2024", "Te queremos y te extrañamos.", c5, "6 años", "Osario")
+# # ANIMALES BY DEFAULT
+# b1 = Animal("Rocky", "Perro", 8, "Macho")
+# b2 = Animal("Zimba", "Gato", 13, "Macho")
+# b3 = Animal("Coco", "Pato", 15, "Hembra")
+# b4 = Animal("Lucero", "Vaca", 9, "Macho")
+# b5 = Animal("Milo", "Hamster", 16, "Hembra")
 
-# FLORES BY DEFAULT
-a4.ponerFlor("Girasoles")
-a3.ponerFlor("Margaritas")
-a1.ponerFlor("Rosas")
-a1.ponerFlor("Lirios")
-a2.ponerFlor("Claveles")
-a2.ponerFlor("Hortensias")
+# # MUERTOS BY DEFAULT
+# a1 = Muerto(b1, "18/08/2022", "Eres nuestro ángel de cuatro patas, siempre en nuestros corazones.", c1, "Permanente", "tumba")
+# a2 = Muerto(b2, "23/01/2023", "Tu lealtad y amor nunca serán olvidados.", c2, "4 años", "tumba")
+# a3 = Muerto(b3, "07/05/2022", "Eternamente en nuestros pensamientos.", c3, "Permanente", "Osario")
+# a4 = Muerto(b4, "21/07/2021", "Fuiste la vaca más bonita de mi rancho.", c4, "7 años", "tumba")
+# a5 = Muerto(b5, "18/08/2024", "Te queremos y te extrañamos.", c5, "6 años", "Osario")
 
-# TUMBAS Y CENIZAS BY DEFAULT
-Funeraria.cenizas.append(a5)
-Funeraria.tumbas.append(a4)
-Funeraria.tumbas.append(a2)
-Funeraria.cenizas.append(a3)
-Funeraria.tumbas.append(a1)
+# # FLORES BY DEFAULT
+# a4.ponerFlor("Girasoles")
+# a3.ponerFlor("Margaritas")
+# a1.ponerFlor("Rosas")
+# a1.ponerFlor("Lirios")
+# a2.ponerFlor("Claveles")
+# a2.ponerFlor("Hortensias")
 
-#----------------------------PRODUCTOS DE LA TIENDA-------------------------------------------------------------
-# PRODUCTOS INICIALES CON LOS QUE EMPIEZA LA TIENDA
-Tienda.agregarProducto(Producto("Pack juguetes", 14000, 15, "perros"))
-Tienda.agregarProducto(Producto("Huesos", 6000, 20, "perros"))
-Tienda.agregarProducto(Producto("Correas", 25000, 10))
-Tienda.agregarProducto(Producto("Pack juguetes", 18000, 10, "gatos"))
-Tienda.agregarProducto(Producto("Rascadores", 40000, 5, "gatos"))
-Tienda.agregarProducto(Producto("Comederos de acero", 20000, 25))
-Tienda.agregarProducto(Producto("Comederos con formas", 30000, 10))
-Tienda.agregarProducto(Producto("Shampoo", 60000, 20, "perros"))
-Tienda.agregarProducto(Producto("Shampoo", 65000, 20, "gatos"))
-Tienda.agregarProducto(Producto("Pienso generico", 30000, 30, "perros"))
-Tienda.agregarProducto(Producto("Pienso generico", 35000, 20, "gatos"))
-Tienda.agregarProducto(Producto("Alpiste", 12000, 20, "aves"))
-Tienda.agregarProducto(Producto("Jaula", 50000, 6, "aves"))
-Tienda.agregarProducto(Producto("Casa de madera", 100000, 2, "aves"))
-Tienda.agregarProducto(Producto("Semillas y cereales", 15000, 20, "hamsters"))
-Tienda.agregarProducto(Producto("Jaula", 30000, 10, "hamsters"))
-Tienda.agregarProducto(Producto("Ruedas", 22000, 10, "hamsters"))
-Tienda.agregarProducto(Producto("Heno", 23000, 20, "conejos"))
-Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
+# # TUMBAS Y CENIZAS BY DEFAULT
+# Funeraria.cenizas.append(a5)
+# Funeraria.tumbas.append(a4)
+# Funeraria.tumbas.append(a2)
+# Funeraria.cenizas.append(a3)
+# Funeraria.tumbas.append(a1)
 
-c1.agregar_puntos(30)
-sede1.clientes_AdoptaLove.append(c1)
-tienda1 = Tienda(Empleado("David", 24, 10456874576, 666777000, "Carlos E", Rol.TENDERO))
-tienda1 = Tienda(sede1.getEmpleados()[0])
+# #----------------------------PRODUCTOS DE LA TIENDA-------------------------------------------------------------
+# # PRODUCTOS INICIALES CON LOS QUE EMPIEZA LA TIENDA
+# Tienda.agregarProducto(Producto("Pack juguetes", 14000, 15, "perros"))
+# Tienda.agregarProducto(Producto("Huesos", 6000, 20, "perros"))
+# Tienda.agregarProducto(Producto("Correas", 25000, 10))
+# Tienda.agregarProducto(Producto("Pack juguetes", 18000, 10, "gatos"))
+# Tienda.agregarProducto(Producto("Rascadores", 40000, 5, "gatos"))
+# Tienda.agregarProducto(Producto("Comederos de acero", 20000, 25))
+# Tienda.agregarProducto(Producto("Comederos con formas", 30000, 10))
+# Tienda.agregarProducto(Producto("Shampoo", 60000, 20, "perros"))
+# Tienda.agregarProducto(Producto("Shampoo", 65000, 20, "gatos"))
+# Tienda.agregarProducto(Producto("Pienso generico", 30000, 30, "perros"))
+# Tienda.agregarProducto(Producto("Pienso generico", 35000, 20, "gatos"))
+# Tienda.agregarProducto(Producto("Alpiste", 12000, 20, "aves"))
+# Tienda.agregarProducto(Producto("Jaula", 50000, 6, "aves"))
+# Tienda.agregarProducto(Producto("Casa de madera", 100000, 2, "aves"))
+# Tienda.agregarProducto(Producto("Semillas y cereales", 15000, 20, "hamsters"))
+# Tienda.agregarProducto(Producto("Jaula", 30000, 10, "hamsters"))
+# Tienda.agregarProducto(Producto("Ruedas", 22000, 10, "hamsters"))
+# Tienda.agregarProducto(Producto("Heno", 23000, 20, "conejos"))
+# Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
+
+# c1.agregar_puntos(30)
+
+# tienda1 = Tienda(Empleado("David", 24, 10456874576, 666777000, "Carlos E", Rol.TENDERO))
+
+
 
 # FIELDFRAME -----------------------
 
@@ -359,9 +360,10 @@ class FieldFrame(Frame):
 # -----------------------------------
 
 def abrir_ventana(vent_inicio):
-
+    Deserializador.deserializarListas()
     # CREAR LA VENTANA PRINCIPAL (SECUNDARIA)
     vent_principal = tk.Toplevel(vent_inicio) 
+    tienda1 = Tienda.getTiendas()[0]
 
 
     # ASIGNARLE EL NOMBRE. DIMENCIONES INICIALES Y COLOR DE FONDO
@@ -371,13 +373,14 @@ def abrir_ventana(vent_inicio):
     vent_principal.config(padx = 15, pady = 15)
 
 
-
+    sedes = CentroAdopcion.getSedes()
     # ------ EVENTOS ------
     
     def descripcion_aplicacion():
          messagebox.showinfo("Aplicación","Sabemos que cada momento de tu compañero es importante, tanto su llegada, como su despedida; es por eso que creamos AdoptaLove, para acompañarte y ayudarte a encontrar o despedir a tu compañero de vida. Además te brindamos servicios para el bienestar de tu compañero; podrás agendar citas de peluqueria, veterinaria o guarderia; y, si quieres conocer nuevos amigos podrás socializar con nuestros clientes y sus mascotas; además, si deseas encontrar regalos para tu compañero, en nuestra tienda, encontrarás lo mejor para el.")
 
     def salir():
+        Serializador.serializarListas()
         vent_principal.destroy()  # Cerrar la ventana principal
         vent_inicio.deiconify()  # Mostrar nuevamente la ventana de inicio
 
@@ -668,6 +671,7 @@ def abrir_ventana(vent_inicio):
                
                                                                     # MASCOTAS SELECCIONADA PARA SER ADOPTADA
                                                                     mascota_adoptada = mascotas_disponibles [(num_mascota)-1]
+                                                                    sede_seleccionada.borrar_animal(mascota_adoptada)
 
                                                                     #ADOPTANTE (CLIENTE)
                                                                     adoptador = Cliente(datos_cliente[0], int(datos_cliente[1]), int(datos_cliente[2]),int(datos_cliente[3]), datos_cliente[4])
@@ -928,8 +932,6 @@ def abrir_ventana(vent_inicio):
 
                             # SE OBTENIENEN LOS EMPLEADOS DISPONIBLES PARA ATENDER CITAS
                             lista_empleados = sede_seleccionada.tiene_empleados()
-                            for i in lista_empleados:
-                                print(i)   
 
                             # SI NO HAY EMPLEADOS CON DISPONIBILIDAD, SE INFORMA SOBRE ELLO
                             if (len(lista_empleados) ==0 ):
@@ -1000,9 +1002,6 @@ def abrir_ventana(vent_inicio):
 
                                                 #CUPOS DISPONIBLES DEL EMPLEADO EN EL DIA SELECCIONADO
                                                 cupos_disponibles = empleado_seleccionado.cupos_disponibles(num_dia)   
-
-                                                for i in cupos_disponibles:
-                                                    print(i) 
 
                                                 if len(cupos_disponibles)==0:
                                                      messagebox.showinfo("Indisponibilidad de cupos", "El proceso de agendamiento de cita no podrá continuar porque el empleado seleccionado no cuenta con cupos disponibles para atender en el dia solicitado")
@@ -1097,7 +1096,7 @@ def abrir_ventana(vent_inicio):
 
                                                                                     cita = Cita(cliente,animal, empleado_seleccionado, cupo_seleccionado, num_sede)
 
-                                                                                    print(cita)
+                                                                    
 
                                                                                     if (cliente.getPuntos()>=15):
 
@@ -1146,9 +1145,7 @@ def abrir_ventana(vent_inicio):
                                                                                         # botón final
                                                                                         inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
                                                                                         inicio.pack(side="top")
-
-                                                                                    print(cita)
-                                                                                        
+                                                                        
 
                                                                             frame_datos_animal.funAceptar(registroDeCita, "Continuar")
                                                             frame_datos_usuario.funAceptar(datos_animal, "Continuar")
@@ -1998,7 +1995,9 @@ def abrir_ventana(vent_inicio):
             frame_servicios.pack(expand=True, fill="both")
 
         frame.funAceptar(serviciosSede, "Continuar")
+#--------------------------------
 
+#------------------------------
     # ---- Menu --------
     
     # crear la barra de menu
@@ -2095,3 +2094,4 @@ def abrir_ventana(vent_inicio):
 
     texto_3 = tk.Label (frame_b_right, text = explicacion_hace,font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
     texto_3.pack(side="top", padx=5, pady=5)
+
