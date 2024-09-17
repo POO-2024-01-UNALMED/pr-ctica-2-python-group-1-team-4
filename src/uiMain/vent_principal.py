@@ -43,15 +43,15 @@ from gestorExcepciones.ErrorAplicacion import ErrorUnidadesInsuficientes
 
 #--------------------------------------SEDES, EMPLEADOS Y ANIMALES------------------------------
 # Lista donde se guardarán las sedes
-sedes = []
+sedes = CentroAdopcion.getSedes()
 
 # Creando las instancias de CentroAdopcion
 sede1 = CentroAdopcion("SEDE BELLO", 25, TipoServicio.GUARDERIA)
-sedes.append(sede1)
+#sedes.append(sede1)
 sede2 = CentroAdopcion("SEDE ITAGÜI", 20, TipoServicio.VETERINARIA)
-sedes.append(sede2)
+#sedes.append(sede2)
 sede3 = CentroAdopcion("SEDE MEDELLÍN", 20, TipoServicio.PELUQUERIA)
-sedes.append(sede3)
+#sedes.append(sede3)
 
 # Agregar animales a cada sede
 # Sede 1

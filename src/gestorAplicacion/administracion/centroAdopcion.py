@@ -30,6 +30,8 @@ class TipoServicio(Enum):
 class CentroAdopcion:
     clientes_AdoptaLove: List['Cliente'] = []
 
+    sedes=[]
+
     def __init__(self, nombre= None, espacios = 0, servicio = None, tienda = None):
         self._nombre = nombre
         self._espaciosDisponibles = espacios
@@ -39,6 +41,7 @@ class CentroAdopcion:
         self._animales: List['Animal'] = []
         self._adopciones: List['Adopcion'] = []
         self._citas_agendadas: List['Cita'] = []
+        CentroAdopcion.sedes.append(self)
 
     
 #SOBRECARGA DE MÉTODOS
@@ -60,6 +63,10 @@ class CentroAdopcion:
         return disponibles
     
 #MÉTODO DE CLASE
+    @classmethod
+    def getSedes(cls):
+        return cls.sedes
+
     @classmethod
     def is_cliente(cls, cliente: Cliente):
         cliente_adoptaLove = next((existe for existe in cls.clientes_AdoptaLove if existe.getCedula() == cliente.getCedula()), None)
