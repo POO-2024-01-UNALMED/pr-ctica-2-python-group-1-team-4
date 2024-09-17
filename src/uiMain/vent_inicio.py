@@ -1,7 +1,6 @@
 import tkinter as tk 
 from PIL import Image, ImageTk  # IMPORTAR MÓDULOS DE pillow PARA REDIMENSIONAR IMAGENES
-import vent_principal 
-
+import vent_principal
 # CREAMOS LA VENTANA DE INICIO
 vent_inicio = tk.Tk()
 
@@ -75,13 +74,14 @@ descripcion_desarrolladores = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de
                  "de Colombia. Joven con gusto por el deporte, en especial el fútbol y también con un interés "
                   "creciente en la tecnología y el desarrollo de soluciones digitales",
 
-                 "Salomé Murillo Gaviria, xx años, de Medellín Antioquia "
-                 "estudiante de ingeniería de sistemas en la Universidad nacional de Colombia", 
+                 "Salomé Murillo Gaviria, 18 años, de Medellín Antioquia.\n"
+                 "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática en la Universidad Nacional de Colombia.\n"
+                 "\nApasionada por los videojuegos de acción y aventura, la música, los animales y todo lo relacionado con la tecnología.", 
 
                  "Daniel Zapata, 19 años, de Medellín Antioquia "
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia\n\nHabilidad para trabajar en equipo, resolver problemas de manera eficiente y mantener un enfoque en la mejora continua. Comprometido con el crecimiento profesional y la excelencia en el cumplimiento de objetivos.",
 
-                 "Nicolas Zambrano, 18 años, de Medellín Zipaquira Cundinamarca "
+                 "Nicolas Zambrano, 18 años, de Zipaquira Cundinamarca "
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia"]
 
 # RUTAS DE LAS IMAGENES DE LOS DESARROLLADORES
