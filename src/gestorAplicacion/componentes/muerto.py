@@ -94,4 +94,4 @@ class Muerto:
         
 #toString
     def __str__(self):
-        return f"{self._animal.getNombre()},{self._fecha},{self._mensaje},{self.mostrarFlores()}\n"
+        return f"{self._animal.getNombre()} {self._fecha} {self._mensaje} {self.mostrarFlores()}\n"

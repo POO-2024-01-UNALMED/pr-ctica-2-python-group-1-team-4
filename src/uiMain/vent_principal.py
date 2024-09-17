@@ -1557,11 +1557,12 @@ def abrir_ventana(vent_inicio):
         frame_inicio.funAceptar(seleccionar_opcion, "Continuar")
 
     def funeraria():
-        texto = "Aquí va la descripción de la funcionalidad :)"
-        formato_frame_top("Funcionalidad funeraria", texto)
+        texto = "En nuestro sistema, puedes comprar o alquilar osarios y terrenos para tumbas según tus necesidades.\nSi eliges comprar, asegurarás un espacio permanente para el descanso final de tus seres queridos. \nSi prefieres alquilar, tendrás la opción de usar el espacio por un período determinado. \nAdemás, tienes la posibilidad de visitar el cementerio para rendir homenaje y agregar flores en las tumbas u osarios. \nEsta opción te permite mantener una conexión continua y significativa con tu ser querido y las demás mascotas que ya partieron al puente del arcoíris."
+        formato_frame_top("Funeraria", texto)
 
         # LIMPIAR EL CONTENIDO DEL FRAME_BOTTOM
         clear_frame_bottom()
+        
         # Crear un objeto Field Frame
         listaCampos = ["Sedes"]
         listaEditables = [True]
@@ -1571,7 +1572,6 @@ def abrir_ventana(vent_inicio):
 
         frame = FieldFrame(frame_bottom, "Centro de adopción", listaCampos, "Escoja una sede", listaEditables, dicTipos, listaValores, combobox_items)
         frame.pack(expand=True, fill="both")
-        messagebox.showinfo("Información", "Por favor, seleccione el centro de adopción más cercano")
 
         # Declarar el frame_visitas fuera para que esté disponible
         frame_visitas = None
@@ -1582,14 +1582,13 @@ def abrir_ventana(vent_inicio):
 
             # Crear la funeraria según la sede seleccionada
             if "Sede Bello" in sede_seleccionada:
-                funeraria_seleccionada = Funeraria(sedes[0])
-                funeraria_convert = sedes[0].getNombre# Sede Bello
+                funeraria_seleccionada = Funeraria(sedes[0])# Sede Bello
             elif "Sede Itagüi" in sede_seleccionada:
                 funeraria_seleccionada = Funeraria(sedes[1])  # Sede Itagüi
             elif "Sede Medellín" in sede_seleccionada:
                 funeraria_seleccionada = Funeraria(sedes[2])  # Sede Medellín
 
-            def mostrarCementerio(objetos, frame_objetos_anterior = None):
+            def mostrarCementerio(objetos):
                 # Crear un Canvas dentro de frame_bottom
                 canvas = tk.Canvas(frame_bottom, borderwidth=3, background="thistle1")
                 
@@ -1603,7 +1602,6 @@ def abrir_ventana(vent_inicio):
                 vsb = tk.Scrollbar(canvas, orient="vertical", command=canvas.yview)
                 canvas.configure(yscrollcommand=vsb.set)
                 
-
                 # Posicionar Canvas y Scrollbar en frame_bottom
                 canvas.pack(side="top", fill="both", expand=True, anchor="center")
                 vsb.pack(side="right", fill="y")
@@ -1612,9 +1610,13 @@ def abrir_ventana(vent_inicio):
                 frame_objetos.rowconfigure(0, weight=0)
 
                 # Ajustar el tamaño de frame_objetos para que ocupe todo el Canvas
-                frame_objetos.update_idletasks()  # Asegúrate de que el frame esté completamente actualizado
+                frame_objetos.update_idletasks()
                 canvas.config(scrollregion=canvas.bbox("all"))
                 frame_objetos.pack(side="top", fill="both", expand=True, anchor="center")
+
+                # Actualizar el tamaño del scroll region una vez que todos los widgets estén agregados
+                frame_objetos.update_idletasks()
+                canvas.config(scrollregion=canvas.bbox("all"))
 
                 # Añadir contenido al frame_objetos
                 resultado_visita = objetos
@@ -1624,10 +1626,6 @@ def abrir_ventana(vent_inicio):
                         if linea.strip():  # Mostrar solo líneas no vacías
                             tk.Label(frame_objetos, text=linea, font=("Times New Roman", 13), fg="purple", bg="thistle1").grid(row=filas, column=0, padx=0, pady=10, sticky="nsew")
                             filas += 1  # Incrementar fila para el siguiente objeto
-
-                # Actualizar el tamaño del scroll region una vez que todos los widgets estén agregados
-                frame_objetos.update_idletasks()
-                canvas.config(scrollregion=canvas.bbox("all"))
 
                 return frame_objetos, canvas
 
@@ -1645,12 +1643,13 @@ def abrir_ventana(vent_inicio):
                 def opcionFlores():
                     seleccion_flores = frame_flores.getEntradas()[0]
                     if seleccion_flores == "Sí":
-                        retorno = frame_flores.funAceptar(manejarFlores(funeraria_seleccionada, seleccion, frame_flores, frame_cementerio, canvas), "OPCION SÍ")
+                        retorno = frame_flores.funAceptar(lambda:[manejarFlores(funeraria_seleccionada, seleccion, frame_flores, frame_cementerio, canvas), funeraria], "Continuar")
                     elif seleccion_flores == "No":
-                        retorno = frame_flores.funAceptar(funeraria, "OPCIÓN NO")
+                        retorno = frame_flores.funAceptar(funeraria, "Continuar")
                     return retorno
                 
-                frame_flores.funAceptar(opcionFlores, "NINGUNA")
+                
+                frame_flores.funAceptar(opcionFlores, "Continuar")
 
             def manejarFlores(funeraria_seleccionada, seleccion, frame_anterior, frame_objetos, canvas1):
                 print(type(frame_anterior))
@@ -1682,12 +1681,13 @@ def abrir_ventana(vent_inicio):
                     frame_objetos.pack_forget()
                     canvas1.pack_forget()
                     resultado_con_flor = funeraria_seleccionada.visita(seleccion)
-                    frame_resultado_nuevo, canvas2 = mostrarCementerio(resultado_con_flor, frame_objetos)
-                    print(type(frame_resultado_nuevo))
+                    frame_resultado_nuevo, canvas2 = mostrarCementerio(resultado_con_flor)
+                    messagebox.showinfo("Información", "Será redireccionado al inicio")
+                    funeraria()
 
                     return frame_resultado_nuevo
                 
-                frame_flores_opciones.funAceptar(agregarFlores, "Agregar flores")
+                frame_flores_opciones.funAceptar(agregarFlores, "Agregar")
 
             def inicioProcesoDatos(accion, seleccion):
                 listaCampos = ["Nombre", "Edad", "Cédula", "Número de celular","Dirección"]
@@ -1698,78 +1698,106 @@ def abrir_ventana(vent_inicio):
                 frame_datos_usuario.pack(expand=True, fill="both")
 
                 def pedirDatosMascota():
-                    datos_cliente = frame_datos_usuario.getEntradas()
-                    cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3], datos_cliente[4])
-                    print(cliente)
-                    frame_datos_usuario.pack_forget()
-                    if accion == "la compra":
-                        listaCampos = ["Nombre que tenía", "Tipo de animal", "Edad con la que murió", "Sexo", "Fecha de fallecimiento", "Años a adquirir el producto"]
-                        listaEditables = [True, True, True, True, True, False]
-                        listaValores = ["", "", "", "", "dia/mes/año", "de por vida"]
-                        dicTipos = {"Nombre que tenía":str, "Tipo de animal":str, "Edad con la que murió":int, "Sexo":str, "Fecha de fallecimiento":str, "Años a adquirir el producto":int}
-                        frame_datos_mascota = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Ingresa sus datos", listaEditables, dicTipos, listaValores)
-                        frame_datos_mascota.pack(expand=True, fill="both")
-                    else:
-                        listaCampos = ["Nombre que tenía", "Tipo de animal", "Edad con la que murió", "Sexo", "Fecha de fallecimiento", "Años a adquirir el producto"]
-                        listaEditables = [True, True, True, True, True, True]
-                        listaValores = ["", "", "", "", "dia/mes/año", ""]
-                        dicTipos = {"Nombre que tenía":str, "Tipo de animal":str, "Edad con la que murió":int, "Sexo":str, "Fecha de fallecimiento":str, "Años a adquirir el producto":int}
-                        frame_datos_mascota = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Ingresa sus datos", listaEditables, dicTipos, listaValores)
-                        frame_datos_mascota.pack(expand=True, fill="both")
+                    try:
+                        datos_cliente = frame_datos_usuario.getEntradas()
                         
+                        # Validar la edad del usuario
+                        edad = int(datos_cliente[1])
+                        if edad < 18:
+                            raise ErrorUsuarioMenor() 
+                        #Validar el numero de cedula y documento
+                        if len(datos_cliente[2]) < 7:
+                            raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos")
+                        if len(datos_cliente[3]) < 10:
+                            raise ErrorDigitos_Cel_CC("cédula", " debe tener al menos 10 digitos")
+                                 
 
-                    def mensajeMascota():
-                        datos_mascota = frame_datos_mascota.getEntradas()
-                        mascota = Animal(datos_mascota[0], datos_mascota[1], datos_mascota[2], datos_mascota[3])
-                        print(mascota)
-                        frame_datos_mascota.pack_forget()
-                        listaCampos = ["Mensaje"]
-                        listaEditables = [True]
-                        listaValores = [""]
-                        dicTipos = {"Mensaje":str}
-                        frame_mensaje = FieldFrame(frame_bottom, f"Mensaje para tu mascota", listaCampos, "Escribe el mensaje", listaEditables, dicTipos, listaValores)
-                        frame_mensaje.pack(expand=True, fill="both")
-                        messagebox.showinfo("Información", "Agrega el mensaje que quieras para tu mascota")
+                        cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3], datos_cliente[4])
+                        print(cliente)
+                        frame_datos_usuario.pack_forget()
 
-                        # Expande el Entry correspondiente a "Mensaje" solo en este caso
-                        for entrada in frame_mensaje.lista_entradas:
-                            entrada.grid(sticky="nsew", padx=30)  # Solo afecta a las entradas de este frame
+                        if accion == "la compra":
+                            listaCampos = ["Nombre que tenía", "Tipo de animal", "Edad con la que murió", "Sexo", "Fecha de fallecimiento", "Años a adquirir el producto"]
+                            listaEditables = [True, True, True, True, True, False]
+                            listaValores = ["", "", "", "", "dia/mes/año", "de por vida"]
+                            combobox_items = {"Sexo": ["Macho", "Hembra"]}
+                            dicTipos = {"Nombre que tenía": str, "Tipo de animal": str, "Edad con la que murió": int, "Sexo": str, "Fecha de fallecimiento": str, "Años a adquirir el producto": int}
+                            frame_datos_mascota = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Ingresa sus datos", listaEditables, dicTipos, listaValores, combobox_items)
+                            frame_datos_mascota.pack(expand=True, fill="both")
+                        else:
+                            listaCampos = ["Nombre que tenía", "Tipo de animal", "Edad con la que murió", "Sexo", "Fecha de fallecimiento", "Años a adquirir el producto"]
+                            listaEditables = [True, True, True, True, True, True]
+                            listaValores = ["", "", "", "", "dia/mes/año", ""]
+                            combobox_items = {"Sexo": ["Macho", "Hembra"]}
+                            dicTipos = {"Nombre que tenía": str, "Tipo de animal": str, "Edad con la que murió": int, "Sexo": str, "Fecha de fallecimiento": str, "Años a adquirir el producto": int}
+                            frame_datos_mascota = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Ingresa sus datos", listaEditables, dicTipos, listaValores, combobox_items)
+                            frame_datos_mascota.pack(expand=True, fill="both")
 
-                        def guardarEnCementerio():
-                            mensaje = frame_mensaje.getEntradas()
-                            años = datos_mascota[5]
-                            print(mensaje)
+                        def mensajeMascota():
+                            datos_mascota = frame_datos_mascota.getEntradas()
+                            mascota = Animal(datos_mascota[0], datos_mascota[1], datos_mascota[2], datos_mascota[3])
+                            print(mascota)
+                            frame_datos_mascota.pack_forget()
+                            listaCampos = ["Mensaje"]
+                            listaEditables = [True]
+                            listaValores = [""]
+                            dicTipos = {"Mensaje": str}
+                            frame_mensaje = FieldFrame(frame_bottom, f"Mensaje para tu mascota", listaCampos, "Escribe el mensaje", listaEditables, dicTipos, listaValores)
+                            frame_mensaje.pack(expand=True, fill="both")
+                            messagebox.showinfo("Información", "Agrega el mensaje que quieras para tu mascota")
 
-                            if seleccion == "tumbas":
-                                if accion == "la compra":
-                                    muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
-                                    Funeraria.tumbas.append(muerto)
-                                    messagebox.showinfo("Información","Su compra ha sido exitosa.")
-                                    messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno de por vida es igual a: $4000000")
-                                    print(muerto)
-                                else:
-                                    muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
-                                    Funeraria.tumbas.append(muerto)
-                                    messagebox.showinfo("Información","Su alquiler ha sido exitoso.")
-                                    messagebox.showinfo("Información de pago", f"A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno los {años} años de alquiler es igual a: ${años*500000}")
-                                    print(muerto)
-                            elif seleccion == "cenizas":
-                                if accion == "la compra":
-                                    muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
-                                    Funeraria.cenizas.append(muerto)
-                                    messagebox.showinfo("Información","Su compra ha sido exitosa.")
-                                    messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el osario de por vida es igual a: $2000000")
-                                    print(muerto)
-                                else:
-                                    muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
-                                    Funeraria.cenizas.append(muerto)
-                                    messagebox.showinfo("Información","Su alquiler ha sido exitoso.")
-                                    print(muerto)
+                            # Expande el Entry correspondiente a "Mensaje" solo en este caso
+                            for entrada in frame_mensaje.lista_entradas:
+                                entrada.grid(sticky="nsew", padx=30)  # Solo afecta a las entradas de este frame
 
-                        # Llamar a guardarEnCementerio al aceptar
-                        frame_mensaje.funAceptar(lambda: [guardarEnCementerio(), visitaCementerio(seleccion, frame_mensaje)], "Continuar")
+                            def guardarEnCementerio():
+                                mensaje = frame_mensaje.getEntradas()
+                                print(mensaje)
 
-                    frame_datos_mascota.funAceptar(mensajeMascota, "Continuar")
+                                if seleccion == "tumbas":
+                                    if accion == "la compra":
+                                        muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
+                                        Funeraria.tumbas.append(muerto)
+                                        messagebox.showinfo("Información", "Su compra ha sido exitosa.")
+                                        messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno de por vida es igual a: $4000000\n\nVisitarás a tu ser querido...")
+                                        print(muerto)
+                                    else:
+                                        muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
+                                        Funeraria.tumbas.append(muerto)
+                                        valor = datos_mascota[5]
+                                        años = int(valor)
+                                        total = años * 500000
+                                        messagebox.showinfo("Información", "Su alquiler ha sido exitoso.")
+                                        messagebox.showinfo("Información de pago", f"A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno los {años} años de alquiler es igual a: ${total}\n\nVisitarás a tu ser querido...")
+                                        print(muerto)
+                                elif seleccion == "cenizas":
+                                    if accion == "la compra":
+                                        muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
+                                        Funeraria.cenizas.append(muerto)
+                                        messagebox.showinfo("Información", "Su compra ha sido exitosa.")
+                                        messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el osario de por vida es igual a: $2000000\n\nVisitarás a tu ser querido...")
+                                        print(muerto)
+                                    else:
+                                        muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
+                                        Funeraria.cenizas.append(muerto)
+                                        valor = datos_mascota[5]
+                                        años = int(valor)
+                                        total = años * 200000
+                                        messagebox.showinfo("Información", "Su alquiler ha sido exitoso.")
+                                        messagebox.showinfo("Información de pago", f"A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el osario los {años} años de alquiler es igual a: ${total}\n\nVisitarás a tu ser querido...")
+                                        print(muerto)
+
+                            # Llamar a guardarEnCementerio al aceptar
+                            frame_mensaje.funAceptar(lambda: [guardarEnCementerio(), visitaCementerio(seleccion, frame_mensaje)], "Continuar")
+
+                        frame_datos_mascota.funAceptar(mensajeMascota, "Continuar")
+
+                    except ErrorDigitos_Cel_CC as e:
+                        e.mostrarMensaje()
+                    except ErrorUsuarioMenor as e:
+                        messagebox.showerror("Error", str(e))
+
+
      
                 frame_datos_usuario.funAceptar(pedirDatosMascota, "Continuar")
 
@@ -1851,6 +1879,7 @@ def abrir_ventana(vent_inicio):
                         frame_visitas = FieldFrame(frame_bottom, "Lugar a visitar", listaCampos, "Escoja una opción", listaEditables,dicTipos, listaValores, combobox_items)
                         frame_visitas.funAceptar(mostrarVisitas, "Continuar")
                         frame_visitas.pack(expand=True, fill="both")
+                        messagebox.showinfo("Información", "¿Qué te gustaría visitar?")
 
             def mostrarVisitas():
                 lugar_seleccionado = frame_visitas.getEntradas()[0]
