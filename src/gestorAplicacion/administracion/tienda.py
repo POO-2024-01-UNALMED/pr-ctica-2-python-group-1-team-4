@@ -81,7 +81,7 @@ class Tienda:
         #Devolver el resultado final 
         return resultado
     
-    def compra(cls, indice: int, cliente: Cliente, cantidad = 1 ):
+    def compra(cls, indice: int, cliente: Cliente, sede: CentroAdopcion,  cantidad = 1 ):
 
         #Control del índice
         if indice<= len(cls.listaProductos) and indice>=0:
@@ -95,19 +95,19 @@ class Tienda:
                 producto.setCantidadUnidades(ProductoCantidad-cantidad)
 
                 #Se elimina el producto de la lista, si quedó sin unidades
-                if (producto.getCantidadUnidades==0):
+                if (producto.getCantidadUnidades()==0):
                     cls.listaProductos.pop(indice)
 
                 #Control de las salidas
                 if (cantidad==1):
-                    cliente_compra = CentroAdopcion.is_cliente(cliente)
+                    cliente_compra = sede.is_cliente(cliente)
                     if cliente_compra.getPuntos()>=15:
                         cliente_compra.disminuir_puntos(15)
                         return f"Se ha comprado una unidad de: {producto.getNombre()}, total a pagar: {str(producto.getPrecio()-(producto.getPrecio()*0.1))}, haciendo uso de 15 de tus puntos de descuento, total puntos actuales: {str(cliente_compra.getPuntos())}."
                     else:
                         return f"Se ha comprado una unidad de: {producto.getNombre()}, total a pagar: {str(producto.getPrecio())}."
                 else:
-                    cliente_compra = CentroAdopcion.is_cliente(cliente)
+                    cliente_compra = sede.is_cliente(cliente)
                     if cliente_compra.getPuntos()>=15:
                         cliente_compra.disminuir_puntos(15)
                         return f"Se han comprado, {str(cantidad)} unidades de {producto.getNombre()}, total a pagar: {str((producto.getPrecio()*cantidad)-((producto.getPrecio()*cantidad)*0.1))}, haciendo uso de 15 de tus puntos de descuento, total puntos actuales: {str(cliente_compra.getPuntos())}."

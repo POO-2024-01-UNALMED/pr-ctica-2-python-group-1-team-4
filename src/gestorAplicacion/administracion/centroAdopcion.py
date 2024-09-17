@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from gestorAplicacion.componentes.animal import Animal, EstadoSalud
     from gestorAplicacion.componentes.cliente import Cliente
     from gestorAplicacion.componentes.empleado import Empleado
-    from .adopcion import Adopcion
+    from gestorAplicacion.administracion.adopcion import Adopcion
     from .cita import Cita
     from gestorAplicacion.administracion.tienda import Tienda
 
@@ -46,7 +46,7 @@ class CentroAdopcion:
     def animales_disponibles(self):
         disponibles = []
         for mascota in self._animales:
-            if mascota.getEstadoSalud() != EstadoSalud.ENFERMO:
+            if mascota.getEstadoSalud().value != "Enfermo":
                 disponibles.append(mascota)
         return disponibles
 
@@ -54,7 +54,7 @@ class CentroAdopcion:
     def animales_disponibles(self, tipo: str):
         disponibles = []
         for mascota in self._animales:
-            if mascota.getEstadoSalud() != EstadoSalud.ENFERMO:
+            if mascota.getEstadoSalud().value!= "Enfermo":
                 if tipo is None or mascota.getEspecie().lower() == tipo.lower():
                     disponibles.append(mascota)
         return disponibles
@@ -73,20 +73,17 @@ class CentroAdopcion:
 #OTROS METODOS
     def tiene_mascotas(self):
         for mascota in self._animales:
-            if mascota.getEstadoSalud() != EstadoSalud.ENFERMO:
+            if mascota.getEstadoSalud().value != "Enfermo":
                 return True
         return False
 
-    def registrar_adopciones(self, mascotas: List['Animal'], cliente: Cliente):
-        adopciones_realizadas = []
-        cliente_adoptaLove = self.is_cliente(cliente)
-        for mascota in mascotas:
-            if mascota:
-                nueva_adopcion = Adopcion(mascota, cliente_adoptaLove)
-                self._adopciones.append(nueva_adopcion)
-                nueva_adopcion.getCliente().agregar_puntos(5)
-                adopciones_realizadas.append(nueva_adopcion)
-        return adopciones_realizadas
+    #def tiene_mascotas(self):
+       # return any(mascota.getEstadoSalud().value != EstadoSalud.ENFERMO.value for mascota in self._animales)
+
+
+    def registrar_adopcion(self, adopcion):
+        self._adopciones.append(adopcion)
+     
 
     def borrar_animal(self, animal: Animal):
         if animal in self._animales:
@@ -156,3 +153,4 @@ class CentroAdopcion:
         else:
             return f"Nombre: {self.getNombre()}, Espacios Disponibles: {self.getEspacios()}, Servicio: {self.getServicio().value}, tienda: no"    
         
+

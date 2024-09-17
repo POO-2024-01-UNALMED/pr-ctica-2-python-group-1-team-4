@@ -64,11 +64,11 @@ class Cita:
     def __str__(self):
         profesion = ""
 
-        if self._empleado.getProfesion() == 'VETERINARIO':
+        if self._empleado.getProfesion() == 'Veterinario':
             profesion = "Veterinario"
-        elif self._empleado.getProfesion() == 'CUIDADOR':
+        elif self._empleado.getProfesion() == 'Cuidador':
             profesion = "Cuidador"
-        elif self._empleado.getProfesion() == 'PELUQUERO':
+        elif self._empleado.getProfesion() == 'Peluquero':
             profesion = "Peluquero"
 
         return (f"Cliente: {self._cliente.getNombre()}\n"

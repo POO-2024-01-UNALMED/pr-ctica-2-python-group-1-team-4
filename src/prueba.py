@@ -1,37 +1,30 @@
 import tkinter as tk
 
-# Crear la ventana
-vent_inicio = tk.Tk()
-vent_inicio.geometry("1100x500")
-vent_inicio.config(padx = 100, pady = 100)
+# Crear la ventana principal
+root = tk.Tk()
+root.title("Mascotas")
 
-# Frame grande inferior (p4)
-frame_left_bottom = tk.Frame(vent_inicio, bg="thistle1")
-frame_left_bottom.pack(side="top", padx=5, pady=5, expand=True, fill="both")
+# Crear el frame donde se van a ubicar los labels
+frame = tk.Frame(root)
+frame.pack(expand=True, fill='both')
 
-# Crear el botón con la imagen
-imagen_sistema = tk.Button(
-    frame_left_bottom, 
-    text="Click para ingresar al sistema\n", 
-    bg="thistle1", 
-    command=lambda: print("Abriendo sistema..."), 
-    compound="top", 
-    font=("Times New Roman", 14), 
-    fg="purple4",
-    width=10,  # Definir un ancho máximo
-    height=10  # Definir un alto máximo
-)
+# Configurar el frame para que las columnas se expandan de manera uniforme
+frame.grid_columnconfigure(0, weight=1)
+frame.grid_columnconfigure(1, weight=1)
 
-# Cargar la imagen usando PhotoImage de Tkinter
-imagen1 = tk.PhotoImage(file="src/imagenes/sistema1.png")
+# Crear y ubicar los labels de manera centrada usando grid
+label_mascota1 = tk.Label(frame, text="Mascota1",font= ("Times New Roman",12),bg = "pink")
+label_mascota1.grid(row=0, column=0, padx=10, pady=10, sticky="e")  # Alinear a la derecha (east)
 
-# Configurar la imagen en el botón
-imagen_sistema.config(image=imagen1)
+label_nombre1 = tk.Label(frame, text="Nombre1 mi nombre es oky ruiz de la rosa y tengo 2 años", font= ("Times New Roman",12))
+label_nombre1.grid(row=0, column=1, padx=10, pady=10, sticky="w")  # Alinear a la izquierda (west)
 
-# Empaquetar el botón
-imagen_sistema.pack(expand=True, fill="both")
+label_mascota2 = tk.Label(frame, text="Mascota2", bg = "pink", font= ("Times New Roman",12))
+label_mascota2.grid(row=1, column=0, padx=10, pady=10, sticky="e")
 
-# Guardar la referencia de la imagen
-imagen_sistema.image = imagen1
+label_nombre2 = tk.Label(frame, text="Nombre2 la verdad no se que decir", font= ("Times New Roman",12))
+label_nombre2.grid(row=1, column=1, padx=10, pady=10, sticky="w")
 
-vent_inicio.mainloop()
+# Iniciar el bucle principal de la aplicación
+root.mainloop()
+

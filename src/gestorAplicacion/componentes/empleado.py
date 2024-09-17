@@ -127,7 +127,7 @@ class Empleado(Persona):
                             array_dia.append(Cupo(fecha_actual, "10:00", "12:00", True))
                             array_dia.append(Cupo(fecha_actual, "14:00", "16:00", True))
                             array_dia.append(Cupo(fecha_actual, "16:00", "18:00", True))
-                            continuar = False
+                            continuar = True
 
     
     #COMPROBAR SI EL EMPLEADO TIENE CUPOS
@@ -155,11 +155,11 @@ class Empleado(Persona):
     
     #MÉTODOS SET Y GET
     def getProfesion(self):
-        return self._profesion
+        return self._profesion.value
 
     def getCupo(self):
         return self._agenda_dias
 
     def __str__(self):
-        return f"Nombre: {self.getNombre()}, Edad: {self.getEdad()} años."
+        return f"Nombre: {self.getNombre()}, Edad: {self.getEdad()} años, Celular: {self.getTelefono()}"
     

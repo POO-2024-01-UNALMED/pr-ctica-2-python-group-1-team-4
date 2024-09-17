@@ -34,6 +34,9 @@ from baseDatos.serializador import Serializador
 #IMPORTACIÓN DE EXCEPCIONES
 from gestorExcepciones.ErrorAplicacion import ErrorAplicacion
 from gestorExcepciones.ErrorAplicacion import ErrorFormularioVacio
+from gestorExcepciones.ErrorAplicacion import ErrorDigitos_Cel_CC
+from gestorExcepciones.ErrorAplicacion import ErrorUsuarioMenor
+from gestorExcepciones.ErrorAplicacion import ErrorFueraRango
 
 # CREACIÓN DE OBJETOS BASE -----------------------------
 
@@ -52,13 +55,11 @@ sedes.append(sede3)
 # Agregar animales a cada sede
 # Sede 1
 sede1.agregar_animal(Animal("Capitán", "Canario", 2, "Macho", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Nala", "Canario", 3, "Hembra", EstadoSalud.ENFERMO))
 sede1.agregar_animal(Animal("Rocky", "Conejo", 2, "Macho", EstadoSalud.SANO))
 sede1.agregar_animal(Animal("Sky", "Conejo", 3, "Hembra", EstadoSalud.SANO))
 sede1.agregar_animal(Animal("Reina", "Gato", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
 sede1.agregar_animal(Animal("Rey", "Gato", 3, "Macho", EstadoSalud.ENFERMO))
 sede1.agregar_animal(Animal("Rolly", "Hámster", 1, "Hembra", EstadoSalud.SANO))
-sede1.agregar_animal(Animal("Zuma", "Hámster", 2, "Macho", EstadoSalud.ENFERMO))
 sede1.agregar_animal(Animal("Tobi", "Perro", 5, "Macho", EstadoSalud.SANO))
 sede1.agregar_animal(Animal("Dino", "Perro", 4, "Macho", EstadoSalud.ENTRATAMIENTO))
 
@@ -66,10 +67,10 @@ sede1.agregar_animal(Animal("Dino", "Perro", 4, "Macho", EstadoSalud.ENTRATAMIEN
 sede2.agregar_animal(Animal("Golfo", "Conejo", 3, "Macho", EstadoSalud.ENFERMO))
 sede2.agregar_animal(Animal("Luna", "Conejo", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
 sede2.agregar_animal(Animal("Frapee", "Canario", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
-sede2.agregar_animal(Animal("Luna", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
+sede2.agregar_animal(Animal("emma", "Gato", 6, "Hembra", EstadoSalud.ENFERMO))
 sede2.agregar_animal(Animal("Everest", "Gato", 4, "Hembra", EstadoSalud.SANO))
 sede2.agregar_animal(Animal("Junior", "Hámster", 2, "Macho", EstadoSalud.SANO))
-sede2.agregar_animal(Animal("Puppy", "Hámster", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
+#sede2.agregar_animal(Animal("Puppy", "Hámster", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
 
 # Sede 3
 sede3.agregar_animal(Animal("Thor", "Perro", 6, "Macho", EstadoSalud.SANO))
@@ -80,7 +81,7 @@ sede3.agregar_animal(Animal("Sony", "Conejo", 3, "Macho", EstadoSalud.SANO))
 sede3.agregar_animal(Animal("River", "Conejo", 4, "Macho", EstadoSalud.SANO))
 sede3.agregar_animal(Animal("Kira", "Canario", 3, "Hembra", EstadoSalud.ENTRATAMIENTO))
 sede3.agregar_animal(Animal("Furry", "Canario", 4, "Macho", EstadoSalud.ENFERMO))
-sede3.agregar_animal(Animal("Princea", "Hámster", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
+#sede3.agregar_animal(Animal("Princea", "Hámster", 2, "Hembra", EstadoSalud.ENTRATAMIENTO))
 
 # Agregar empleados a cada sede
 # Sede 1 (Guardería)
@@ -168,7 +169,9 @@ Tienda.agregarProducto(Producto("Ruedas", 22000, 10, "hamsters"))
 Tienda.agregarProducto(Producto("Heno", 23000, 20, "conejos"))
 Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
 
-
+c1.agregar_puntos(30)
+sede1.clientes_AdoptaLove.append(c1)
+tienda1 = Tienda(Empleado("David", 24, 10456874576, 666777000, "Carlos E", Rol.TENDERO))
 
 # FIELDFRAME -----------------------
 
@@ -225,7 +228,8 @@ class FieldFrame(Frame):
         self.boton_aceptar.grid(row=len(self.lista_criterios)+1, column=1, padx=5, pady=2)
 
         # BOTÓN LIMPIAR
-        tk.Button(self, text="Limpiar", font=("Verdana", 10), bg="white", width=6, height=1, command=self.funborrar).grid(row=len(self.lista_criterios)+1, column=0, padx=5, pady=2)
+        self.boton_limpiar = tk.Button(self, text="Limpiar", font=("Verdana", 10), bg="white", width=6, height=1, command=self.funborrar)
+        self.boton_limpiar.grid(row=len(self.lista_criterios)+1, column=0, padx=5, pady=2)
 
         self.grid_rowconfigure(len(self.lista_criterios)+1, weight=1)
 
@@ -274,7 +278,33 @@ class FieldFrame(Frame):
         
         except ValueError:
             return False
+        
+    def validar_cel_cc(self, celular, cedula):
 
+        try:
+            if len(celular) == 10 and celular.isdigit():
+    
+                if len(cedula) >= 7 and cedula.isdigit():
+                    return True    
+                     
+                else:           
+                    raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos")             
+            else:
+                raise ErrorDigitos_Cel_CC("celular", " debe tener 10 digitos")
+                        
+        except ErrorDigitos_Cel_CC as f:  
+            f.mostrarMensaje()
+
+    def validar_CC(self, cedula):
+
+        try:
+            if len(cedula)>=7 and cedula.isdigit():
+                return True
+            else:
+                raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos" )
+            
+        except ErrorDigitos_Cel_CC as f:
+            f.mostrarMensaje()
 
 
 # -----------------------------------
@@ -290,6 +320,7 @@ def abrir_ventana(vent_inicio):
     vent_principal.geometry("1400x800")
     vent_principal.configure(bg='LightBlue1') 
     vent_principal.config(padx = 15, pady = 15)
+
 
 
     # ------ EVENTOS ------
@@ -313,8 +344,8 @@ def abrir_ventana(vent_inicio):
     def formato_frame_top(titulo, texto):
         titulo_1.config(text = titulo, font= ("Lucida Handwriting", 20, "bold"))
 
-        descripcionFun = tk.Label(frame_top, text = texto, font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
-        descripcionFun.pack(side = "bottom", expand=True, fill = "both", pady =3)
+        descripcionFun.config(text = texto, font = ("Times New Roman", 14), fg= "purple")
+       # descripcionFun.pack(side = "bottom", expand=True, fill = "both", pady =3)
 
     def adoptar_mascota():
 
@@ -335,6 +366,8 @@ def abrir_ventana(vent_inicio):
         frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, dicTipos, listaValores, combobox_items)
         #frame.place(x =0, y = 0 , width=1236, height= 418)
         frame.pack(expand=True, fill="both")
+
+        #---------
 
         def funcionAnimal():
             datos_cliente = frame.getEntradas()
@@ -378,15 +411,984 @@ def abrir_ventana(vent_inicio):
 
     def adoptarAnimal():
 
-        #LIMPIAR EL CONTENIDO DEL FRAME_BOTTOM
+        # LIMPIAR EL FRAME_BOTTOM POR SI TIENE WIDGETS ADENTRO
         clear_frame_bottom()
+
+        # ASIGNAR EL TIULO Y LA DESCRIPCIÓN DE LA FUNCIONALIDAD EN EL FRAME_TOP
+        titulo = "Proceso de adopción"
+
+        descripcion = "Mediante nuestros servicios de adopcion de mascotas puedes acceder de manera eficiente a la información sobre las mascotas disponibles para adopcion\nen cada una de nuestras sedes. Podras visualizar detalles de cada mascota como edad, tipo y condiciones de salud, así como gestionar el proceso de\n adopcion a través del sistema, seleccionando la mascota de tu preferencia y con la que mas hayas conectado."
+
+        formato_frame_top(titulo, descripcion)
+
+        # CREAR Y EMPAQUETAR EL FIELDFRAME PARA LA RECEPCIÓN DE LOS DATOS DEL CLIENTE (frame_datos_cliente)
+    
+        lista_datos = ["Nombre", "Edad", "N° Cédula", "Celular", "Dirección"] 
+        lista_editables = [True, True, True, True, True]  
+        valores_por_defecto = ["", "", "", "",""] 
+        tipos_esperados = {"Nombre": str, "Edad": int, "N° Cédula": int, "Celular": int, "Dirección": str} 
+
+        frame_datos_cliente = FieldFrame(frame_bottom, "Información Personal", lista_datos, "Datos requeridos", lista_editables, tipos_esperados,valores_por_defecto)
+
+        frame_datos_cliente.pack(expand = True, fill = "both") 
+
+        # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_datos_cliente) ------
+        def encuesta():
+
+            datos_cliente = frame_datos_cliente.getEntradas() #LISTA CON LOS DATOS PERSONALES DEL CLIENTE
+
+            # SI SE INGRESARON LOS DATOS CORRECTAMENTE
+            if datos_cliente != False:
+
+                # VERIFICAR SI EL USUARIO ES MENOR DE EDAD, SI LO ES, NO PODRÁ CONTINUAR EL PROCESO
+                if int(datos_cliente[1]) < 18:
+                    messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor())
+                    frame_datos_cliente.funborrar() #LIMPIAR LAS ENTRADAS PARA QUE PUEDA INGRESAR NUEVOS DATOS
+                
+                # SI ES MAYOR DE EDAD:
+                else:
+                    # VERIFICAR QUE EL CELULAR Y LA CÉDULA CUMPLA CON LOS REQUERIMIENTOS 
+                    if frame_datos_cliente.validar_cel_cc(datos_cliente[3],datos_cliente[2]):
+
+                        frame_datos_cliente.pack_forget() # OCULTAR EL FRAME DE DATOS DEL CLIENTE (NO BORRARLO)
+
+                        #PREGUNTAS ENCUESTA
+                        pregunta1 = Adopcion.preguntasEncuesta(1)
+                        pregunta2 = Adopcion.preguntasEncuesta(2)
+                        pregunta3 = Adopcion.preguntasEncuesta(3)
+                        pregunta4 = Adopcion.preguntasEncuesta(4)
+                        pregunta5 = Adopcion.preguntasEncuesta(5)
+                        pregunta6 = Adopcion.preguntasEncuesta(6)
+
+                        #CREAR Y EMPAQUETAR EL FIELDFRAME PARA LAS RESPUESTAS DEL CLIENTE A LA ENCUESTA (frame_encuesta)
+
+                        lista_preguntas = [pregunta1, pregunta2, pregunta3, pregunta4, pregunta5, pregunta6] 
+                        lista_editables = [True, True, True, True, True, True] 
+                        valores_por_defecto = ["", "", "", "", "",""] 
+                        tipos_esperados = {pregunta1 : int, pregunta2 : int, pregunta3 : int, pregunta4 : int, pregunta5: int, pregunta6:int}
+                                                                                                        
+                        rango= [1,2,3,4,5]  #RANGO RESPUESTAS
+                        combobox_items = {pregunta1: rango, pregunta2 : rango, pregunta3 : rango, pregunta4 : rango, pregunta5: rango, pregunta6:rango}
+
+                        frame_encuesta = FieldFrame(frame_bottom, "Preguntas" ,lista_preguntas, "Respuesta", lista_editables, tipos_esperados, valores_por_defecto, combobox_items)
+     
+                        frame_encuesta.pack(expand=True, fill="both") # EMPAQUETAR EL FIELDFRAME DE LA ENCUESTA EN FRAME BOTTOM
+
+                        # INFORMACIÓN SOBRE LA ENCUESTA E INTRUCCIÓN DE COMO LLENARLA
+                        messagebox.showinfo("Aviso", "La presente encuesta representa un instrumento necesario para verificar si usted cumple con los requisitos preestablecidos por AdoptaLove para ser admitido en calidad de adoptante.\n\nPor favor, responda a las preguntas en una escala de 1 a 5, siendo 1 la calificación más baja y 5 la más alta.")
+
+                        # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_encuesta) ------
+                        def eleccion_sede():
+                            respuestas_encuesta = frame_encuesta.getEntradas() #LISTA CON LAS RESPUESTAS DEL CLIENTE EN LA ENCUESTA
+
+                            #SI SE RESPONDIERON TODOS LOS CAMPOS (PREGUNTAS) CORRECTAMENTE:
+                            if respuestas_encuesta != False:
+                                puntos = 0
+
+                                # CALCULAR LOS PUNTOS OBTENIDOS POR EL CLIENTE
+                                for i in respuestas_encuesta:
+                                    puntos+= int (i)
+                                
+                                # SI NO CUMPLE CON LOS REQUERIDOS, SE LE MUESTRA UN AVISO INFORMANDO SOBRE ELLO Y QUE EL PROCESO NO PODRÁ CONTINUAR
+                                if puntos<=18:
+                                    messagebox.showinfo("Incumplimiento de reuisitos","Estimado " + datos_cliente[0] + ", lamentablemente no cumple con los requisitos necesarios para ser adoptante en AdoptaLove, \npor lo que no podemos continuar con el proceso de adopción." )
+                                    
+                                    # DESTRUIR EL FRAME DE LA ENCUESTA:
+                                    frame_encuesta.destroy()
+
+                                    #BORRAR LOS VALORES DE LAS ENTRADAS Y VOLVER A MOSTRAR EL FRAME DE LOS DATOS DEL CLIENTE 
+                                    frame_datos_cliente.funborrar() 
+                                    frame_datos_cliente.pack(expand=True, fill="both")
+                                
+                                # SI CUMPLE CON LOS PUNTOS REQUERIDOS
+                                else:
+                                    #DESTRUIR EL FRAME DE LA ENCUESTA:
+                                    frame_encuesta.destroy()
+
+                                    # CREAR EL FIELDFRAME PARA LA ELECCIÓN DE LA SEDE
+                                    lista_datos = ["Sede"]
+                                    lista_editables = [True]
+                                    valores_por_defecto = [""]
+                                    tipos_esperados = {"Sede": str}
+                                    combobox_items = {"Sede": ["SEDE BELLO", "SEDE ITAGÜI","SEDE MEDELLÍN"]}
+
+                                    frame_sede = FieldFrame(frame_bottom, "Centro de Adopcion", lista_datos, "seleccione una sede", lista_editables, tipos_esperados,valores_por_defecto,combobox_items)
+
+                                    frame_sede.pack(expand= True, fill="both") # EMPAQUETAR EL FIELFRAME DE LA ELECCIÓN SEDE EN FRAME_BOTTOM
+
+
+                                    # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_sede) ------
+
+                                    def eleccion_modovisualizar():
+                                        
+                                        respuesta = frame_sede.getEntradas()
+
+                                        if respuesta!= False:
+                                            respuesta_sede = respuesta[0]
+                                            sede_seleccionada = None  # SEDE SELECCIONADA PARA LA ADOPCIÓN
+                                            
+                                            # BUSCAR CUAL ES LA SEDE QUE SE SELECCIONÓ
+                                            for sede in sedes:
+                                                if (sede.getNombre() ==  respuesta_sede):
+                                                    sede_seleccionada = sede
+            
+                                                
+                                            # SI LA SEDE SELECCIONADA NO TIENE MASCOTAS DISPONIBLES Y SE LE INFORMA DE ELLO     
+                                            if (sede_seleccionada.tiene_mascotas()!= True):
+                                                messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en estos momentos esta sede no cuenta con mascotas disponibles para adopción.\nPuedes intentar en otras de nuestras sedes")
+
+                                                frame_sede.funborrar() #SE BORRAN LAS ENTRADAS PARA QUE PUEDA INGRESAR NUEVOS DATOS
+
+                                            # SI TIENE MASCOTAS DISPONIBLES
+                                            else:
+                                                #OCULTAMOS EL FRAME DE ELECCIÓN SE LA SEDE
+                                                frame_sede.pack_forget()
+
+                                                # CREAMOS EL FIELDFRAME PARA LA OPCIÓN DE VISUALIZACIÓN
+                                                lista_datos = ["Modo visualización"]
+                                                lista_editables = [True]
+                                                valores_por_defecto = [""]
+                                                tipos_esperados = {"Modo visualización": str}
+                                                combobox_items = {"Modo visualización": ["Ver todos los animales", "filtrar por tipo"]}
+
+                                                frame_modo_visualizacion = FieldFrame(frame_bottom, "Visualización Animales disponibles",lista_datos, "Seleccione",lista_editables, tipos_esperados, valores_por_defecto, combobox_items )
+
+                                                frame_modo_visualizacion.pack(expand= True, fill="both")
+
+                                                # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_modo_visualización) ------
+
+                                                def mostrar_animales_disponibles():
+                                                    
+                                                    eleccion_visualizacion = frame_modo_visualizacion.getEntradas()
+                                                    mascotas_disponibles = [] #LISTA CON LAS MASCOTAS DISPONIBLES DE LA SEDE
+                                                    
+                                                    # COMPROBAMOS EL MODO DE VISUALIZACIÓN
+                                                    if eleccion_visualizacion!=False:
+                 
+                                                        # SI ELIGIÓ VER TODOS, SE BUSCAN TODOS LOS ANIMALES DISPONIBLES DE SEDE                                        
+                                                        if ((str(eleccion_visualizacion[0])) == "Ver todos los animales" ):
+
+                                                            # LISTA CON LOS ANIMALES DISPONIBLES
+                                                            mascotas_disponibles = sede_seleccionada.animales_disponibles() 
+
+                                                            # DESTRUIR EL FRAME DE ELECCIÓN VISUALIZACIÓN
+                                                            frame_modo_visualizacion.destroy()
+
+                                                            # CONSTRUIR LOS FRAME DONDE SE VISUALIZARÁN LOS DATOS DE LAS MASCOTAS
+                                                            frame_muestra_mascotas = tk.Frame(frame_bottom, highlightbackground="purple4", highlightthickness=2, bg = "thistle1")
+                                                            frame_muestra_mascotas.pack(side = "top", expand = True,fill = "both")
+                                                            frame_muestra_mascotas.pack_propagate(False)
+
+                                                            # Configurar el frame para que las columnas se expandan de manera uniforme
+                                                            #frame_mascotas.grid_columnconfigure(0, weight=1)
+                                                            #frame_mascotas.grid_columnconfigure(1, weight=1)
+
+                                                            #AGREGAR LOS LABEL DONDE SE MUESTRA CADA MASCOTA:
+
+                                                            for i in range(len(mascotas_disponibles)):
+                                                                # LABEL DEL NÚMERO DE LA MASCOTA
+                                                                label_criterio = tk.Label(frame_muestra_mascotas, text=("Mascota " + str(i+1)),font= ("Times New Roman",10), bg = "plum1" )
+
+                                                                label_criterio.grid(row = i, column = 0, padx=20, pady=8, sticky="e" )
+
+                                                                # LABEL con __str__() DE LAS MASCOTAS
+                                                                label_entrada = tk.Label(frame_muestra_mascotas, text=(mascotas_disponibles[i].__str__()),font= ("Times New Roman",10), bg = "plum1")
+                                                                label_entrada.grid(row = i, column = 1, padx=20, pady=8, sticky="w")
+
+
+                                                            # FIELDFRAME PARA LA ELECCIÓN DE LA MASCOTA 
+                                                            lista_datos = ["Numero mascota"]
+                                                            lista_editables = [True]
+                                                            valores_por_defecto = [""]
+                                                            tipos_esperados = {"Numero ascota": int}
+                                                            combobox_items = {"Numero mascota": list(range(1,(len(mascotas_disponibles)+1)))}
+
+                                                            frame_elegir_mascota = FieldFrame(frame_bottom, "Mascota", lista_datos, "Seleccione la mascota",lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+
+                                                            frame_elegir_mascota.pack(side = "bottom", expand= True, fill = "both")
+
+
+                                                            # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_elegir_mascota) ------
+
+                                                            def mostrar_resultados():
+                                                                eleccion_mascota = frame_elegir_mascota.getEntradas()
+
+                                                                if eleccion_mascota != False:
+
+                                                                    num_mascota = int(eleccion_mascota[0]) 
+               
+                                                                    # MASCOTAS SELECCIONADA PARA SER ADOPTADA
+                                                                    mascota_adoptada = mascotas_disponibles [(num_mascota)-1]
+
+                                                                    #ADOPTANTE (CLIENTE)
+                                                                    adoptador = Cliente(datos_cliente[0], int(datos_cliente[1]), int(datos_cliente[2]),int(datos_cliente[3]), datos_cliente[4])
+
+                                                                    #VERIFICAR SI EL CLIENTE YA HA SIDO CLIENTE ANTERIORMENTE
+                                                                    adoptador = sede_seleccionada.is_cliente(adoptador)
+
+                                                                    # CREAR EL OBJETO ADOPCIÓN
+                                                                    adopcion = Adopcion(mascota_adoptada,adoptador)
+                        
+
+                                                                    # REGISTRAMOS LA ADOPCIÓN ADOPCIÓN EN SU SEDE CORRESPONDIENTE
+                                                                    sede_seleccionada.registrar_adopcion(adopcion)
+
+                                                                    #ASIGNARLE 5 PUNTOS AL CLIENTE POR LA ADOPCIÓN
+                                                                    adopcion.getCliente().agregar_puntos(5)
+
+                                                                    messagebox.showinfo("Puntos canjeables", "Sr./Sra " + adoptador.getNombre() +  " usted ha ganado 5 puntos que serán agregados a su saldo de puntos. Estos puntos son canjeables para obtener descuentos en nuestros servicios y productos de nuestras tiendas.\nEn este momento tiene un total de " + str(adoptador.getPuntos()) + " puntos.")
+
+                                                                    # MOTRAR LOS RESULTADOS POR PANTALLA 
+                                                                    frame_elegir_mascota.destroy()
+                                                                    frame_muestra_mascotas.destroy()
+
+                                                                    frame_resultado_adopcion = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2 )                                                                                
+                                                                    frame_resultado_adopcion.pack(expand=True, fill="both")
+                                                                    # Label de factura1
+                                                                    factura = tk.Label(frame_resultado_adopcion, text="----- DETALLES ADOPCIÓN -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                    factura.pack(side="top", pady=30)
+                                                                    # Label de factura2
+                                                                    factura = tk.Label(frame_resultado_adopcion, text=adopcion.__str__(), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                    factura.pack(side="top")
+                                                                    # Label de factura3
+                                                                    factura = tk.Label(frame_resultado_adopcion, text=f"Gracias {adopcion.getCliente().getNombre()} por darle un hogar a {adopcion.getAnimal().getNombre()}", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                    factura.pack(side="top")
+                                                                    # Label de factura4
+                                                                    factura = tk.Label(frame_resultado_adopcion, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                    factura.pack(side="top")
+
+                                                                    # botón final
+                                                                    inicio = tk.Button(frame_resultado_adopcion, text="Salir", font=("Verdana", 10), bg="white", command=adoptarAnimal)
+                                                                    inicio.pack(side="top")
+       
+                                                            frame_elegir_mascota.funAceptar(mostrar_resultados, "Adoptar")
+                                                                
+
+                                                        #SI ELIGIÓ FILTRAR POR TIPO
+                                                        else:
+                                                            frame_modo_visualizacion.destroy()
+
+                                                            #CREAR EL FRAME PARA QUE SELECCIONE LA ESPECIE
+                                                            lista_datos = ["Tipo"]
+                                                            lista_editables = [True]
+                                                            valores_por_defecto = [""]
+                                                            tipos_esperados = {"Tipo": str}
+                                                            combobox_items = {"Tipo": ["Perro", "Gato", "Canario", "Conejo", "Hámster"]}
+
+                                                            frame_eleccion_tipo = FieldFrame (frame_bottom,"Especie mascota", lista_datos, "Seleccione el tipo",lista_editables, tipos_esperados, valores_por_defecto, combobox_items)
+
+                                                            frame_eleccion_tipo.pack(expand=True, fill = "both")
+
+                                                            # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_modo_visualización) -----
+
+                                                            def lista_filtro_tipo():
+                                                                
+                                                                tipo = frame_eleccion_tipo.getEntradas()
+
+                                                                #SI SE SELECCIONÓ EL TIPO DE LA MASCOTA CORRECTAMENTE
+                                                                if tipo != False:
+                                                                    
+                                                                    especie = tipo [0]
+                                                                    
+                                                                    #LISTA DE ANIMALES QUE COINCIDEN CON EL TIPO SOLICITADO
+                                                                    mascotas_disponibles = sede_seleccionada.animales_disponibles(especie)
+
+                                                                    # SI LA SEDE NO TIENE ANIMALES DE ESE TIPO, SE LE INFORMA DE ELLO Y LO DEVUELVE A ESCOGER SEDE                                 
+                                                                    if (len(mascotas_disponibles) == 0):
+                                                                        messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en este momento en la sede no se encuentran mascotas de ese tipo disponibles para adopción.\nPuedes intentar en otra de nuestras sedes")
+
+                                                                        frame_eleccion_tipo.destroy()
+                                                                        frame_sede.funborrar()
+                                                                        frame_sede.pack(expand=True,fill = "both") #PARA QUE VUELVA ESCOGER LA SEDE 
+
+                                                                    # SI TIENE ANIMALES QUE COINCIDEN, ENTONCES EL USUARIO PODRÁ ESCOG
+                                                                    else:
+                                                                        frame_eleccion_tipo.destroy()
+                                                                        
+                                                                        frame_muestra_mascotas = tk.Frame(frame_bottom, highlightbackground="purple4", highlightthickness=2, bg = "thistle1")
+                                                                        frame_muestra_mascotas.pack(side = "top", expand = True,fill = "both")
+                                                                        frame_muestra_mascotas.pack_propagate(False)
+
+                                                                        #AGREGAR LOS LABEL DONDE SE MUESTRA CADA MASCOTA:
+
+                                                                        for i in range(len(mascotas_disponibles)):
+
+                                                                            # LABEL DEL NÚMERO DE LA MASCOTA
+                                                                            label_criterio = tk.Label(frame_muestra_mascotas, text=("Mascota " + str(i+1)),font= ("Times New Roman",10), bg = "plum1" )
+
+                                                                            label_criterio.grid(row = i, column = 0, padx=20, pady=8, sticky="e" )
+
+                                                                            # LABEL __str__ MASCOTAS
+                                                                            label_entrada = tk.Label(frame_muestra_mascotas, text=(mascotas_disponibles[i].__str__()),font= ("Times New Roman",10), bg = "plum1")
+                                                                            label_entrada.grid(row = i, column = 1, padx=20, pady=8, sticky="w")
+
+
+                                                                        #FIELDFRAME PARA LA ELECCIÓN DE LA MASCOTA 
+                                                                        lista_datos = ["Numero mascota"]
+                                                                        lista_editables = [True]
+                                                                        valores_por_defecto = [""]
+                                                                        tipos_esperados = {"Numero ascota": int}
+                                                                        combobox_items = {"Numero mascota": list(range(1,(len(mascotas_disponibles)+1)))}
+
+                                                                        frame_seleccionar_mascota = FieldFrame(frame_bottom, "Mascota", lista_datos, "Seleccione la mascota",lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+
+                                                                        frame_seleccionar_mascota.pack(side = "bottom", expand= True, fill = "both")
+
+                                                                        # EVENTO AL DAR CLICK EN EL BOTÓN CONTINUAR EN (frame_elegir_mascota) ----
+
+                                                                        def mostrar_resultados():
+                                                                            eleccion_mascota = frame_seleccionar_mascota.getEntradas()
+
+                                                                            if eleccion_mascota != False:
+                                                                                num_mascota = int(eleccion_mascota[0]) 
+
+                                                                                # MASCOTA Y CLIENTE PARA REGISTRAR LA ADOPCIÓN
+                                                                                mascota_adoptada = mascotas_disponibles [(num_mascota)-1]
+
+                                                                                adoptador = Cliente(datos_cliente[0], int(datos_cliente[1]), int(datos_cliente[2]),int(datos_cliente[3]), datos_cliente[4])
+
+                                                                                # CREAR EL OBJETO ADOPCIÓN
+                                                                                adopcion = Adopcion(mascota_adoptada,adoptador)
+                                
+                                                                                 # REGISTRAMOS LA ADOPCIÓN ADOPCIÓN EN SU SEDE CORRESPONDIENTE
+                                                                                sede_seleccionada.registrar_adopcion(adopcion)
+
+                                                                                #ASIGNARLE 5 PUNTOS AL CLIENTE POR LA ADOPCIÓN
+                                                                                adopcion.getCliente().agregar_puntos(5)
+
+                                                                                messagebox.showinfo("Puntos canjeables", "Sr./Sra " + adoptador.getNombre() +  " usted ha ganado 5 puntos que serán agregados a su saldo de puntos. Estos puntos son canjeables para obtener descuentos en nuestros servicios y productos de nuestras tiendas.\nEn este momento tiene un total de " + str(adoptador.getPuntos()) + " puntos.")
+
+                                                                                #MOSTRAR RESULTADOS
+                                                                                frame_seleccionar_mascota.destroy()
+                                                                                frame_muestra_mascotas. destroy()
+
+                                                                                frame_resultado_adopcion = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2 )                                                                                
+                                                                                frame_resultado_adopcion.pack(expand=True, fill="both")
+                                                                                # Label de factura1
+                                                                                factura = tk.Label(frame_resultado_adopcion, text="----- DETALLES ADOPCIÓN -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                factura.pack(side="top", pady=30)
+                                                                                # Label de factura2
+                                                                                factura = tk.Label(frame_resultado_adopcion, text=adopcion.__str__(), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                factura.pack(side="top")
+                                                                                # Label de factura3
+                                                                                factura = tk.Label(frame_resultado_adopcion, text=f"Gracias {adopcion.getCliente().getNombre()} por darle un hogar a {adopcion.getAnimal().getNombre()}", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                factura.pack(side="top")
+                                                                                # Label de factura4
+                                                                                factura = tk.Label(frame_resultado_adopcion, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                factura.pack(side="top")
+
+                                                                                # botón final
+                                                                                inicio = tk.Button(frame_resultado_adopcion, text="Salir", font=("Verdana", 10), bg="white", command=adoptarAnimal)
+                                                                                inicio.pack(side="top")
+
+
+
+
+
+                                                                        frame_seleccionar_mascota.funAceptar(mostrar_resultados, "continuar")
+
+                                                            frame_eleccion_tipo.funAceptar(lista_filtro_tipo, "Continuar")
+                                                      
+                                                frame_modo_visualizacion.funAceptar(mostrar_animales_disponibles, "continuar")
+  
+                                    frame_sede.funAceptar(eleccion_modovisualizar, "continuar")
+
+                        frame_encuesta.funAceptar(eleccion_sede, "Continuar")
+             
+        frame_datos_cliente.funAceptar(encuesta, "Continuar")
+                
+
 
 
     def agendar_servicio():
-        pass
+        def funVacia():
+            pass
+
+        # LIMPIAMOS EL FRAME BOTTOM Y AÑADIMOS LA DESCRIPCIÓN
+        clear_frame_bottom()
+        formato_frame_top("Agendar Servicio", "En las diferentes sedes de AdoptaLove ofrecemos distintos servicios.\nPor favor selecciona una sede para comenzar a agendar un servicio de los ofertados para tu máscota")
+
+    
+        #FIELDFRAME PARA ESCOGER SEDE
+        lista_campo = ["Servicio:"]
+        lista_habilitado = [True] 
+        tipo_esperados = {"Servicio:": str}
+        valor_por_defecto = [""]
+        dicRespuestas = {"Servicio:": ["BELLO: Guardería", "ITAGÜI: Veterinaria", "MEDELLÍN: Peluqueria"]}
+
+        frame_eleccion_sede = FieldFrame(frame_bottom, "Seleccione una sede", lista_campo, "Sede con servicio ofertado", lista_habilitado, tipo_esperados, valor_por_defecto, dicRespuestas)
+        frame_eleccion_sede.pack(expand=True, fill="both")
+    
+        # FUNCIÓN PARA EL BOTÓN ACEPTAR DEL (frame_eleccion_sede)
+        def escogerSede():
+            
+            sede_escogida = frame_eleccion_sede.getEntradas()
+
+            if sede_escogida != False:
+
+                frame_eleccion_sede.lista_entradas[0].config(state="disabled")
+                frame_eleccion_sede.boton_limpiar.config(command=funVacia)
+                frame_eleccion_sede.boton_aceptar.config(command=funVacia)
+
+                lista_animales=[]
+
+                if sede_escogida[0] == "ITAGÜI: Veterinaria":
+                    lista_animales = ["Perro", "Gato", "Conejo", "Hámster", "Otro"]
+                else:
+                    lista_animales = ["Perro", "Gato", "Otro"]
+                    
+                # Combobox de comprobar que el animal sea correcto ---------
+                lista_campo = ["Animal:"]
+                listahabilitado = [True] 
+                dictipo = {"Animal:": str}
+                valor = [""]
+                dicRespuestas = {"Animal:": lista_animales}
+
+                frame_tipo_mascota = FieldFrame(frame_bottom, "Especie", lista_campo, "Tipo de su animal", listahabilitado, dictipo, valor, dicRespuestas)
+                frame_tipo_mascota.pack(expand=True, fill="both") 
+                
+                # FUNCION DEL BOTON frame_tipo_mascota
+                def empleados_disponibles():
+                    tipo_animal = frame_tipo_mascota.getEntradas()
+                        
+                    if tipo_animal != False:
+
+                        # SI EL SERVICIO NO ESTÁ DISPONIBLE PARA SU MASCOTA, SE LE INFORMA SOBRE ELLO:
+                        if tipo_animal[0] == "Otro":
+                            messagebox.showinfo("Servicio no disponible", "Por el momento, el servicio solo se encuentra disponible para los animales mostrados en las opciones")         
+                            agendar_servicio()
+
+                        # SI EL SERVICIO SI ESTÁ DISPONIBLE
+                        else:
+
+                            sede_seleccionada = None
+                            profesion = ""
+
+                            # SE VERIFICA CUAL ES LA SEDE SELECCIONADAA
+                            if (sede_escogida[0] =="BELLO: Guardería"):
+                                sede_seleccionada = sedes[0]
+                                profesion = "Cuidador"
+
+                            elif (sede_escogida[0] =="ITAGÜI: Veterinaria"):
+                                sede_seleccionada = sedes[1]
+                                profesion = "Veterinario"
+                            
+                            else:
+                                sede_seleccionada = sedes[2]
+                                profesion = "Peluquero"
+
+                            # SE OBTENIENEN LOS EMPLEADOS DISPONIBLES PARA ATENDER CITAS
+                            lista_empleados = sede_seleccionada.tiene_empleados()
+                            for i in lista_empleados:
+                                print(i)   
+
+                            # SI NO HAY EMPLEADOS CON DISPONIBILIDAD, SE INFORMA SOBRE ELLO
+                            if (len(lista_empleados) ==0 ):
+                                messagebox.showinfo("Indisponibilidad de citas", "Actualmente, debido a la falta de disponibilidad de citas, no es posible continuar con el proceso de agendamiento")
+                                agendar_servicio()
+
+                            else:
+                                # SI HAY EMPLEADOS DISPONIBLES, SE LE MUESTRAN PARA QUE SELECCIONE UNO:
+                                frame_tipo_mascota.destroy()
+                                frame_eleccion_sede.destroy()
+                                
+                                frame_muestra_empleados = tk.Frame(frame_bottom, highlightbackground="purple4", highlightthickness=2, bg = "thistle1")
+                                frame_muestra_empleados.pack(side = "top", expand = True,fill = "both")
+                                frame_muestra_empleados.pack_propagate(False)
+
+                                #AGREGAR LOS LABEL DONDE SE MUESTRA CADA MASCOTA:
+
+                                for i in range(len(lista_empleados)):
+                                    # LABEL DEL NÚMERO DE LA MASCOTA
+                                    label_criterio = tk.Label(frame_muestra_empleados, text=(profesion + " " + str(i+1)),font= ("Times New Roman",10), bg = "plum1" )
+
+                                    label_criterio.grid(row = i, column = 0, padx=20, pady=8, sticky="e" )
+
+                                     # LABEL __str__mascotas
+                                    label_entrada = tk.Label(frame_muestra_empleados, text=(lista_empleados[i].__str__()),font= ("Times New Roman",10), bg = "plum1")
+                                    label_entrada.grid(row = i, column = 1, padx=20, pady=8, sticky="w")
+
+
+                                lista_datos = ["Numero " + profesion]
+                                lista_editables = [True]
+                                valores_por_defecto = [""]
+                                tipos_esperados = {"Numero " + profesion: int}
+                                combobox_items = {"Numero " + profesion: list(range(1,(len(lista_empleados)+1)))}
+
+                                frame_seleccionar_empleado = FieldFrame(frame_bottom, profesion, lista_datos, "Seleccione el " + profesion, lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+
+                                frame_seleccionar_empleado.pack(side = "bottom", expand= True, fill = "both")
+
+                                def eleccionDia():
+                                    eleccion_empleado = frame_seleccionar_empleado.getEntradas()
+                                    if eleccion_empleado != False:
+                                        frame_seleccionar_empleado.destroy()
+                                        frame_muestra_empleados.destroy()
+                                    
+                                        empleado_seleccionado = lista_empleados[int(eleccion_empleado[0]) - 1]
+
+
+                                        lista_dias = ["Día"]
+                                        lista_editables = [True]
+                                        valores_por_defecto = [""]
+                                        tipos_esperados = {"Día": str}
+                                        combobox_items = {"Día": ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"]}
+
+                                        frame_seleccionar_dia = FieldFrame(frame_bottom, "Dia para la cita", lista_dias, "Seleccione el día", lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+                                        frame_seleccionar_dia.pack(expand=True, fill="both") 
+
+                                        def cupos_dia():
+                                            dic = {"Lunes": 0, "Martes":1, "Miercoles":2, "Jueves":3, "Viernes": 4, "Sábado":5}   
+
+                                            eleccion_dia = frame_seleccionar_dia.getEntradas()
+
+                                            if eleccion_dia != False:
+                                                frame_seleccionar_dia.lista_entradas[0].config(state="disabled")
+                                                frame_seleccionar_dia.boton_aceptar.config(command=funVacia)
+                                                frame_seleccionar_dia.boton_limpiar.config(command=funVacia)
+
+                                                num_dia = dic[eleccion_dia[0]]
+
+                                                #CUPOS DISPONIBLES DEL EMPLEADO EN EL DIA SELECCIONADO
+                                                cupos_disponibles = empleado_seleccionado.cupos_disponibles(num_dia)   
+
+                                                for i in cupos_disponibles:
+                                                    print(i) 
+
+                                                if len(cupos_disponibles)==0:
+                                                     messagebox.showinfo("Indisponibilidad de cupos", "El proceso de agendamiento de cita no podrá continuar porque el empleado seleccionado no cuenta con cupos disponibles para atender en el dia solicitado")
+                                                     agendar_servicio()
+                                                else:
+
+                                                    lista_cupos = ["Hora"]
+                                                    lista_editables = [True]
+                                                    valores_por_defecto = [""]
+                                                    tipos_esperados = {"Hora": str}
+                                                    combobox_items = {"Hora": cupos_disponibles}
+
+                                                    frame_seleccionar_cupo = FieldFrame(frame_bottom, "Horario", lista_cupos, "Seleccione cupo", lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+                                                    frame_seleccionar_cupo.pack(expand=True, fill="both") 
+
+
+                                                    def datos_cliente ():
+                                                        eleccion_cupo = frame_seleccionar_cupo.getEntradas()
+                                                        
+                                                        if eleccion_cupo!=False:
+                                                            frame_seleccionar_cupo.destroy()
+                                                            frame_seleccionar_dia.destroy()
+
+                                                            cupo_seleccionado= None
+
+                                                            for i in cupos_disponibles:
+                                                                if (i.__str__())== eleccion_cupo[0]:
+                                                                    cupo_seleccionado = i
+
+                                                            # Creación FieldFrame
+                                                            listaCampos= ["Nombre", "Cédula", "Edad"]
+                                                            listahabilitados = [True, True, True]
+                                                            valorEsperado = {"Nombre": str, "Cédula": int, "Edad": int} 
+
+                                                            frame_datos_usuario = FieldFrame(frame_bottom, "Información personal", listaCampos, "Sus datos", listahabilitados, valorEsperado)
+                                                            frame_datos_usuario.pack(expand=True, fill="both")
+
+                                                            def datos_animal():
+                                                                entrada_cliente = frame_datos_usuario.getEntradas()
+                                                                
+                                                                if entrada_cliente!=False:
+
+                                                                    if int(entrada_cliente[2]) < 18:
+                                                                        messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor())
+                                                                        agendar_servicio()
+
+                                                                    else:
+
+                                                                        if frame_datos_usuario.validar_CC(entrada_cliente[1]):
+
+                                       
+                                                                            frame_datos_usuario.destroy()
+
+                                                                             # Creación FieldFrame Mascota
+                                                                            if sede_escogida[0] == "ITAGÜI: Veterinaria":
+                                                                                lista_animales = ["Perro", "Gato", "Conejo", "Hámster"]
+                                                                            else:
+                                                                                 lista_animales = ["Perro", "Gato"]
+
+
+                                                                            listaCampos= ["Nombre", "Edad", "Especie", "Sexo"]
+                                                                            listahabilitados = [True, True, True, True]
+                                                                            valorEsperado = {"Nombre": str, "Edad": int, "Especie": str, "Sexo": str} 
+                                                                            combobox_items = {"Especie": lista_animales, "Sexo": ["Macho", "Hembra"]}
+                                                                            listaValores = ["", "", "", ""]
+
+                                                                            frame_datos_animal = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Datos", listahabilitados, valorEsperado,listaValores, combobox_items)
+                                                                        
+                                                                            frame_datos_animal.pack(expand=True, fill="both")
+
+                                                                            def registroDeCita():
+                                                                                entrada_animal = frame_datos_animal.getEntradas()
+
+                                                                                if entrada_animal!=False:
+                                                                                    animal = Animal(entrada_animal[0],entrada_animal[2],entrada_animal[1],entrada_animal[3])
+                                                                                    print(animal)
+                                                                                    print(sede_seleccionada)
+
+                                                                                    num_sede = None
+
+                                                                                    if sede_seleccionada.getNombre() == "SEDE BELLO":
+                                                                                        num_sede = 1
+                                                                                    elif sede_seleccionada.getNombre() == "SEDE ITAGÜI":
+                                                                                        num_sede = 2
+
+                                                                                    else:
+                                                                                        num_sede = 3
+
+
+                                                                                    cliente = Cliente(entrada_cliente[0], int(entrada_cliente[2]), int(entrada_cliente[1]))
+                                                                                    cliente = sede_seleccionada.is_cliente(cliente)
+
+                                                                                    cita = Cita(cliente,animal, empleado_seleccionado, cupo_seleccionado, num_sede)
+
+                                                                                    print(cita)
+
+                                                                                    if (cliente.getPuntos()>=15):
+
+                                                                                        cliente.disminuir_puntos(15)
+                                                                                        cita.aplicarDescuento()
+                                                                                        frame_datos_animal.destroy()
+
+                                                                                        frame_factura = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2 )
+                                                                                        frame_factura.pack(expand=True, fill="both")
+                                                                                        # Label de factura1
+                                                                                        factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top", pady=30    )
+                                                                                        # Label de factura2
+                                                                                        factura = tk.Label(frame_factura, text=cita.__str__(), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+                                                                                        # Label de factura3
+                                                                                        factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por agendar una cita con nosotros, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+                                                                                        # Label de factura4
+                                                                                        factura = tk.Label(frame_factura, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+
+                                                                                        # botón final
+                                                                                        inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
+                                                                                        inicio.pack(side="top")
+
+                                                                                    else:
+
+                                                                                        frame_datos_animal.destroy()
+
+                                                                                        frame_factura = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2 )
+                                                                                        frame_factura.pack(expand=True, fill="both")
+                                                                                        # Label de factura1
+                                                                                        factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top", pady=30)
+                                                                                        # Label de factura2
+                                                                                        factura = tk.Label(frame_factura, text=cita.__str__(), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+                                                                                        # Label de factura3
+                                                                                        factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por agendar una cita con nosotros, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+                                                                                        # Label de factura4
+                                                                                        factura = tk.Label(frame_factura, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                                                        factura.pack(side="top")
+
+                                                                                        # botón final
+                                                                                        inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
+                                                                                        inicio.pack(side="top")
+
+                                                                                    print(cita)
+                                                                                        
+
+                                                                            frame_datos_animal.funAceptar(registroDeCita, "Continuar")
+                                                            frame_datos_usuario.funAceptar(datos_animal, "Continuar")
+                                                    frame_seleccionar_cupo.funAceptar(datos_cliente, "Continuar")
+                                        frame_seleccionar_dia.funAceptar(cupos_dia, "Continuar")                                
+                                frame_seleccionar_empleado.funAceptar(eleccionDia,"Continuar")
+                frame_tipo_mascota.funAceptar(empleados_disponibles, "Continuar")                      
+        frame_eleccion_sede.funAceptar(escogerSede, "Continuar")
+
+
+
 
     def tienda():
-        pass
+        # Función vacia (Sirve para deshabilitar Botones)
+        def funVacia():
+            pass
+
+        # Limpiamos el frame botom y añadimos un título
+        clear_frame_bottom()
+        formato_frame_top("Tienda para mascotas", "En AdoptaLove ofrecemos todo lo que su mascota necesita para garantizar su bienestar y felicidad.\n Contamos con una amplia selección de productos de la más alta calidad, asegurando los mejores precios para su conveniencia.")
+        
+        # Inicio de la tienda --------------------------------------------
+        listacampo = ["Elección"]
+        listahabilitado = [True]
+        DicTipos = {"Elección": str}
+        valor = [""]
+        diccionario ={"Elección":["Filtrar por tipo", "Mostrar todo"]}
+        # Pregunta de si desea filtrar
+        inicioTienda = FieldFrame(frame_bottom, "¿Cómo desea ver los productos?", listacampo, "Su elección", listahabilitado, DicTipos, valor, diccionario)
+        inicioTienda.pack(expand=True, fill="both")
+
+        # Funcion para el botón continuar de inicioTienda
+        def proceso_2_Tienda():
+            filtro = inicioTienda.getEntradas()
+            if filtro != False: 
+                if filtro[0] == "Mostrar todo": # Caso de que quiere ver todos los productos
+                    inicioTienda.pack_forget()
+
+                    productos = tienda1.getProductos() # lista con los productos de la tienda
+                    comunas = 0 # Columnas para los label
+                    filas = 0 # Filas para los label
+                    lista_comobox = [] # lista para el combobox de escoger Animal
+                    frame_produtos = tk.Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2) # Frame para acomodar todo ---------------------------------
+                    frame_produtos.pack(expand=True, fill="both")
+
+                    for i in productos: # recorremos la lista de productos para imprimirlos
+                        lista_comobox.append(f"{str(productos.index(i)+1)} {i.getNombre()}")
+                        tk.Label(frame_produtos, text=i.__str__(), font = ("Times New Roman", 8), fg= "purple", bg = "thistle1").grid(row=filas, column=comunas, padx=8, pady=10, sticky="nsew")
+                        filas+=1
+                        if filas == 4:
+                            comunas+=1
+                            filas = 0
+
+                    # Entradas para comprar producto
+                    tk.Label(frame_produtos, text="Seleccione el producto:",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=0, column=7, padx=15)
+                    selec_producto = ttk.Combobox(frame_produtos, values=lista_comobox, state="readonly")
+                    selec_producto.grid(row=0, column=8, padx=15, sticky="ew")
+
+                    tk.Label(frame_produtos, text="Unidades del producto",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=1, column=7, padx=15)
+                    cantidad_producto = tk.Entry(frame_produtos)
+                    cantidad_producto.grid(row=1, column=8, padx=15)
+
+                    # Funcion limpiar
+                    def funborrar(): 
+                        selec_producto.set('')  # RESTABLECER EL COMBOBOX
+                        cantidad_producto.delete("0", "end")  # BORRAR ENTRADAS NORMALES
+
+                    # Boton limpiar
+                    limpiar = tk.Button(frame_produtos, text="Limpiar", font=("Verdana", 10), bg="white", command=funborrar)
+                    limpiar.grid(row=2, column=7, padx=15)
+
+                    # Función botón de continuar
+                    def funcontinuar():
+                        if selec_producto.get()!='' and cantidad_producto.get()!="":
+                            puede = True
+                            try:
+                                int(cantidad_producto.get())
+                            except ValueError:
+                                puede = False
+                                messagebox.showerror("Error de tipo","El valor ingresado no es un número")
+                            if puede==True:
+                                cantidad = int(cantidad_producto.get())
+                                partir = selec_producto.get().split()
+                                indice = int(partir[0])-1
+                                comparador = tienda1.listaProductos[indice].getCantidadUnidades()
+
+                                if (cantidad<=comparador and cantidad>=0):
+                                    producto = tienda1.listaProductos[indice]
+                                    continuar.config(command=funVacia)
+                                    messagebox.showinfo("Proceso de compra",f"Se va a procesar la compra de {cantidad} unidades de {producto.getNombre()} para {producto.getTipoAnimal()}. \n\nSus datos serán registrados para realizar la compra.")
+                                    frame_produtos.destroy()
+                                    
+                                    # FieldFrame para registrar el usuario ---------------------------------
+                                    # Función botón de aceptar del Nuevo FieldFrame
+                                    def registroCompra():
+                                        datos_cliente = registrarUsuario.getEntradas()
+                                        if datos_cliente != False:
+                                            if registrarUsuario.validar_CC(datos_cliente[1]):
+                                                if int(datos_cliente[2])<=140 and int(datos_cliente[2])>6:
+                                                    cliente = Cliente(datos_cliente[0], int(datos_cliente[2]), int(datos_cliente[1])) # Cliente para llamar a compra
+                                                    registrarUsuario.destroy()
+                                                    # Creamos un frame para mostrar factura
+                                                    frame_factura = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2)
+                                                    frame_factura.pack(expand=True, fill="both")
+            
+                                                    # Label de factura1
+                                                    factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                    factura.pack(side="top", pady=30)
+                                                    # Label de factura2
+                                                    factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sede1,cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                    factura.pack(side="top")
+                                                    # Label de factura3
+                                                    factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por visitar nuestra tienda, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                    factura.pack(side="top")
+                                                    # Label de factura4
+                                                    factura = tk.Label(frame_factura, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                    factura.pack(side="top")
+
+                                                    # botón final
+                                                    inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=tienda)
+                                                    inicio.pack(side="top")
+
+                                                else: 
+                                                    messagebox.showerror("Error de edad","La edad ingresada es invalida")
+
+                                    # Creación FieldFrame
+                                    listaCampos= ["Nombre", "Cédula", "Edad"]
+                                    listahabilitados = [True, True, True]
+                                    valorEsperado = {"Nombre": str, "Cédula": int, "Edad": int} 
+
+                                    registrarUsuario = FieldFrame(frame_bottom, "Registro de la compra:", listaCampos, "Sus datos personales:", listahabilitados, valorEsperado)
+                                    registrarUsuario.pack(expand=True, fill="both")
+
+                                    # Botón de Comprar
+                                    registrarUsuario.funAceptar(registroCompra, "Finalizar")
+
+
+                                else:
+                                    messagebox.showerror("Error Fuera de rango",ErrorFueraRango())
+                        else:
+                            messagebox.showerror("Error en campos","Faltan campos por rellenar")
+
+                    # Boton continuar
+                    continuar = tk.Button(frame_produtos,text="Comprar", font=("Verdana", 10), bg="white", command=funcontinuar)
+                    continuar.grid(row=2 , column=8, padx=15)
+                else:
+                    # deshabilitamos para 
+                    inicioTienda.boton_aceptar.config(command=funVacia)
+                    inicioTienda.boton_limpiar.config(command=funVacia)
+                    combo = inicioTienda.lista_entradas[0]
+                    combo.config(state="disabled") # Deshabilitamos la entrada para que ya no pueda hacer nada
+
+                    # Función para controlar el filtro
+                    def controlFiltrar():
+                        filtro_escogido = combo_filtrar.getEntradas()
+                        if filtro_escogido != False:
+                            filtro = filtro_escogido[0]
+                            inicioTienda.pack_forget()
+                            combo_filtrar.destroy()
+
+                            productos = tienda1.getProductos() # lista con los productos de la tienda
+                            comunas = 0 # Columnas para los label
+                            filas = 0 # Filas para los label
+                            lista_comobox = [] # lista para el combobox de escoger Animal
+                            frame_produtos = tk.Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2) # Frame para acomodar todo ---------------------------------
+                            frame_produtos.pack(expand=True, fill="both")
+
+                            for i in productos: # recorremos la lista de productos para imprimirlos
+                                if i.getTipoAnimal()==filtro or i.getTipoAnimal()=="Uso general":
+                                    lista_comobox.append(f"{str(productos.index(i)+1)} {i.getNombre()}")
+                                    tk.Label(frame_produtos, text=i.__str__(), font = ("Times New Roman", 8), fg= "purple", bg = "thistle1").grid(row=filas, column=comunas, padx=8, pady=10, sticky="nsew")
+                                    filas+=1
+                                    if filas == 4:
+                                        comunas+=1
+                                        filas = 0
+                                        
+                            # Entradas para comprar producto
+                            tk.Label(frame_produtos, text="Seleccione el producto:",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=0, column=7, padx=15)
+                            selec_producto = ttk.Combobox(frame_produtos, values=lista_comobox, state="readonly")
+                            selec_producto.grid(row=0, column=8, padx=15, sticky="ew")
+
+                            tk.Label(frame_produtos, text="Unidades del producto",  font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg="thistle1").grid(row=1, column=7, padx=15)
+                            cantidad_producto = tk.Entry(frame_produtos)
+                            cantidad_producto.grid(row=1, column=8, padx=15)
+
+                            # Funcion limpiar
+                            def funborrar(): 
+                                selec_producto.set('')  # RESTABLECER EL COMBOBOX
+                                cantidad_producto.delete("0", "end")  # BORRAR ENTRADAS NORMALES
+
+                            # Boton limpiar
+                            limpiar = tk.Button(frame_produtos, text="Limpiar", font=("Verdana", 10), bg="white", command=funborrar)
+                            limpiar.grid(row=2, column=7, padx=15)
+
+                            # Función botón de continuar
+                            def funcontinuar():
+                                if selec_producto.get()!='' and cantidad_producto.get()!="":
+                                    puede = True
+                                    try:
+                                        int(cantidad_producto.get())
+                                    except ValueError:
+                                        puede = False
+                                        messagebox.showerror("Error de tipo","El valor ingresado no es un número")
+                                    if puede==True:
+                                        cantidad = int(cantidad_producto.get())
+                                        partir = selec_producto.get().split()
+                                        indice = int(partir[0])-1
+                                        comparador = tienda1.listaProductos[indice].getCantidadUnidades()
+
+                                        if (cantidad<=comparador and cantidad>=0):
+                                            producto = tienda1.listaProductos[indice]
+                                            continuar.config(command=funVacia)
+                                            messagebox.showinfo("Proceso de compra",f"Se va a procesar la compra de {cantidad} unidades de {producto.getNombre()} para {producto.getTipoAnimal()}. \n\nSus datos serán registrados para realizar la compra.")
+                                            frame_produtos.destroy()
+                                            
+                                            # FieldFrame para registrar el usuario ---------------------------------
+                                            # Función botón de aceptar del Nuevo FieldFrame
+                                            def registroCompra():
+                                                datos_cliente = registrarUsuario.getEntradas()
+                                                if datos_cliente != False:
+                                                    if registrarUsuario.validar_CC(datos_cliente[1]):
+                                                        if int(datos_cliente[2])<=140 and int(datos_cliente[2])>6:
+                                                            cliente = Cliente(datos_cliente[0], int(datos_cliente[2]), int(datos_cliente[1])) # Cliente para llamar a compra
+                                                            registrarUsuario.destroy()
+                                                            # Creamos un frame para mostrar factura
+                                                            frame_factura = Frame(frame_bottom, bg="thistle1", highlightbackground="purple4", highlightthickness=2)
+                                                            frame_factura.pack(expand=True, fill="both")
+                    
+                                                            # Label de factura1
+                                                            factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                            factura.pack(side="top", pady=30)
+                                                            # Label de factura2
+                                                            factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sede1,cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                            factura.pack(side="top")
+                                                            # Label de factura3
+                                                            factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por visitar nuestra tienda, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                            factura.pack(side="top")
+                                                            # Label de factura4
+                                                            factura = tk.Label(frame_factura, text="-------------------------------", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
+                                                            factura.pack(side="top")
+
+                                                            # botón final
+                                                            inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=tienda)
+                                                            inicio.pack(side="top")
+
+                                                        else: 
+                                                            messagebox.showerror("Error de edad","La edad ingresada es invalida")
+
+                                            # Creación FieldFrame
+                                            listaCampos= ["Nombre", "Cédula", "Edad"]
+                                            listahabilitados = [True, True, True]
+                                            valorEsperado = {"Nombre": str, "Cédula": int, "Edad": int} 
+
+                                            registrarUsuario = FieldFrame(frame_bottom, "Registro de la compra:", listaCampos, "Sus datos personales:", listahabilitados, valorEsperado)
+                                            registrarUsuario.pack(expand=True, fill="both")
+
+                                            # Botón de Comprar
+                                            registrarUsuario.funAceptar(registroCompra, "Finalizar")
+
+
+                                        else:
+                                            messagebox.showerror("Error Fuera de Rango",ErrorFueraRango())
+                                else:
+                                    messagebox.showerror("Error en campos","Faltan campos por rellenar")
+
+                            # Boton continuar
+                            continuar = tk.Button(frame_produtos,text="Comprar", font=("Verdana", 10), bg="white", command=funcontinuar)
+                            continuar.grid(row=2 , column=8, padx=15)
+
+
+
+
+
+                    # Combobox con opciones para filtrar
+                    listacampo = ["Seleccione el filtro"]
+                    listahabilitado = [True] 
+                    dictipo = {"Seleccione el filtro": str}
+                    valor = [""]
+                    dicRespuestas = {"Seleccione el filtro": ["perros", "gatos", "hamsters", "conejos", "aves"]} 
+
+                    combo_filtrar = FieldFrame(frame_bottom, "¿Para cual tipo de animal?", listacampo, "Tipo de Animal", listahabilitado, dictipo, valor, dicRespuestas)
+                    combo_filtrar.pack(expand=True, fill="both")
+
+                    combo_filtrar.funAceptar(controlFiltrar, "Continuar")
+
+        # Botón de comenzar 
+        inicioTienda.funAceptar(proceso_2_Tienda, "Comenzar")
+
+    
 
     def socializar():
         pass
@@ -414,7 +1416,7 @@ def abrir_ventana(vent_inicio):
     menu_2 = tk.Menu(menubar, tearoff=0, font=("Arial",9))
     menubar.add_cascade(label = "Procesos y consultas", menu = menu_2)
 
-    menu_2.add_command(label = "Adoptar una mascota", command = adoptar_mascota)
+    menu_2.add_command(label = "Adoptar una mascota", command = adoptarAnimal)
     menu_2.add_separator()
     menu_2.add_command(label = "Agendar servicio", command = agendar_servicio)
     menu_2.add_separator()
@@ -442,6 +1444,9 @@ def abrir_ventana(vent_inicio):
 
     titulo_1 = tk.Label(frame_top, text = "AdoptaLove", font=("Lucida Handwriting", 45, "bold"), fg = "purple4", bg = "thistle1")
     titulo_1.pack(pady=10, anchor='center', expand=True)
+
+    descripcionFun = tk.Label(frame_top, bg = "thistle1")
+    descripcionFun.pack(side = "bottom", expand=True, fill = "both", pady =3)
   
     # Frame inferior (en el principal)-------
     frame_bottom = tk.Frame(frame_principal, bg = "#B89AD6")
@@ -487,21 +1492,3 @@ def abrir_ventana(vent_inicio):
 
     texto_3 = tk.Label (frame_b_right, text = explicacion_hace,font = ("Times New Roman", 14), fg= "purple", bg = "thistle1")
     texto_3.pack(side="top", padx=5, pady=5)
-
-
-
-
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
