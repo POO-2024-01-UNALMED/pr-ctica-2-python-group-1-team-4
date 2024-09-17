@@ -38,6 +38,7 @@ from gestorExcepciones.ErrorAplicacion import ErrorDigitos_Cel_CC
 from gestorExcepciones.ErrorAplicacion import ErrorUsuarioMenor
 from gestorExcepciones.ErrorAplicacion import ErrorFueraRango
 from gestorExcepciones.ErrorAplicacion import ErrorUnidadesInsuficientes
+from gestorExcepciones.ErrorAplicacion import ErrorBusquedaInvalida
 
 # CREACIÓN DE OBJETOS BASE -----------------------------
 
@@ -301,7 +302,7 @@ class FieldFrame(Frame):
 
         # Pregunta final, si se detecta que hay mas de un campo en la lista de vacios...
         if len(listaVacios) > 0:
-            messagebox.showerror("Error",ErrorFormularioVacio(listaVacios))
+            messagebox.showerror("Error", ErrorFormularioVacio(listaVacios))
             # la función devolverá falso facilitando su control en las funcionalidades
             # Donde si retorna falso, se sabe que hay campos vacios que necesitan valores para continuar los procesos 
             return False
@@ -540,7 +541,13 @@ def abrir_ventana(vent_inicio):
                                                 
                                             # SI LA SEDE SELECCIONADA NO TIENE MASCOTAS DISPONIBLES Y SE LE INFORMA DE ELLO     
                                             if (sede_seleccionada.tiene_mascotas()!= True):
-                                                messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en estos momentos esta sede no cuenta con mascotas disponibles para adopción.\nPuedes intentar en otras de nuestras sedes")
+                                                #messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en estos momentos esta sede no cuenta con mascotas disponibles para adopción.\nPuedes intentar en otras de nuestras sedes")
+                                                texto = "Lo sentimos, en estos momentos esta sede no cuenta con mascotas disponibles para adopción.\nPuedes intentar en otras de nuestras sedes"
+                                                
+                                                try:
+                                                    raise ErrorBusquedaInvalida(texto)  # Lanza la excepción
+                                                except ErrorBusquedaInvalida as e:
+                                                    messagebox.showerror("Error:", str(e))  # Muestra el mensaje de error
 
                                                 frame_sede.funborrar() #SE BORRAN LAS ENTRADAS PARA QUE PUEDA INGRESAR NUEVOS DATOS
 
@@ -701,7 +708,12 @@ def abrir_ventana(vent_inicio):
 
                                                                     # SI LA SEDE NO TIENE ANIMALES DE ESE TIPO, SE LE INFORMA DE ELLO Y LO DEVUELVE A ESCOGER SEDE                                 
                                                                     if (len(mascotas_disponibles) == 0):
-                                                                        messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en este momento en la sede no se encuentran mascotas de ese tipo disponibles para adopción.\nPuedes intentar en otra de nuestras sedes")
+                                                                        #messagebox.showinfo("Falta de disponibilidad de mascotas", "Lo sentimos, en este momento en la sede no se encuentran mascotas de ese tipo disponibles para adopción.\nPuedes intentar en otra de nuestras sedes")
+                                                                        texto = "Lo sentimos, en este momento en la sede no se encuentran mascotas de ese tipo disponibles para adopción.\nPuedes intentar en otra de nuestras sedes"
+                                                                        try:
+                                                                            raise ErrorBusquedaInvalida(texto)  # Lanza la excepción
+                                                                        except ErrorBusquedaInvalida as e:
+                                                                            messagebox.showerror("Error:", str(e))  # Muestra el mensaje de error
 
                                                                         frame_eleccion_tipo.destroy()
                                                                         frame_sede.funborrar()

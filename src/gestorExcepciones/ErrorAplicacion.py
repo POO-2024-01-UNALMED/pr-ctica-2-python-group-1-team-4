@@ -24,8 +24,8 @@ class ErrorFueraRango(ErrorGenerativo):
 # Error sugerido 1 (Búsqueda sin resultados)
 class ErrorBusquedaInvalida(ErrorGenerativo):
     # Se dispara cuando el usuario realiza una búsqueda y no se encuentran resultados
-    def __init__(self):
-        super().__init__("No se encontraron resultados para la búsqueda realizada.")
+    def __init__(self, descripcion):
+        super().__init__(f"No se encontraron resultados para la búsqueda realizada. {descripcion}")
 
 
 # Errores de tipo B (Acciones del usuario)
