@@ -32,7 +32,7 @@ from baseDatos.deserializador import Deserializador
 from baseDatos.serializador import Serializador
 
 #IMPORTACIÓN DE EXCEPCIONES
-from gestorExcepciones.ErrorAplicacion import ErrorAplicacion
+from gestorExcepciones.ErrorAplicacion import ErrorAccionUsuario, ErrorAplicacion
 from gestorExcepciones.ErrorAplicacion import ErrorFormularioVacio
 from gestorExcepciones.ErrorAplicacion import ErrorDigitos_Cel_CC
 from gestorExcepciones.ErrorAplicacion import ErrorUsuarioMenor
@@ -43,15 +43,15 @@ from gestorExcepciones.ErrorAplicacion import ErrorUnidadesInsuficientes
 
 #--------------------------------------SEDES, EMPLEADOS Y ANIMALES------------------------------
 # Lista donde se guardarán las sedes
-sedes = []
+sedes = CentroAdopcion.getSedes()
 
 # Creando las instancias de CentroAdopcion
 sede1 = CentroAdopcion("SEDE BELLO", 25, TipoServicio.GUARDERIA)
-sedes.append(sede1)
+#sedes.append(sede1)
 sede2 = CentroAdopcion("SEDE ITAGÜI", 20, TipoServicio.VETERINARIA)
-sedes.append(sede2)
+#sedes.append(sede2)
 sede3 = CentroAdopcion("SEDE MEDELLÍN", 20, TipoServicio.PELUQUERIA)
-sedes.append(sede3)
+#sedes.append(sede3)
 
 # Agregar animales a cada sede
 # Sede 1
@@ -1479,7 +1479,7 @@ def abrir_ventana(vent_inicio):
 
             # Configuración del marco superior
             formato_frame_top("Registrarse", texto)
-            
+
             # Creación del FieldFrame para recolectar los datos del cliente
             listaCampos = ["Nombre", "Edad", "Celular", "Deseas formar parte de socializar? (True/False)"]
             listaEditables = [True, True, True, True]
@@ -1491,12 +1491,30 @@ def abrir_ventana(vent_inicio):
 
             def guardar_cliente():
                 datos_cliente = frame_cliente.getEntradas()  # Recolectar los datos del cliente
-                if datos_cliente:  # Verificar que no sean falsos o vacíos
-                    # Crear el objeto Cliente
-                    nuevo_cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3])
-                    
-                    # Llamar a la función registrar_mascota pasándole el nuevo cliente
-                    registrar_mascota(nuevo_cliente)
+                if datos_cliente:
+                    # Validar que no haya campos vacíos
+                    espacios_vacios = []
+                    for i in range(len(listaCampos)):
+                        if not datos_cliente[i]:
+                            espacios_vacios.append(listaCampos[i])
+
+                    if espacios_vacios:
+                        raise ErrorFormularioVacio(espacios_vacios)
+
+                    try:
+                        nombre, edad, celular, desea_socializar = datos_cliente
+                        if int(datos_cliente[1]) < 18:
+                            raise ErrorUsuarioMenor() 
+                        if len(str(datos_cliente[2])) != 10:
+                            raise ErrorDigitos_Cel_CC(datos_cliente[2],"Numero Celular Incorrecto")
+                        
+                        if desea_socializar not in ["True", "False"]:
+                            raise ErrorAccionUsuario("El valor para socializar debe ser True o False.")
+                        
+                        nuevo_cliente = Cliente(nombre, edad, celular, desea_socializar)
+                        registrar_mascota(nuevo_cliente)
+                    except ErrorAplicacion as e:
+                        messagebox.showerror("Error", str(e))
 
             # Configurar el botón para aceptar los datos del cliente y proceder al registro de mascota
             frame_cliente.funAceptar(guardar_cliente, "Registrar")
@@ -1515,24 +1533,51 @@ def abrir_ventana(vent_inicio):
             def guardar_mascota():
                 datos_mascota = frame_Mascota.getEntradas()  # Recolectar datos de la mascota
                 if datos_mascota:
-                    # Crear un objeto Mascota
-                    mascota = Animal(datos_mascota[0], datos_mascota[1], datos_mascota[2].split(","))
-                    
-                    # Asignar la mascota al cliente
-                    cliente._mascota = mascota
-                    
-                    # Registrar el cliente en Socializar
-                    socializar_instance.registrar_cliente(cliente)
-                    
-                    messagebox.showinfo("Registro Exitoso", f"¡Cliente {cliente._nombre} y su mascota {mascota._nombre} registrados exitosamente!")
-                    
-                    # Limpiar el frame de la mascota y proceder a buscar matches
-                    frame_Mascota.pack_forget()  # Ocultar el frame de la mascota
-                    buscar_matches(cliente)  # Proceder a buscar matches
+                    try:
+                        nombre, edad, caracteristicas = datos_mascota
+                        if int(datos_mascota[1]) < 0:
+                            raise ErrorUsuarioMenor() 
+                        
+                        mascota = Animal(nombre, edad, caracteristicas.split(","))
+                        cliente._mascota = mascota
+                        
+                        # Registrar el cliente en Socializar
+                        socializar_instance.registrar_cliente(cliente)
+                        
+                        messagebox.showinfo("Registro Exitoso", f"¡Cliente {cliente._nombre} y su mascota {mascota._nombre} registrados exitosamente!")
+                        
+                        # Limpiar el frame de la mascota y proceder a buscar matches
+                        frame_Mascota.pack_forget()  # Ocultar el frame de la mascota
+                        buscar_matches(cliente)  # Proceder a buscar matches
+                    except ErrorAplicacion as e:
+                         messagebox.showerror("Error", str(e))
 
             # Configurar el botón para guardar los datos de la mascota
             frame_Mascota.funAceptar(guardar_mascota, "Registrar")
             frame_inicio.pack()
+        
+        def seleccionar_opcion():
+            opcion = frame_inicio.getEntradas()  # Recolectar la opción seleccionada
+            if opcion:
+                if opcion[0] == "Registrarse":
+                    frame_inicio.pack_forget()
+                    registrar_cliente()
+                elif opcion[0] == "Hacer Match":
+                    frame_inicio.pack_forget()
+                    
+                    # Si no hay clientes registrados, usar el cliente por defecto
+                    if not socializar_instance.clientes:  # Acceso correcto al atributo
+                        messagebox.showinfo("Cliente por defecto", "No hay clientes registrados. Usaremos un cliente por defecto.")
+                        socializar_instance.registrar_cliente(cliente_defecto)
+                        buscar_matches(cliente_defecto)
+                    else:
+                        # Llamar a la función para buscar matches con el cliente registrado
+                        cliente_registrado = socializar_instance.clientes[-1]  # Seleccionar el último cliente registrado
+                        buscar_matches(cliente_registrado)
+
+        # Configurar el botón para continuar según la opción seleccionada
+        frame_inicio.funAceptar(seleccionar_opcion, "Continuar")
+
 
         def seleccionar_opcion():
             opcion = frame_inicio.getEntradas()  # Recolectar la opción seleccionada
@@ -1709,7 +1754,7 @@ def abrir_ventana(vent_inicio):
                         if len(datos_cliente[2]) < 7:
                             raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos")
                         if len(datos_cliente[3]) < 10:
-                            raise ErrorDigitos_Cel_CC("cédula", " debe tener al menos 10 digitos")
+                            raise ErrorDigitos_Cel_CC("celular", " debe tener al menos 10 digitos")
                                  
 
                         cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3], datos_cliente[4])
