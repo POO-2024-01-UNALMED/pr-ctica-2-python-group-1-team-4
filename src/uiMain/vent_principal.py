@@ -37,6 +37,7 @@ from gestorExcepciones.ErrorAplicacion import ErrorFormularioVacio
 from gestorExcepciones.ErrorAplicacion import ErrorDigitos_Cel_CC
 from gestorExcepciones.ErrorAplicacion import ErrorUsuarioMenor
 from gestorExcepciones.ErrorAplicacion import ErrorFueraRango
+from gestorExcepciones.ErrorAplicacion import ErrorUnidadesInsuficientes
 
 # CREACIÓN DE OBJETOS BASE -----------------------------
 
@@ -1362,7 +1363,7 @@ def abrir_ventana(vent_inicio):
 
 
                                         else:
-                                            messagebox.showerror("Error Fuera de Rango",ErrorFueraRango())
+                                            messagebox.showerror("Error unidades insuficientes",ErrorUnidadesInsuficientes())
                                 else:
                                     messagebox.showerror("Error en campos","Faltan campos por rellenar")
 

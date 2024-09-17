@@ -2,7 +2,7 @@ from tkinter import messagebox
 class ErrorAplicacion(Exception):
     # Se dispara cuando se detecta un error en la aplicación
     def __init__(self, mensajeEspecifico):
-        self.mensajeBase = "Error: "
+        self.mensajeBase = "Error"
         # Mensaje de error que se mostrará al usuario, se concatena con el mensaje específico
         super().__init__(f"{self.mensajeBase}: {mensajeEspecifico}")
 
