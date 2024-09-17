@@ -1,6 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import tkinter as tk 
 from PIL import Image, ImageTk  # IMPORTAR MÓDULOS DE pillow PARA REDIMENSIONAR IMAGENES
-import vent_principal
+from uiMain import vent_principal
 # CREAMOS LA VENTANA DE INICIO
 vent_inicio = tk.Tk()
 
