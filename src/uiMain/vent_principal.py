@@ -1211,7 +1211,7 @@ def abrir_ventana(vent_inicio):
                                                     factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
                                                     factura.pack(side="top", pady=30)
                                                     # Label de factura2
-                                                    factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sede1,cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                    factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sedes[0],cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
                                                     factura.pack(side="top")
                                                     # Label de factura3
                                                     factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por visitar nuestra tienda, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
@@ -1334,7 +1334,7 @@ def abrir_ventana(vent_inicio):
                                                             factura = tk.Label(frame_factura, text="----- Factura Electrónica -----", font=("Times New Roman", 20, "bold"), fg="purple4", bg="thistle1")
                                                             factura.pack(side="top", pady=30)
                                                             # Label de factura2
-                                                            factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sede1,cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
+                                                            factura = tk.Label(frame_factura, text=tienda1.compra(indice+1, cliente, sedes[0],cantidad), font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
                                                             factura.pack(side="top")
                                                             # Label de factura3
                                                             factura = tk.Label(frame_factura, text=f"Gracias {cliente.getNombre()} por visitar nuestra tienda, esperamos verte pronto.", font=("Times New Roman", 14, "bold"), fg="purple4", bg="thistle1")
