@@ -1,7 +1,6 @@
 from typing import List
 
 from gestorAplicacion.administracion.centroAdopcion import CentroAdopcion
-from gestorAplicacion.componentes.cliente import Cliente
 from gestorAplicacion.componentes.muerto import Muerto
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
@@ -16,11 +15,11 @@ class Funeraria:
 
     ##Atributos
     tumbas: List['Muerto'] = []
-    cenizas: List['Cliente'] = []
+    cenizas: List['Muerto'] = []
 
     ##Constructor ----------------------------------------------------------------------------
     def __init__(self, centro: CentroAdopcion):
-        _centro = centro
+        self._centro = centro
 
     ##Setter and Getter ----------------------------------------------------------------------
     def getCentro(self):
@@ -55,7 +54,6 @@ class Funeraria:
         
     def visita(self, tipo):
         resultado = ""
-
         #Se controla el tipo ingresado
         if (tipo=="tumbas"):
             indice = 0
@@ -63,11 +61,12 @@ class Funeraria:
                 indice += 1
                 resultado += str(indice)+". "+str(i)
             return resultado
-        else:
+        elif (tipo=="cenizas"):
             indice = 0
             for i in self.cenizas:
                 indice += 1
                 resultado += str(indice)+". "+str(i)
+            return resultado
 
     def florCenizas(self, indice, flores):
         if indice <= len(self.cenizas):
