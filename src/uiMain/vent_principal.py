@@ -1121,7 +1121,7 @@ def abrir_ventana(vent_inicio):
                                                                                         inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
                                                                                         inicio.pack(side="top")
 
-                                                                                    print(cita)
+                                                                                
                                                                                         
 
                                                                             frame_datos_animal.funAceptar(registroDeCita, "Continuar")
