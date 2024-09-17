@@ -6,7 +6,6 @@ class ErrorAplicacion(Exception):
         # Mensaje de error que se mostrará al usuario, se concatena con el mensaje específico
         super().__init__(f"{self.mensajeBase}: {mensajeEspecifico}")
 
-#------------------------------------------------------------------------------------------
 
 # Subclases de ErrorAplicacion (ErrorGenerativo, ErrorAccionUsuario)
 
@@ -29,7 +28,6 @@ class ErrorBusquedaInvalida(ErrorGenerativo):
     def __init__(self):
         super().__init__("No se encontraron resultados para la búsqueda realizada.")
 
-# ----------------------------------------------------------------------------------------
 
 # Errores de tipo B (Acciones del usuario)
 class ErrorAccionUsuario(ErrorAplicacion):
@@ -37,7 +35,7 @@ class ErrorAccionUsuario(ErrorAplicacion):
         super().__init__(mensaje)
 
 class ErrorDigitos_Cel_CC(ErrorAccionUsuario):
-    # Se dispara cuando el usuario no selecciona un elemento de un menú desplegable y da click en aceptar
+    # Se dispara cuando el usuario ingresa correctamente un numero de cédula o celular
     def __init__(self, numero, descripcion_error):
         super().__init__(f"El número de {numero} está incorrecto. {descripcion_error} ")
         self._numero = numero
