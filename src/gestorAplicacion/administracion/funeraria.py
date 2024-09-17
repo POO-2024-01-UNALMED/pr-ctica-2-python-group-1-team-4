@@ -69,15 +69,13 @@ class Funeraria:
             return resultado
 
     def florCenizas(self, indice, flores):
-        if indice <= len(self.cenizas):
-            indice -= 1
-            return self.cenizas[indice].ponerFlor(flores)
+        if 0 <= indice < len(self.cenizas):  # Verificar si el índice es válido (dentro de rango)
+            return self.cenizas[indice].ponerFlor(flores)  # No restar 1 al índice
         else: 
             return "Índice inválido, no se pudo colocar las flores."
-        
+    
     def florTumbas(self, indice, flores):
-        if indice <= len(self.tumbas):
-            indice -= 1
-            return self.tumbas[indice].ponerFlor(flores)
+        if 0 <= indice < len(self.tumbas):  # Verificar si el índice es válido
+            return self.tumbas[indice].ponerFlor(flores)  # No restar 1 al índice
         else: 
             return "Índice inválido, no se pudo colocar las flores."

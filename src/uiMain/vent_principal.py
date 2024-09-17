@@ -375,9 +375,9 @@ class FieldFrame(Frame):
 def abrir_ventana(vent_inicio):
     Deserializador.deserializarListas()
     # CREAR LA VENTANA PRINCIPAL (SECUNDARIA)
-    vent_principal = tk.Toplevel(vent_inicio) 
+    vent_principal = tk.Toplevel(vent_inicio)
     tienda1 = Tienda.getTiendas()[0]
-
+    sedes = CentroAdopcion.getSedes()
 
     # ASIGNARLE EL NOMBRE. DIMENCIONES INICIALES Y COLOR DE FONDO
     vent_principal.title("AdoptaLove")
@@ -386,7 +386,7 @@ def abrir_ventana(vent_inicio):
     vent_principal.config(padx = 15, pady = 15)
 
 
-    sedes = CentroAdopcion.getSedes()
+
     # ------ EVENTOS ------
     
     def descripcion_aplicacion():
@@ -1598,6 +1598,7 @@ def abrir_ventana(vent_inicio):
         # Configurar el botón para continuar según la opción seleccionada
         frame_inicio.funAceptar(seleccionar_opcion, "Continuar")
 
+#-----------------------------------------------------------------------------------------------------------------------------------------------
     def funeraria():
         texto = "En nuestro sistema, puedes comprar o alquilar osarios y terrenos para tumbas según tus necesidades.\nSi eliges comprar, asegurarás un espacio permanente para el descanso final de tus seres queridos. \nSi prefieres alquilar, tendrás la opción de usar el espacio por un período determinado. \nAdemás, tienes la posibilidad de visitar el cementerio para rendir homenaje y agregar flores en las tumbas u osarios. \nEsta opción te permite mantener una conexión continua y significativa con tu ser querido y las demás mascotas que ya partieron al puente del arcoíris."
         formato_frame_top("Funeraria", texto)
@@ -1630,6 +1631,7 @@ def abrir_ventana(vent_inicio):
             elif "Sede Medellín" in sede_seleccionada:
                 funeraria_seleccionada = Funeraria(sedes[2])  # Sede Medellín
 
+            #Método para mostrar el cementerio según elección
             def mostrarCementerio(objetos):
                 # Crear un Canvas dentro de frame_bottom
                 canvas = tk.Canvas(frame_bottom, borderwidth=3, background="thistle1")
@@ -1660,7 +1662,7 @@ def abrir_ventana(vent_inicio):
                 frame_objetos.update_idletasks()
                 canvas.config(scrollregion=canvas.bbox("all"))
 
-                # Añadir contenido al frame_objetos
+                # Añadir objetos al frame_objetos
                 resultado_visita = objetos
                 if resultado_visita:
                     filas = 0  # Control de filas en el grid
@@ -1671,10 +1673,11 @@ def abrir_ventana(vent_inicio):
 
                 return frame_objetos, canvas
 
+            #Método para ir al cementerio y agregar flores si es el caso.
             def visitaCementerio(seleccion, frame_anterior):
                 frame_anterior.pack_forget()
                 resultado = funeraria_seleccionada.visita(seleccion)
-                frame_cementerio, canvas = mostrarCementerio(resultado)
+                frame_cementerio, canvas = mostrarCementerio(resultado) #Metodo que muestra los objetos
                 listaCampos = ["Agregar flores"]
                 combobox_items = {"Agregar flores": ["Sí", "No"]}
                 listaEditables = [True]
@@ -1682,25 +1685,24 @@ def abrir_ventana(vent_inicio):
                 frame_flores = FieldFrame(frame_bottom, "Agregar flores", listaCampos, "¿Desea agregar flores?", listaEditables, dicTipos, listaValores, combobox_items)
                 frame_flores.pack(expand=True, fill="both")
 
+                #El usuario debe escoger si dar flores o no. Si escoge sí, se llama al  método manejarFlores y continua el proceso. Si no, será llevado al inicio.
                 def opcionFlores():
                     seleccion_flores = frame_flores.getEntradas()[0]
                     if seleccion_flores == "Sí":
-                        retorno = frame_flores.funAceptar(lambda:[manejarFlores(funeraria_seleccionada, seleccion, frame_flores, frame_cementerio, canvas), funeraria], "Continuar")
+                        retorno = frame_flores.funAceptar(manejarFlores(funeraria_seleccionada, seleccion, frame_flores, frame_cementerio, canvas), "Continuar")
                     elif seleccion_flores == "No":
                         retorno = frame_flores.funAceptar(funeraria, "Continuar")
                     return retorno
                 
-                
                 frame_flores.funAceptar(opcionFlores, "Continuar")
 
+            #El método da a escoger al usuario a qué osario o tumba desea darle flores, para luego agregarlas.
             def manejarFlores(funeraria_seleccionada, seleccion, frame_anterior, frame_objetos, canvas1):
-                print(type(frame_anterior))
-                print(type(frame_objetos))
                 frame_anterior.pack_forget()
                 listaCampos = ["Flores", seleccion]
                 listaEditables = [True, True]
                 listaValores = ["", ""]
-                
+                #Se verifica si la seleccion es osario o tumba para acceder a sus métodos de acceso respectivos.
                 if seleccion == "tumbas":
                     combobox_items_flores = {"Flores": ["Rosas", "Lirios", "Tulipanes"], seleccion: [f"Tumba {i+1}" for i in range(len(funeraria_seleccionada.getTumbas()))]}
                     frame_flores_opciones = FieldFrame(frame_bottom, "Opciones de flores", listaCampos, "Seleccione una flor y una tumba", listaEditables, dicTipos, listaValores, combobox_items_flores)
@@ -1710,35 +1712,39 @@ def abrir_ventana(vent_inicio):
 
                 frame_flores_opciones.pack(expand=True, fill="both")
 
+                #Verifica las opciones de flor y la tumba u osario escogida por el usuario, para agregarles la flor.
                 def agregarFlores():
                     flor_seleccionada = frame_flores_opciones.getEntradas()[0]
-                    opcion_seleccionada = int(frame_flores_opciones.getEntradas()[1].split(" ")[-1]) - 1
-                    if seleccion == "tumbas":
-                        mensaje = funeraria_seleccionada.florTumbas(opcion_seleccionada, flor_seleccionada)
-                    else:
-                        mensaje = funeraria_seleccionada.florCenizas(opcion_seleccionada, flor_seleccionada)
+                    opcion_seleccionada = int(frame_flores_opciones.getEntradas()[1].split(" ")[-1]) - 1  #Se obtiene la opcion de la tumba u osario.
 
-                    print(mensaje)
+                    #Sea tumba u osario, se verifica para agregarle la flor con su respectivo método.
+                    if seleccion == "tumbas":
+                        funeraria_seleccionada.florTumbas(opcion_seleccionada, flor_seleccionada)
+                    else:
+                        funeraria_seleccionada.florCenizas(opcion_seleccionada, flor_seleccionada)
+
                     frame_flores_opciones.pack_forget()
-                    frame_objetos.pack_forget()
+                    frame_objetos.pack_forget()   #Se esconden todos los frames anteriores a este proceso.
                     canvas1.pack_forget()
-                    resultado_con_flor = funeraria_seleccionada.visita(seleccion)
+                    resultado_con_flor = funeraria_seleccionada.visita(seleccion)   #Se le vuelve a mostrar al usuario los objetos escogidos anteriormente, pero ahora con la actualización de la flor incluida por él.
                     frame_resultado_nuevo, canvas2 = mostrarCementerio(resultado_con_flor)
-                    messagebox.showinfo("Información", "Será redireccionado al inicio")
-                    funeraria()
+                    messagebox.showinfo("Información", "Verifique que se guardó el cambio.\n\nSerá redireccionado al inicio.")
+                    funeraria() #Lleva al usuario al inicio.
 
                     return frame_resultado_nuevo
                 
                 frame_flores_opciones.funAceptar(agregarFlores, "Agregar")
 
+            #Inicia el proceso de recolección de datos para la compra o alquiler, y crear el objeto de tipo muerto.
             def inicioProcesoDatos(accion, seleccion):
-                listaCampos = ["Nombre", "Edad", "Cédula", "Número de celular","Dirección"]
+                listaCampos = ["Nombre", "Edad", "Cédula", "Número de celular","Dirección"] #Se empieza con los datos del cliente.
                 listaEditables = [True, True, True, True, True]
                 listaValores = ["", "", "", "", ""]
                 dicTipos = {"Nombre": str, "Edad": int, "Cédula": int, "Número de celular": int, "Dirección": str}
                 frame_datos_usuario = FieldFrame(frame_bottom, f"Información para {accion}", listaCampos, "Ingresa tus datos", listaEditables, dicTipos, listaValores)
                 frame_datos_usuario.pack(expand=True, fill="both")
 
+                #Sigue con los datos de la mascota fallecida.
                 def pedirDatosMascota():
                     try:
                         datos_cliente = frame_datos_usuario.getEntradas()
@@ -1753,11 +1759,11 @@ def abrir_ventana(vent_inicio):
                         if len(datos_cliente[3]) < 10:
                             raise ErrorDigitos_Cel_CC("celular", " debe tener al menos 10 digitos")
                                  
-
+                        #Se crea el objeto cliente para luego agregarlo al objeto muerto.
                         cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3], datos_cliente[4])
-                        print(cliente)
                         frame_datos_usuario.pack_forget()
 
+                        #Se verifica si el usuario quiere comprar o alquilar, ya sea el osario o tumba.
                         if accion == "la compra":
                             listaCampos = ["Nombre que tenía", "Tipo de animal", "Edad con la que murió", "Sexo", "Fecha de fallecimiento", "Años a adquirir el producto"]
                             listaEditables = [True, True, True, True, True, False]
@@ -1775,10 +1781,11 @@ def abrir_ventana(vent_inicio):
                             frame_datos_mascota = FieldFrame(frame_bottom, "Información de la mascota", listaCampos, "Ingresa sus datos", listaEditables, dicTipos, listaValores, combobox_items)
                             frame_datos_mascota.pack(expand=True, fill="both")
 
+                        #Le da la opción al usuario de agregarle un mensaje al osario o tumba.
                         def mensajeMascota():
                             datos_mascota = frame_datos_mascota.getEntradas()
+                            #Se crea el objeto mascota para luego agregarlo al objeto muerto.
                             mascota = Animal(datos_mascota[0], datos_mascota[1], datos_mascota[2], datos_mascota[3])
-                            print(mascota)
                             frame_datos_mascota.pack_forget()
                             listaCampos = ["Mensaje"]
                             listaEditables = [True]
@@ -1792,17 +1799,21 @@ def abrir_ventana(vent_inicio):
                             for entrada in frame_mensaje.lista_entradas:
                                 entrada.grid(sticky="nsew", padx=30)  # Solo afecta a las entradas de este frame
 
+                            #Guarda en el cementerio (La lista de los objetos cenizas o tumbas) la información creada a partir de InicioProcesoDatos
                             def guardarEnCementerio():
                                 mensaje = frame_mensaje.getEntradas()
-                                print(mensaje)
 
+                                #Se verifica si el usuario escogio tumbas u osarios(cenizas)
                                 if seleccion == "tumbas":
+                                    #Verifica si el usuario escogió comprar o alquilar el terreno.
                                     if accion == "la compra":
+                                        #Creación del objeto muerto
                                         muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
+                                        #Se agrega a la lista (cementerio) indicada
                                         Funeraria.tumbas.append(muerto)
                                         messagebox.showinfo("Información", "Su compra ha sido exitosa.")
                                         messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno de por vida es igual a: $4000000\n\nVisitarás a tu ser querido...")
-                                        print(muerto)
+                                        #El resto de la sentencia If Else el codigo sigue la misma lógica.
                                     else:
                                         muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
                                         Funeraria.tumbas.append(muerto)
@@ -1811,14 +1822,12 @@ def abrir_ventana(vent_inicio):
                                         total = años * 500000
                                         messagebox.showinfo("Información", "Su alquiler ha sido exitoso.")
                                         messagebox.showinfo("Información de pago", f"A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el terreno los {años} años de alquiler es igual a: ${total}\n\nVisitarás a tu ser querido...")
-                                        print(muerto)
                                 elif seleccion == "cenizas":
                                     if accion == "la compra":
                                         muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, "de por vida", seleccion)
                                         Funeraria.cenizas.append(muerto)
                                         messagebox.showinfo("Información", "Su compra ha sido exitosa.")
                                         messagebox.showinfo("Información de pago", "A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el osario de por vida es igual a: $2000000\n\nVisitarás a tu ser querido...")
-                                        print(muerto)
                                     else:
                                         muerto = Muerto(mascota, datos_mascota[4], mensaje[0], cliente, datos_mascota[5], seleccion)
                                         Funeraria.cenizas.append(muerto)
@@ -1827,9 +1836,8 @@ def abrir_ventana(vent_inicio):
                                         total = años * 200000
                                         messagebox.showinfo("Información", "Su alquiler ha sido exitoso.")
                                         messagebox.showinfo("Información de pago", f"A su dirección se le enviará la factura, y se le estará contactando por teléfono.\nTotal a pagar por el osario los {años} años de alquiler es igual a: ${total}\n\nVisitarás a tu ser querido...")
-                                        print(muerto)
 
-                            # Llamar a guardarEnCementerio al aceptar
+                            # Llamar a guardarEnCementerio al aceptar, para luego acceder a la visita al cementerio para que el usuario verifique que todo su proceso se guardó.
                             frame_mensaje.funAceptar(lambda: [guardarEnCementerio(), visitaCementerio(seleccion, frame_mensaje)], "Continuar")
 
                         frame_datos_mascota.funAceptar(mensajeMascota, "Continuar")
@@ -1843,12 +1851,14 @@ def abrir_ventana(vent_inicio):
      
                 frame_datos_usuario.funAceptar(pedirDatosMascota, "Continuar")
 
+            #Muestra las opciones al usuario de los diferentes servicios funerarios
             def mostrarServicios():
                 servicio_seleccionado = frame_servicios.getEntradas()
 
+                #Se empieza a verificar la selección del usuario.
                 for i in servicio_seleccionado:
                     if i == "Cremación":
-                        if funeraria_seleccionada.espacioCenizas():
+                        if funeraria_seleccionada.espacioCenizas(): #Verifica que en la sede escogida haya espacio para osarios
                             listaCampos = ["Acciones"]
                             listaEditables = [True]
                             listaValores = [""]
@@ -1858,14 +1868,14 @@ def abrir_ventana(vent_inicio):
                             frame_opciones.pack(expand=True, fill="both")
                             messagebox.showinfo("Información", "¡Si hay espacio disponible!")
 
+                            #Recibe la selección del usuario en si comprar o alquilar el osario.
                             def manejarAccionOsario():
                                 accion_seleccionada = frame_opciones.getEntradas()[0]
                                 if accion_seleccionada == "Comprar osario":
-                                    print("Has seleccionado comprar un osario.")
                                     frame_servicios.pack_forget()
                                     frame.pack_forget()
                                     frame_opciones.pack_forget()
-                                    inicioProcesoDatos("la compra", "cenizas")
+                                    inicioProcesoDatos("la compra", "cenizas") #Lleva al usuario al proceso de recolección de datos para su compra.
                                     messagebox.showinfo("Información", f"Vas a comprar un osario en la {sede_seleccionada[0]}")
 
                                 elif accion_seleccionada == "Alquilar osario":
@@ -1873,14 +1883,14 @@ def abrir_ventana(vent_inicio):
                                     frame_servicios.pack_forget()
                                     frame.pack_forget()
                                     frame_opciones.pack_forget()
-                                    inicioProcesoDatos("el alquiler", "cenizas")
+                                    inicioProcesoDatos("el alquiler", "cenizas")  #Lleva al usuario al proceso de recolección de datos para su alquiler.
                                     messagebox.showinfo("Información", f"Vas a alquilar un osario en la {sede_seleccionada[0]}")
 
                             frame_opciones.funAceptar(manejarAccionOsario, "Continuar")
                             frame_opciones.pack(expand=True, fill="both")
                         else:
                             print("No hay espacio para cenizas.")
-                    
+                    #Esta parte del código funciona igual a la anterior, solo que todo va en torno a los terrenos (tumbas)
                     elif i == "Entierro":
                         if funeraria_seleccionada.espacioTumbas():
                             listaCampos = ["Acciones"]
@@ -1911,7 +1921,7 @@ def abrir_ventana(vent_inicio):
                             frame_opciones.pack(expand=True, fill="both")
                         else:
                             print("No hay espacio para tumbas.")
-
+                    #Verifica que el usuario haya escogido la visita al cementerio.
                     elif i == "Visitar cementerio":
                         listaCampos = ["Visitar"]
                         combobox_items = {"Visitar": ["Osarios", "Tumbas"]}
@@ -1923,17 +1933,19 @@ def abrir_ventana(vent_inicio):
                         frame_visitas.pack(expand=True, fill="both")
                         messagebox.showinfo("Información", "¿Qué te gustaría visitar?")
 
+            #Le permite al usuario escoger entre si visitar las tumbas u osarios.
             def mostrarVisitas():
                 lugar_seleccionado = frame_visitas.getEntradas()[0]
 
+                #Verifica el lugar seleccionado por el usuario.
                 if lugar_seleccionado == "Tumbas":
                     frame.pack_forget()
                     frame_servicios.pack_forget()
-                    visitaCementerio("tumbas", frame_visitas)
+                    visitaCementerio("tumbas", frame_visitas) #Dirige al usuario directamente a la visita de las tumbas
 
                 elif lugar_seleccionado == "Osarios":
                     frame.pack_forget()
-                    frame_servicios.pack_forget()
+                    frame_servicios.pack_forget() #Dirige al usuario directamente a la visita de los osarios.
                     visitaCementerio("cenizas", frame_visitas)
 
             # Mostrar los servicios disponibles según la sede seleccionada
