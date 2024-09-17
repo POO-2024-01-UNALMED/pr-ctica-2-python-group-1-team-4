@@ -1497,8 +1497,11 @@ def abrir_ventana(vent_inicio):
             clear_frame_bottom()
 
             texto = "Por favor, completa los datos del cliente y su mascota para registrarse."
+
+            # Configuración del marco superior
             formato_frame_top("Registrarse", texto)
 
+            # Creación del FieldFrame para recolectar los datos del cliente
             listaCampos = ["Nombre", "Edad", "Celular", "Deseas formar parte de socializar? (True/False)"]
             listaEditables = [True, True, True, True]
             listaValores = ["", "", "", ""]
@@ -1508,35 +1511,39 @@ def abrir_ventana(vent_inicio):
             frame_cliente.pack(expand=True, fill="both")
 
             def guardar_cliente():
-                datos_cliente = frame_cliente.getEntradas()  
-                espacios_vacios = [campo for campo, valor in zip(listaCampos, datos_cliente) if not valor]
-                
-                if espacios_vacios:
-                    raise ErrorFormularioVacio(espacios_vacios)  # Lanzar excepción si hay espacios vacíos
-                
-                try:
-                    if int(datos_cliente[1]) < 18:
-                        raise ErrorUsuarioMenor()  # Excepción para la edad
-                    if len(str(datos_cliente[2])) != 9:
-                        raise ErrorDigitos_Cel_CC(datos_cliente[2], "Número de celular incorrecto")  # Verificación del celular
-                    
-                    # Validar si la participación es un booleano
-                    if datos_cliente[3] not in ["True", "False"]:
-                        raise ErrorAccionUsuario("El valor de participación debe ser True o False.")
+                datos_cliente = frame_cliente.getEntradas()  # Recolectar los datos del cliente
+                if datos_cliente:
+                    # Validar que no haya campos vacíos
+                    espacios_vacios = []
+                    for i in range(len(listaCampos)):
+                        if not datos_cliente[i]:
+                            espacios_vacios.append(listaCampos[i])
 
-                    # Crear cliente si las validaciones pasan
-                    nuevo_cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3])
-                    registrar_mascota(nuevo_cliente)
+                    if espacios_vacios:
+                        raise ErrorFormularioVacio(espacios_vacios)
 
-                except ValueError as e:
-                    messagebox.showerror("Error", f"Entrada no válida: {str(e)}")
-                except ErrorAplicacion as e:
-                    messagebox.showerror("Error", str(e))
+                    try:
+                        nombre, edad, celular, desea_socializar = datos_cliente
+                        if int(datos_cliente[1]) < 18:
+                            raise ErrorUsuarioMenor() 
+                        if len(str(datos_cliente[2])) != 10:
+                            raise ErrorDigitos_Cel_CC(datos_cliente[2],"Numero Celular Incorrecto")
+                        
+                        if desea_socializar not in ["True", "False"]:
+                            raise ErrorAccionUsuario("El valor para socializar debe ser True o False.")
+                        
+                        nuevo_cliente = Cliente(nombre, edad, celular, desea_socializar)
+                        registrar_mascota(nuevo_cliente)
+                    except ErrorAplicacion as e:
+                        messagebox.showerror("Error", str(e))
 
+            # Configurar el botón para aceptar los datos del cliente y proceder al registro de mascota
             frame_cliente.funAceptar(guardar_cliente, "Registrar")
 
         def registrar_mascota(cliente):
             clear_frame_bottom()
+
+            # Crear un nuevo FieldFrame para registrar los datos de la mascota
             listaMascota = ["Nombre", "Edad", "Características"]
             listaEditables = [True, True, True]
             dicTiposMascota = {"Nombre": str, "Edad": int, "Características": str}
@@ -1545,27 +1552,53 @@ def abrir_ventana(vent_inicio):
             frame_Mascota.pack(expand=True, fill="both")
 
             def guardar_mascota():
-                datos_mascota = frame_Mascota.getEntradas()
-                espacios_vacios = [campo for campo, valor in zip(listaMascota, datos_mascota) if not valor]
-                
-                if espacios_vacios:
-                    raise ErrorFormularioVacio(espacios_vacios)  # Lanzar excepción si hay espacios vacíos
+                datos_mascota = frame_Mascota.getEntradas()  # Recolectar datos de la mascota
+                if datos_mascota:
+                    try:
+                        nombre, edad, caracteristicas = datos_mascota
+                        if int(datos_mascota[1]) < 0:
+                            raise ErrorUsuarioMenor() 
+                        
+                        mascota = Animal(nombre, edad, caracteristicas.split(","))
+                        cliente._mascota = mascota
+                        
+                        # Registrar el cliente en Socializar
+                        socializar_instance.registrar_cliente(cliente)
+                        
+                        messagebox.showinfo("Registro Exitoso", f"¡Cliente {cliente._nombre} y su mascota {mascota._nombre} registrados exitosamente!")
+                        
+                        # Limpiar el frame de la mascota y proceder a buscar matches
+                        frame_Mascota.pack_forget()  # Ocultar el frame de la mascota
+                        buscar_matches(cliente)  # Proceder a buscar matches
+                    except ErrorAplicacion as e:
+                         messagebox.showerror("Error", str(e))
 
-                try:
-                    mascota = Animal(datos_mascota[0], int(datos_mascota[1]), datos_mascota[2].split(","))
-                    cliente._mascota = mascota
-                    socializar_instance.registrar_cliente(cliente)
-                    messagebox.showinfo("Registro Exitoso", f"¡Cliente {cliente._nombre} y su mascota {mascota._nombre} registrados exitosamente!")
-                    frame_Mascota.pack_forget()
-                    buscar_matches(cliente)
-
-                except ValueError as e:
-                    messagebox.showerror("Error", f"Entrada no válida: {str(e)}")
-                except ErrorAplicacion as e:
-                    messagebox.showerror("Error", str(e))
-
+            # Configurar el botón para guardar los datos de la mascota
             frame_Mascota.funAceptar(guardar_mascota, "Registrar")
             frame_inicio.pack()
+        
+        def seleccionar_opcion():
+            opcion = frame_inicio.getEntradas()  # Recolectar la opción seleccionada
+            if opcion:
+                if opcion[0] == "Registrarse":
+                    frame_inicio.pack_forget()
+                    registrar_cliente()
+                elif opcion[0] == "Hacer Match":
+                    frame_inicio.pack_forget()
+                    
+                    # Si no hay clientes registrados, usar el cliente por defecto
+                    if not socializar_instance.clientes:  # Acceso correcto al atributo
+                        messagebox.showinfo("Cliente por defecto", "No hay clientes registrados. Usaremos un cliente por defecto.")
+                        socializar_instance.registrar_cliente(cliente_defecto)
+                        buscar_matches(cliente_defecto)
+                    else:
+                        # Llamar a la función para buscar matches con el cliente registrado
+                        cliente_registrado = socializar_instance.clientes[-1]  # Seleccionar el último cliente registrado
+                        buscar_matches(cliente_registrado)
+
+        # Configurar el botón para continuar según la opción seleccionada
+        frame_inicio.funAceptar(seleccionar_opcion, "Continuar")
+
 
         def seleccionar_opcion():
             opcion = frame_inicio.getEntradas()  # Recolectar la opción seleccionada
