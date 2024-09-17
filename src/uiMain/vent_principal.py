@@ -624,6 +624,7 @@ def abrir_ventana(vent_inicio):
                
                                                                     # MASCOTAS SELECCIONADA PARA SER ADOPTADA
                                                                     mascota_adoptada = mascotas_disponibles [(num_mascota)-1]
+                                                                    sede_seleccionada.borrar_animal(mascota_adoptada)
 
                                                                     #ADOPTANTE (CLIENTE)
                                                                     adoptador = Cliente(datos_cliente[0], int(datos_cliente[1]), int(datos_cliente[2]),int(datos_cliente[3]), datos_cliente[4])
@@ -884,8 +885,6 @@ def abrir_ventana(vent_inicio):
 
                             # SE OBTENIENEN LOS EMPLEADOS DISPONIBLES PARA ATENDER CITAS
                             lista_empleados = sede_seleccionada.tiene_empleados()
-                            for i in lista_empleados:
-                                print(i)   
 
                             # SI NO HAY EMPLEADOS CON DISPONIBILIDAD, SE INFORMA SOBRE ELLO
                             if (len(lista_empleados) ==0 ):
@@ -956,9 +955,6 @@ def abrir_ventana(vent_inicio):
 
                                                 #CUPOS DISPONIBLES DEL EMPLEADO EN EL DIA SELECCIONADO
                                                 cupos_disponibles = empleado_seleccionado.cupos_disponibles(num_dia)   
-
-                                                for i in cupos_disponibles:
-                                                    print(i) 
 
                                                 if len(cupos_disponibles)==0:
                                                      messagebox.showinfo("Indisponibilidad de cupos", "El proceso de agendamiento de cita no podrá continuar porque el empleado seleccionado no cuenta con cupos disponibles para atender en el dia solicitado")
@@ -1053,7 +1049,7 @@ def abrir_ventana(vent_inicio):
 
                                                                                     cita = Cita(cliente,animal, empleado_seleccionado, cupo_seleccionado, num_sede)
 
-                                                                                    print(cita)
+                                                                    
 
                                                                                     if (cliente.getPuntos()>=15):
 
@@ -1102,9 +1098,7 @@ def abrir_ventana(vent_inicio):
                                                                                         # botón final
                                                                                         inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
                                                                                         inicio.pack(side="top")
-
-                                                                                    print(cita)
-                                                                                        
+                                                                        
 
                                                                             frame_datos_animal.funAceptar(registroDeCita, "Continuar")
                                                             frame_datos_usuario.funAceptar(datos_animal, "Continuar")
