@@ -21,9 +21,9 @@ class Tienda:
     listaProductos = []
 
     ##Constructor -------------------------------------------------------------------------------
-    def __init__(self, empleado: Empleado) -> None:
-        _listaEmpleados = []
-        _listaEmpleados.append(empleado)
+    def __init__(self, empleado: Empleado = None):
+        self._listaEmpleados = []
+        self._listaEmpleados.append(empleado)
 
     ##Setter and Getter -------------------------------------------------------------------------
     
