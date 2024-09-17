@@ -1730,7 +1730,7 @@ def abrir_ventana(vent_inicio):
                         if len(datos_cliente[2]) < 7:
                             raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos")
                         if len(datos_cliente[3]) < 10:
-                            raise ErrorDigitos_Cel_CC("cédula", " debe tener al menos 10 digitos")
+                            raise ErrorDigitos_Cel_CC("celular", " debe tener al menos 10 digitos")
                                  
 
                         cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3], datos_cliente[4])
