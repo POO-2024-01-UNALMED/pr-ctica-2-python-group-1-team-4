@@ -308,6 +308,8 @@ class FieldFrame(Frame):
         else:
             # Si todos los campos están llenos, se devuelve lo que el usuario puso 
             return listaValores
+        
+    # FUNCIONES PARA EL MANEJO DE EXCEPCIONES
     
     # Valida el tipo de cualquier entrada
     def validar_tipo(self, valor, tipo_esperado):
@@ -319,8 +321,8 @@ class FieldFrame(Frame):
         except ValueError:
             # Si da error, retorna falso
             return False
-    
-    # Validar un celular y la cédula
+        
+        
     def validar_cel_cc(self, celular, cedula):
 
         try:
@@ -337,11 +339,10 @@ class FieldFrame(Frame):
                     # Se tira el error en el caso del número
                 raise ErrorDigitos_Cel_CC("celular", " debe tener 10 digitos")
                         
-        except ErrorDigitos_Cel_CC as f:  # lanza uno de los errores personalizados para el control de errores
-            # método para arrojar alerta
-            f.mostrarMensaje()
-    
-    # Validar solo cédula
+        except ErrorDigitos_Cel_CC as f:  
+
+            messagebox.showerror("Error:", f )
+
     def validar_CC(self, cedula):
 
         try:
@@ -353,8 +354,20 @@ class FieldFrame(Frame):
                 raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos" )
             
         except ErrorDigitos_Cel_CC as f:
-            # Recoge la exepción personalizada y utiliza su método mostrar mensaje
-            f.mostrarMensaje()
+
+            messagebox.showerror("Error ", f )
+
+    def validar_edad(self, edad):
+        
+        try:
+            if edad>=18:
+                return True
+            else:
+                raise ErrorUsuarioMenor
+            
+        except ErrorUsuarioMenor as e:
+             messagebox.showerror("Error ", e)
+
 
 
 # -----------------------------------
@@ -399,67 +412,7 @@ def abrir_ventana(vent_inicio):
         descripcionFun.config(text = texto, font = ("Times New Roman", 14), fg= "purple")
        # descripcionFun.pack(side = "bottom", expand=True, fill = "both", pady =3)
 
-    def adoptar_mascota():
-
-        clear_frame_bottom()
-
-        texto = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las\n industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló\nde tal manera que logró hacer un libro de textos especimen.\n "
-
-        formato_frame_top("Funcionalidad adoptar Mascota", texto)
-        
-        # Creación de un objeto Field Frame
-        listaCampos = ["Nombre", "Cédula", "Dirección","edad" ,"Sexo", "pregunta"]
-        listaEditables = [True, True, False,True, True, True]
-        listaValores = ["", "", "", "","", ""]
-        dicTipos = {"Nombre": str, "Cédula": int, "Dirección": str,"edad": int, "Sexo": str, "pregunta":str}
-
-        combobox_items = {"Sexo": ["Masculino", "Femenino", "Otro"], "pregunta":["Messi", "Cristiano"]}
-
-        frame = FieldFrame(frame_bottom, "Persona" ,listaCampos, "Sus datos", listaEditables, dicTipos, listaValores, combobox_items)
-        #frame.place(x =0, y = 0 , width=1236, height= 418)
-        frame.pack(expand=True, fill="both")
-
-        #---------
-
-        def funcionAnimal():
-            datos_cliente = frame.getEntradas()
-
-            def mostrarCliente():
-                 datos_animal = frame_Animal.getEntradas()
-
-                 if datos_animal != False:
-
-                    cliente = Cliente(datos_cliente[0], datos_cliente[2], datos_cliente[1])
-                    CentroAdopcion.clientes_AdoptaLove.append(cliente)
-
-                    for i in CentroAdopcion.clientes_AdoptaLove:
-                        #messagebox.showinfo("DATOS CLIENTE", cliente.__str__())
-                        print(i)
-
-                    # Ocultar frame de datos del animal y volver al frame de cliente
-                    frame_Animal.destroy()
-
-                    frame.funborrar()
-                    #frame.place(x=0, y=0, width=1236, height=418) 
-                    frame.pack(expand=True, fill="both")
-
-            if datos_cliente != False:
-
-                frame.pack_forget()  # Ocultar el frame de Persona actual en lugar de destruirlo
-
-                 #frame.destroy()
-                listaAnimal = ["Nombre perro", "Sexo perro", "Edad perro"]
-                listaEditables = [True, True, True]
-                dicTipos = {"Nombre perro": str, "Sexo perro": str, "Edad perro": int}
-
-                frame_Animal = FieldFrame(frame_bottom, "Animal", listaAnimal, "sus datos", listaEditables, dicTipos)
-                #frame_Animal.place(x =0, y = 0, width=1236, height= 418)
-                frame_Animal.pack(expand=True, fill="both")
-
-                frame_Animal.funAceptar(mostrarCliente, "Finalizar")
-
-        
-        frame.funAceptar(funcionAnimal, "Continuar")
+ 
 
     def adoptarAnimal():
 
@@ -493,8 +446,8 @@ def abrir_ventana(vent_inicio):
             if datos_cliente != False:
 
                 # VERIFICAR SI EL USUARIO ES MENOR DE EDAD, SI LO ES, NO PODRÁ CONTINUAR EL PROCESO
-                if int(datos_cliente[1]) < 18:
-                    messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor())
+                if frame_datos_cliente.validar_edad(int(datos_cliente[1])) != True:
+                  #  messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor())
                     frame_datos_cliente.funborrar() #LIMPIAR LAS ENTRADAS PARA QUE PUEDA INGRESAR NUEVOS DATOS
                 
                 # SI ES MAYOR DE EDAD:
@@ -1882,7 +1835,7 @@ def abrir_ventana(vent_inicio):
                         frame_datos_mascota.funAceptar(mensajeMascota, "Continuar")
 
                     except ErrorDigitos_Cel_CC as e:
-                        e.mostrarMensaje()
+                        messagebox.showerror("Error", str(e))
                     except ErrorUsuarioMenor as e:
                         messagebox.showerror("Error", str(e))
 
