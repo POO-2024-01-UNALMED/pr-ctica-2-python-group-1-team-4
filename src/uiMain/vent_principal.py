@@ -812,44 +812,45 @@ def abrir_ventana(vent_inicio):
 
     
         #FIELDFRAME PARA ESCOGER SEDE
-        lista_campo = ["Servicio:"]
+        lista_campo = ["Servicio"]
         lista_habilitado = [True] 
-        tipo_esperados = {"Servicio:": str}
+        tipo_esperados = {"Servicio": str}
         valor_por_defecto = [""]
-        dicRespuestas = {"Servicio:": ["BELLO: Guardería", "ITAGÜI: Veterinaria", "MEDELLÍN: Peluqueria"]}
+        dicRespuestas = {"Servicio": ["BELLO: Guardería", "ITAGÜI: Veterinaria", "MEDELLÍN: Peluqueria"]}
 
-        frame_eleccion_sede = FieldFrame(frame_bottom, "Seleccione una sede", lista_campo, "Sede con servicio ofertado", lista_habilitado, tipo_esperados, valor_por_defecto, dicRespuestas)
+        frame_eleccion_sede = FieldFrame(frame_bottom, "Sede - Servicio", lista_campo, "Seleccione un servicio: ", lista_habilitado, tipo_esperados, valor_por_defecto, dicRespuestas)
         frame_eleccion_sede.pack(expand=True, fill="both")
     
-        # FUNCIÓN PARA EL BOTÓN ACEPTAR DEL (frame_eleccion_sede)
+        # FUNCIÓN PARA EL BOTÓN CONTINUAR DEL (frame_eleccion_sede)
         def escogerSede():
             
             sede_escogida = frame_eleccion_sede.getEntradas()
 
             if sede_escogida != False:
 
-                frame_eleccion_sede.lista_entradas[0].config(state="disabled")
-                frame_eleccion_sede.boton_limpiar.config(command=funVacia)
+                frame_eleccion_sede.lista_entradas[0].config(state="disabled") # CONFIGURAR PARA QUE NO SEA EDITABLE
+                frame_eleccion_sede.boton_limpiar.config(command=funVacia) #DESABILITAR BOTONES
                 frame_eleccion_sede.boton_aceptar.config(command=funVacia)
 
-                lista_animales=[]
+                lista_animales=[] #LISYA DE ANIMALES PARA LOS CUALES ESTÁ DISPONIBLE EL SERVICIO
 
                 if sede_escogida[0] == "ITAGÜI: Veterinaria":
                     lista_animales = ["Perro", "Gato", "Conejo", "Hámster", "Otro"]
+
                 else:
                     lista_animales = ["Perro", "Gato", "Otro"]
                     
-                # Combobox de comprobar que el animal sea correcto ---------
-                lista_campo = ["Animal:"]
+                #VERIFICAR QUE EL TIPO DE LA MASCOTA ESTÉ ENTRE LOS OFERTADOS POR EL SERVICIO
+                lista_campo = ["Mascota"]
                 listahabilitado = [True] 
-                dictipo = {"Animal:": str}
+                dictipo = {"Mascota": str}
                 valor = [""]
-                dicRespuestas = {"Animal:": lista_animales}
+                dicRespuestas = {"Mascota": lista_animales}
 
-                frame_tipo_mascota = FieldFrame(frame_bottom, "Especie", lista_campo, "Tipo de su animal", listahabilitado, dictipo, valor, dicRespuestas)
+                frame_tipo_mascota = FieldFrame(frame_bottom, "Especie", lista_campo, "Tipo de su mascota", listahabilitado, dictipo, valor, dicRespuestas)
                 frame_tipo_mascota.pack(expand=True, fill="both") 
                 
-                # FUNCION DEL BOTON frame_tipo_mascota
+                # FUNCION DEL BOTON ACEPTAR DE (frame_tipo_mascota)
                 def empleados_disponibles():
                     tipo_animal = frame_tipo_mascota.getEntradas()
                         
@@ -860,7 +861,7 @@ def abrir_ventana(vent_inicio):
                             messagebox.showinfo("Servicio no disponible", "Por el momento, el servicio solo se encuentra disponible para los animales mostrados en las opciones")         
                             agendar_servicio()
 
-                        # SI EL SERVICIO SI ESTÁ DISPONIBLE
+                        # SI EL SERVICIO SI ESTÁ DISPONIBLE PARA SU MASCOTA:
                         else:
 
                             sede_seleccionada = None
@@ -879,37 +880,37 @@ def abrir_ventana(vent_inicio):
                                 sede_seleccionada = sedes[2]
                                 profesion = "Peluquero"
 
-                            # SE OBTENIENEN LOS EMPLEADOS DISPONIBLES PARA ATENDER CITAS
-                            lista_empleados = sede_seleccionada.tiene_empleados()
-                            for i in lista_empleados:
-                                print(i)   
+                            # SE OBTENIENEN LOS EMPLEADOS DISPONIBLES PARA ATENDER CITAS:
+                            lista_empleados = sede_seleccionada.tiene_empleados() 
 
-                            # SI NO HAY EMPLEADOS CON DISPONIBILIDAD, SE INFORMA SOBRE ELLO
+                            # SI NO HAY EMPLEADOS CON DISPONIBILIDAD, SE INFORMA SOBRE ELLO:
                             if (len(lista_empleados) ==0 ):
                                 messagebox.showinfo("Indisponibilidad de citas", "Actualmente, debido a la falta de disponibilidad de citas, no es posible continuar con el proceso de agendamiento")
-                                agendar_servicio()
+                                agendar_servicio() # SE DEVUELVE AL INICIO
 
                             else:
                                 # SI HAY EMPLEADOS DISPONIBLES, SE LE MUESTRAN PARA QUE SELECCIONE UNO:
                                 frame_tipo_mascota.destroy()
                                 frame_eleccion_sede.destroy()
+
+                                #FRAME PARA MOSTRAR LOS EMPLEADOS:
                                 
                                 frame_muestra_empleados = tk.Frame(frame_bottom, highlightbackground="purple4", highlightthickness=2, bg = "thistle1")
                                 frame_muestra_empleados.pack(side = "top", expand = True,fill = "both")
                                 frame_muestra_empleados.pack_propagate(False)
 
-                                #AGREGAR LOS LABEL DONDE SE MUESTRA CADA MASCOTA:
-
                                 for i in range(len(lista_empleados)):
-                                    # LABEL DEL NÚMERO DE LA MASCOTA
+
+                                    # LABEL DEL NÚMERO DEL EMPLEADO
                                     label_criterio = tk.Label(frame_muestra_empleados, text=(profesion + " " + str(i+1)),font= ("Times New Roman",10), bg = "plum1" )
 
                                     label_criterio.grid(row = i, column = 0, padx=20, pady=8, sticky="e" )
 
-                                     # LABEL __str__mascotas
+                                     # LABEL __str__ DEL EMPLEADO
                                     label_entrada = tk.Label(frame_muestra_empleados, text=(lista_empleados[i].__str__()),font= ("Times New Roman",10), bg = "plum1")
                                     label_entrada.grid(row = i, column = 1, padx=20, pady=8, sticky="w")
 
+                                
 
                                 lista_datos = ["Numero " + profesion]
                                 lista_editables = [True]
@@ -921,15 +922,21 @@ def abrir_ventana(vent_inicio):
 
                                 frame_seleccionar_empleado.pack(side = "bottom", expand= True, fill = "both")
 
+
+                                # EVENTO PARA EL BOTÓN CONTINUAR DE (frame_seleccionar_empleado)
+
                                 def eleccionDia():
+
                                     eleccion_empleado = frame_seleccionar_empleado.getEntradas()
+
                                     if eleccion_empleado != False:
                                         frame_seleccionar_empleado.destroy()
                                         frame_muestra_empleados.destroy()
                                     
-                                        empleado_seleccionado = lista_empleados[int(eleccion_empleado[0]) - 1]
+                                        empleado_seleccionado = lista_empleados[int(eleccion_empleado[0]) - 1] #EMPLEADO SELECCIONADO
 
 
+                                        # CREAR UN FIELDFRAME PARA SELECCIONAR EL DIA EN EL QUE SE QUIERE LA CITA:
                                         lista_dias = ["Día"]
                                         lista_editables = [True]
                                         valores_por_defecto = [""]
@@ -939,14 +946,16 @@ def abrir_ventana(vent_inicio):
                                         frame_seleccionar_dia = FieldFrame(frame_bottom, "Dia para la cita", lista_dias, "Seleccione el día", lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
                                         frame_seleccionar_dia.pack(expand=True, fill="both") 
 
+
+                                        #EVENTO PARA EL BOTÓN CONTINUAR DE (frame_seleccionar_dia)
                                         def cupos_dia():
                                             dic = {"Lunes": 0, "Martes":1, "Miercoles":2, "Jueves":3, "Viernes": 4, "Sábado":5}   
 
                                             eleccion_dia = frame_seleccionar_dia.getEntradas()
 
                                             if eleccion_dia != False:
-                                                frame_seleccionar_dia.lista_entradas[0].config(state="disabled")
-                                                frame_seleccionar_dia.boton_aceptar.config(command=funVacia)
+                                                frame_seleccionar_dia.lista_entradas[0].config(state="disabled") # CONFIGURAR PARA QUE NO SEA EDITABLE
+                                                frame_seleccionar_dia.boton_aceptar.config(command=funVacia)  
                                                 frame_seleccionar_dia.boton_limpiar.config(command=funVacia)
 
                                                 num_dia = dic[eleccion_dia[0]]
@@ -954,23 +963,24 @@ def abrir_ventana(vent_inicio):
                                                 #CUPOS DISPONIBLES DEL EMPLEADO EN EL DIA SELECCIONADO
                                                 cupos_disponibles = empleado_seleccionado.cupos_disponibles(num_dia)   
 
-                                                for i in cupos_disponibles:
-                                                    print(i) 
 
+                                                # SI NO HAY CUPOS PARA EL DIA SELECCIONADO, SE LE INFORMA SOBRE ELLO
                                                 if len(cupos_disponibles)==0:
                                                      messagebox.showinfo("Indisponibilidad de cupos", "El proceso de agendamiento de cita no podrá continuar porque el empleado seleccionado no cuenta con cupos disponibles para atender en el dia solicitado")
-                                                     agendar_servicio()
-                                                else:
+                                                     agendar_servicio() #LO MANDA AL INICIO
 
-                                                    lista_cupos = ["Hora"]
+                                                #SI HAY CUPOS ENTONCES SE PROCESE A SELECCIONAR LA HORA:
+                                                else:
+                                                    lista_cupos = ["Hora cita"]
                                                     lista_editables = [True]
                                                     valores_por_defecto = [""]
-                                                    tipos_esperados = {"Hora": str}
-                                                    combobox_items = {"Hora": cupos_disponibles}
+                                                    tipos_esperados = {"Hora cita": str}
+                                                    combobox_items = {"Hora cita" : cupos_disponibles}
 
-                                                    frame_seleccionar_cupo = FieldFrame(frame_bottom, "Horario", lista_cupos, "Seleccione cupo", lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
+                                                    frame_seleccionar_cupo = FieldFrame(frame_bottom, "Horario", lista_cupos, "Seleccione el cupo", lista_editables,tipos_esperados, valores_por_defecto, combobox_items)
                                                     frame_seleccionar_cupo.pack(expand=True, fill="both") 
 
+                                                    #EVENTO PARA EL BOTÓN CONTINUAR DE (frame_seleccionar_cupo)
 
                                                     def datos_cliente ():
                                                         eleccion_cupo = frame_seleccionar_cupo.getEntradas()
@@ -979,42 +989,44 @@ def abrir_ventana(vent_inicio):
                                                             frame_seleccionar_cupo.destroy()
                                                             frame_seleccionar_dia.destroy()
 
-                                                            cupo_seleccionado= None
+                                                            cupo_seleccionado= None  #CUPO SELECCIONADO
 
                                                             for i in cupos_disponibles:
                                                                 if (i.__str__())== eleccion_cupo[0]:
                                                                     cupo_seleccionado = i
 
-                                                            # Creación FieldFrame
+                                                            # FIELDFRAME PARA CAPTURAR LOS DATOS DEL CLIENTE
+
                                                             listaCampos= ["Nombre", "Cédula", "Edad"]
                                                             listahabilitados = [True, True, True]
                                                             valorEsperado = {"Nombre": str, "Cédula": int, "Edad": int} 
 
-                                                            frame_datos_usuario = FieldFrame(frame_bottom, "Información personal", listaCampos, "Sus datos", listahabilitados, valorEsperado)
+                                                            frame_datos_usuario = FieldFrame(frame_bottom, "Información personal", listaCampos, "Datos requeridos", listahabilitados, valorEsperado)
                                                             frame_datos_usuario.pack(expand=True, fill="both")
 
                                                             def datos_animal():
+
                                                                 entrada_cliente = frame_datos_usuario.getEntradas()
                                                                 
                                                                 if entrada_cliente!=False:
 
+                                                                    #SI ES MANOR DE EDAD NO SE PUEDE CONTINUAR CON EL PROCESO
                                                                     if int(entrada_cliente[2]) < 18:
-                                                                        messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor())
+                                                                        messagebox.showinfo("Usuario menor de edad", ErrorUsuarioMenor()) #EXCEPCIÓN INVENTADA
                                                                         agendar_servicio()
 
                                                                     else:
-
+                                                                        # COMPRUEBA SI LA CÉDULA CUMPLE CON LOS REQUISITOS EN COLOMBIA
                                                                         if frame_datos_usuario.validar_CC(entrada_cliente[1]):
-
-                                       
+       
                                                                             frame_datos_usuario.destroy()
 
-                                                                             # Creación FieldFrame Mascota
                                                                             if sede_escogida[0] == "ITAGÜI: Veterinaria":
                                                                                 lista_animales = ["Perro", "Gato", "Conejo", "Hámster"]
                                                                             else:
                                                                                  lista_animales = ["Perro", "Gato"]
 
+                                                                            # CAPTURAR LOS DATOS DE LA MASCOTA 
 
                                                                             listaCampos= ["Nombre", "Edad", "Especie", "Sexo"]
                                                                             listahabilitados = [True, True, True, True]
@@ -1026,14 +1038,16 @@ def abrir_ventana(vent_inicio):
                                                                         
                                                                             frame_datos_animal.pack(expand=True, fill="both")
 
+                                                                            # EVENTO PARA EL BOTÓN DE (frame_datos_animal)
+
                                                                             def registroDeCita():
                                                                                 entrada_animal = frame_datos_animal.getEntradas()
 
                                                                                 if entrada_animal!=False:
-                                                                                    animal = Animal(entrada_animal[0],entrada_animal[2],entrada_animal[1],entrada_animal[3])
-                                                                                    print(animal)
-                                                                                    print(sede_seleccionada)
 
+                                                                                    # OBJETO DE TIPO ANIMAL
+                                                                                    animal = Animal(entrada_animal[0],entrada_animal[2],entrada_animal[1],entrada_animal[3])
+                                                            
                                                                                     num_sede = None
 
                                                                                     if sede_seleccionada.getNombre() == "SEDE BELLO":
@@ -1045,13 +1059,20 @@ def abrir_ventana(vent_inicio):
                                                                                         num_sede = 3
 
 
+                                                                                    #OBJETO DE TIPO CLIENTE
+
                                                                                     cliente = Cliente(entrada_cliente[0], int(entrada_cliente[2]), int(entrada_cliente[1]))
                                                                                     cliente = sede_seleccionada.is_cliente(cliente)
 
+                                                                                    #CREAR LA CITA
+
                                                                                     cita = Cita(cliente,animal, empleado_seleccionado, cupo_seleccionado, num_sede)
 
-                                                                                    print(cita)
+                                                                                    #REGISTRAR LA CITA EN LA SEDE CORRESPONDIENTE
+                                                                                    sede_seleccionada.getCitas().append(cita)
 
+                                                                                    #MOSTRAR LOS RESULTADOS DEL PROCESO
+                                      
                                                                                     if (cliente.getPuntos()>=15):
 
                                                                                         cliente.disminuir_puntos(15)
@@ -1100,7 +1121,7 @@ def abrir_ventana(vent_inicio):
                                                                                         inicio = tk.Button(frame_factura, text="Salir", font=("Verdana", 10), bg="white", command=agendar_servicio)
                                                                                         inicio.pack(side="top")
 
-                                                                                    print(cita)
+                                                                                
                                                                                         
 
                                                                             frame_datos_animal.funAceptar(registroDeCita, "Continuar")
