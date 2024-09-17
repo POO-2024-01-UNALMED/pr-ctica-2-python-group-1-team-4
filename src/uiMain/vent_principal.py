@@ -179,63 +179,84 @@ tienda1 = Tienda(sede1.getEmpleados()[0])
 
 class FieldFrame(Frame):
     
-    # CONSTRUCTOR FIELDFRAME
+    # CONSTRUCTOR FIELDFRAME ----------------------------------
     def __init__(self, frame_principal, titulo_campos, lista_criterios, titulo_entradas, lista_habilitados, tipos_esperados=None, Valores=None, combobox=None):
-        # CONSTRUCTOR DEL FRAME PADRE
+        # CONSTRUCTOR DEL FRAME PADRE --------------------------------------------------
         super().__init__(frame_principal, bg="thistle1", highlightbackground="purple4", highlightthickness=2)
-        self.titulo_campos = titulo_campos  # Título de criterios
+        # Atributos del FieldFrame ------------------------------------------------------
+        self.titulo_campos = titulo_campos  # Título de los criterios
         self.lista_criterios = lista_criterios # Nombres de cada criterio
         self.titulo_entradas = titulo_entradas # Título de las entradas
-        self.lista_habilitados = lista_habilitados
+        self.lista_habilitados = lista_habilitados # Valores que van a estar habilitados
         self.lista_valores = Valores # Lista de valores por defecto de las entradas
-        self.combobox_items = combobox or {}
+        self.combobox_items = combobox or {} # Lista de diccionarios para las comboboxes o una sola combobox en forma de diccionario
+        self.tipos_esperados = tipos_esperados or {}  # Diccionario con los tipos esperados por cada campo
 
-        self.tipos_esperados = tipos_esperados or {}  # Diccionario con los tipos esperados por campo
         self.lista_entradas = [] # Lista que guarda las Entrys o comboboxes
 
-        # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS
+        # CREAR Y EMPAQUETAR LABELS DE LOS TITULOS -----------------------------------------
         Label_titulo_criterios = tk.Label(self, text=self.titulo_campos, font=("Times New Roman", 14, "bold", "underline"), fg="purple4", bg = "thistle1")
-        Label_titulo_criterios.grid(row=0, column=0, padx=5, pady=10)
+        Label_titulo_criterios.grid(row=0, column=0, padx=5, pady=10) # posicionado con grid en la primera columna donde van a ir los nombres de los criterios
         
+        # Título para las entradas
         Label_titulo_entradas = tk.Label(self, text=self.titulo_entradas, font=("Times New Roman", 14, "bold", "underline" ), fg="purple4", bg = "thistle1")
-        Label_titulo_entradas.grid(row=0, column=1, padx=5, pady=10)
+        Label_titulo_entradas.grid(row=0, column=1, padx=5, pady=10) # posicionado con grid en la segunda columna donde van a ir las entradas
 
+        # Corregir el tamaño de las columnas
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
+        # Inicio proceso del FieldFrame ------------------------------------------------------------
         for i in range(len(self.lista_criterios)):
-            # LABEL CRITERIOS
+            # se recorre con el índice i, la lista de los criterios, para colocarlos en un label
             label_criterio = tk.Label(self, text=self.lista_criterios[i], font=("Times New Roman", 12), bg="plum1", fg="purple4")
-            label_criterio.grid(row=i+1, column=0, padx=5, pady=10)
+            label_criterio.grid(row=i+1, column=0, padx=5, pady=10) # Grid en la columna de los nombres de los criterios
 
-            # CAMPOS DE TEXTO ENTRADAS
+            # CREACION DE ENTRADAS -----------------------------------------------------------
             if self.lista_criterios[i] in self.combobox_items:
+                # Si se encuentra que el nombre del criterio está en las claves del combobox, entonces:
+                # para darle los valores al combobox accede a los valores de la clabe en la posición en que 
+                # el nombre de criterio y la clave son iguales
                 entradaValor = ttk.Combobox(self, values=self.combobox_items[self.lista_criterios[i]], state="readonly")
-                entradaValor.grid(row=i+1, column=1, padx=5, pady=10)
-                if self.lista_valores is not None:
-                    entradaValor.set(self.lista_valores[i])
-            else:
-                entradaValor = tk.Entry(self)
-                entradaValor.grid(row=i+1, column=1, padx=5, pady=10)
-                if self.lista_valores is not None:
-                    entradaValor.insert(0, self.lista_valores[i])
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10) # grid en la columna de las entradas fila i+1 porque la primera fila la ocupan los títulos
 
+                # Si detecta que la lista de los valores por defecto no está vacía: 
+                if self.lista_valores is not None:
+                    # Se toma la entrada y se le coloca el valor por defecto ubicado en la posición i, ya que todo va en orden 
+                    entradaValor.set(self.lista_valores[i]) 
+            else:
+                # En caso de que no sea una combobox
+                entradaValor = tk.Entry(self) # Se crea la entrada pasandole el frame en que va a estar contenida
+                # En este caso, todo va contenido en este objeto FieldFrames
+                entradaValor.grid(row=i+1, column=1, padx=5, pady=10) # grid en la columna de las entradas, fila i+1 porque la primera dila la ocupan los títulos 
+
+               # Si detecta que la lista de los valores por defecto no está vacía: 
+                if self.lista_valores is not None:
+                    # se toma la entrada y se le coloca el valor por defecto 
+                    entradaValor.insert(0, self.lista_valores[i])
+                # Si se detecta que el campo es deshabilitado:
                 if self.lista_habilitados is not None and not self.lista_habilitados[i]:
+                    # Bloquea la entrada para que no reciba nada
                     entradaValor.configure(state=tk.DISABLED)
-            
+
+            # se agrega la entrada a la lista de entradas del FieldFrame, para luego poder ser consultadas desde ahí
             self.lista_entradas.append(entradaValor)
 
+        # BOTONES DEL FIELD FRAME --------------------------------------------------------------------------
         # BOTÓN ACEPTAR 
+        # Este boton se crea, para luego tener una función con la cual se le coloca el comando, y si se quiere se le cambia el título
         self.boton_aceptar = tk.Button(self, text="Aceptar", font=("Verdana", 10), bg="white", width=8, height=1)
-        self.boton_aceptar.grid(row=len(self.lista_criterios)+1, column=1, padx=5, pady=2)
+        self.boton_aceptar.grid(row=len(self.lista_criterios)+1, column=1, padx=5, pady=2) # Grid acomoda en la última fila basándose en el tamaño de la lista de criterios
 
         # BOTÓN LIMPIAR
+        # Se crea este botón para limpiar todos los campos
         self.boton_limpiar = tk.Button(self, text="Limpiar", font=("Verdana", 10), bg="white", width=6, height=1, command=self.funborrar)
-        self.boton_limpiar.grid(row=len(self.lista_criterios)+1, column=0, padx=5, pady=2)
+        self.boton_limpiar.grid(row=len(self.lista_criterios)+1, column=0, padx=5, pady=2) # Grid acomoda en la última fila basándose en el tamaño de la lista de criterios
 
         self.grid_rowconfigure(len(self.lista_criterios)+1, weight=1)
 
     def funborrar(self):
+        # Recorre la lista de las entradas, y para borrar de la forma correcta filtra los comboboxes y las entradas comunes
         for entrada in self.lista_entradas:
             if isinstance(entrada, ttk.Combobox):  # SI ES UN COMBOBOX
                 entrada.set('')  # RESTABLECER EL COMBOBOX
@@ -243,69 +264,95 @@ class FieldFrame(Frame):
                 entrada.delete("0", "end")  # BORRAR ENTRADAS NORMALES
 
     def funAceptar(self, funcion, texto = "Aceptar"):
-        self.boton_aceptar.config(command=funcion, text=texto)
+        # Se le pasa una función y si se quiere, un texto para modificar el botón
+        self.boton_aceptar.config(command=funcion, text=texto) # Se le da de comando al botón, la función del parámetro, y el text consignado en la varibale texto
 
     def getValue(self, Criterio):
-        index = self.lista_criterios.index(Criterio)
-        return self.lista_entradas[index].get()
+        # Recibe un String con el nombre del críterio
+        index = self.lista_criterios.index(Criterio) # Busca el nombre del criterio en la lista de nombres de críterios, para obtener el índice 
+        return self.lista_entradas[index].get() # Como las entradas están todas en orden, devuelve el valor de la entrada en la lista de entradas en la posición index
     
     def getEntradas(self):
-        listaValores = []
-        listaVacios = []
+        listaValores = [] # Lista para almacenar todos los valores que ingresó el usuario
+        listaVacios = [] # Lista para almacenar los campos vacios 
+        # Creamos un ciclo con la variable entera i, que servirá para recorrer todas las listas que recordemos están en orden
         for i in range(len(self.lista_criterios)):
             if self.lista_habilitados[i] == True:
+                #Si el campo en la posición i, está habilitado, estonces le pedimos que nos devuelva el valor
                 valor = self.getValue(self.lista_criterios[i])
                 if valor == "":
+                    # Si el valor está vacio, ingresamos el nombre del criterio en lista_criterios para retornarle al usuario
                     listaVacios.append(self.lista_criterios[i])
                 else:
-                    # VALIDAR EL TIPO DE DATO ESPERADO
+                    # Caso de que el campo si esté lleno 
+                    # VALIDAR EL TIPO DE DATO ESPERADO CON EL DICCIONARIO Y LA CLABE DE TIPOS ESPERADOS--------------------------------------
                     tipo_esperado = self.tipos_esperados.get(self.lista_criterios[i], str)
 
                     if not self.validar_tipo(valor, tipo_esperado):
+                        # Sino, el usuario obtendrá esta alerta por pantalla...
                         messagebox.showerror("Error: Tipo de dato incorrecto", f"El campo {self.lista_criterios[i]} debe ser de tipo entero.")
                   
-                        return False
+                        return False # la función devolverá falso facilitando su control en las funcionalidades
+                        # Donde si retorna falso, se sabe que hay campos con entradas incorrectas
+                    # Se agrega el valor a la 
+                    # Se añade el valor a la lista de valores que vamos a obtener para utilizar lo que ingresó el usuario
                     listaValores.append(valor)
 
+        # Pregunta final, si se detecta que hay mas de un campo en la lista de vacios...
         if len(listaVacios) > 0:
             messagebox.showerror("Error",ErrorFormularioVacio(listaVacios))
+            # la función devolverá falso facilitando su control en las funcionalidades
+            # Donde si retorna falso, se sabe que hay campos vacios que necesitan valores para continuar los procesos 
             return False
         else:
+            # Si todos los campos están llenos, se devuelve lo que el usuario puso 
             return listaValores
     
+    # Valida el tipo de cualquier entrada
     def validar_tipo(self, valor, tipo_esperado):
         try:
-            tipo_esperado(valor)
+            tipo_esperado(valor) # Se hace un casteo con el valor ingresado
+            # Si esto no da error retorna verdadero 
             return True
         
         except ValueError:
+            # Si da error, retorna falso
             return False
-        
+    
+    # Validar un celular y la cédula
     def validar_cel_cc(self, celular, cedula):
 
         try:
+            # Se verifica que el celular y la cédula tengan el largo adecuado
             if len(celular) == 10 and celular.isdigit():
     
                 if len(cedula) >= 7 and cedula.isdigit():
                     return True    
                      
-                else:           
+                else:
+                    # Se tira el error en el caso del documento 
                     raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos")             
             else:
+                    # Se tira el error en el caso del número
                 raise ErrorDigitos_Cel_CC("celular", " debe tener 10 digitos")
                         
-        except ErrorDigitos_Cel_CC as f:  
+        except ErrorDigitos_Cel_CC as f:  # lanza uno de los errores personalizados para el control de errores
+            # método para arrojar alerta
             f.mostrarMensaje()
-
+    
+    # Validar solo cédula
     def validar_CC(self, cedula):
 
         try:
+            # Verificando los dígitos de la cédula 
             if len(cedula)>=7 and cedula.isdigit():
                 return True
             else:
+                # Caso de que no tenga los dígitos correctos 
                 raise ErrorDigitos_Cel_CC("documento", " debe tener al menos 7 digitos" )
             
         except ErrorDigitos_Cel_CC as f:
+            # Recoge la exepción personalizada y utiliza su método mostrar mensaje
             f.mostrarMensaje()
 
 
