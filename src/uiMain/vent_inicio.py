@@ -71,8 +71,9 @@ def salir():
 
 # HOJAS DE VIDA DE LOS DESARROLLADORES
 descripcion_desarrolladores = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de Sotavento Córdoba "
-                 "estudiante de ingeniería de sistemas e informática en la Universidad Nacional "
-                 "de Colombia",
+                 "estudiante de segundo semestre de ingeniería de sistemas e informática en la Universidad Nacional "
+                 "de Colombia. Joven con gusto por el deporte, en especial el fútbol y también con un interés "
+                  "creciente en la tecnología y el desarrollo de soluciones digitales",
 
                  "Salomé Murillo Gaviria, xx años, de Medellín Antioquia "
                  "estudiante de ingeniería de sistemas en la Universidad nacional de Colombia", 
@@ -285,7 +286,7 @@ label_p6_br.pack(expand = True, fill= "both")
 imagen_tl = ImageTk.PhotoImage(Image.open("src/imagenes/Oky1.png").resize((300,197), Image.LANCZOS))
 imagen_tr = ImageTk.PhotoImage(Image.open("src/imagenes/Salome1.png").resize((300,197), Image.LANCZOS))
 imagen_bl = ImageTk.PhotoImage(Image.open("src/imagenes/Nico1.png").resize((300,197), Image.LANCZOS))
-imagen_br = ImageTk.PhotoImage(Image.open("src/imagenes/Daniel1.png").resize((300,197), Image.LANCZOS))
+imagen_br = ImageTk.PhotoImage(Image.open("src/imagenes/Daniel3.png").resize((300,197), Image.LANCZOS))
 
 # # AGREGAR CADA IMAGEN A SU LABEL CORRESPONDIENTE
 label_p6_tl.config(image=imagen_tl)
