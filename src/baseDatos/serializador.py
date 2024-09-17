@@ -29,18 +29,15 @@ class Serializador:
 
     @staticmethod
     def serializarListas():
-        from uiMain.prueba import Prueba
         # Métodos estáticos
-        Serializador.serializar(Prueba.sedes, "Sedes")
+        Serializador.serializar(CentroAdopcion.getSedes(), "Sedes")
         Serializador.serializar(CentroAdopcion.getClientes(), "Clientes")
         Serializador.serializar(Funeraria.getTumbas(), "Tumbas")
         Serializador.serializar(Funeraria.getCenizas(), "Cenizas")
         Serializador.serializar(Tienda.getProductos(), "Productos")
-        Serializador.serializar(Tienda.getEmpleados(), "Empleados_Tienda") #lista de empleados debería ser de clase
-
-        #probar
-        #Serializador.serializar(Muerto.getFlores(), "Flores")
 
         # Métodos no estáticos
         m = Muerto()
         Serializador.serializar(m.getFlores(), "Flores")
+        e = Tienda()
+        Serializador.serializar(e.getEmpleados(), "Empleados_Tienda")

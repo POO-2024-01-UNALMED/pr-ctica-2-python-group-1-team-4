@@ -6,6 +6,7 @@ from gestorAplicacion.administracion.funeraria import Funeraria
 from gestorAplicacion.administracion.tienda import Tienda
 from gestorAplicacion.componentes.muerto import Muerto
 
+
 class Deserializador:
 
     @staticmethod
@@ -34,18 +35,15 @@ class Deserializador:
 
     @staticmethod
     def deserializarListas():
-
         # Métodos estáticos
-        ##Deserializador.deserializar(Main.sedes, "Sedes")
+        Deserializador.deserializar(CentroAdopcion.getSedes(), "Sedes")
         Deserializador.deserializar(CentroAdopcion.getClientes(), "Clientes")
-        #Deserializador.deserializar(Funeraria.getTumbas(), "Tumbas")
-        #Deserializador.deserializar(Funeraria.getCenizas(), "Cenizas")
-        #Deserializador.deserializar(Tienda.getProductos(), "Productos")
-        #Deserializador.deserializar(Tienda.getEmpleados(), "Empleados_Tienda")  #lista de empleados debería ser de clase
-
-        #probar
-        #Deserializador.deserializar(Muerto.getFlores(), "Flores")
+        Deserializador.deserializar(Funeraria.getTumbas(), "Tumbas")
+        Deserializador.deserializar(Funeraria.getCenizas(), "Cenizas")
+        Deserializador.deserializar(Tienda.getProductos(), "Productos")
 
         # Métodos no estáticos
         m = Muerto()
         Deserializador.deserializar(m.getFlores(), "Flores")
+        e = Tienda()
+        Deserializador.deserializar(e.getEmpleados(), "Empleados_Tienda")
