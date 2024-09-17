@@ -172,6 +172,7 @@ Tienda.agregarProducto(Producto("Corral metálico", 30000, 10, "conejos"))
 c1.agregar_puntos(30)
 sede1.clientes_AdoptaLove.append(c1)
 tienda1 = Tienda(Empleado("David", 24, 10456874576, 666777000, "Carlos E", Rol.TENDERO))
+tienda1 = Tienda(sede1.getEmpleados()[0])
 
 # FIELDFRAME -----------------------
 
