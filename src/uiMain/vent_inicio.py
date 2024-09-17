@@ -82,7 +82,8 @@ descripcion_desarrolladores = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia\n\nHabilidad para trabajar en equipo, resolver problemas de manera eficiente y mantener un enfoque en la mejora continua. Comprometido con el crecimiento profesional y la excelencia en el cumplimiento de objetivos.",
 
                  "Nicolas Zambrano, 18 años, de Zipaquira Cundinamarca "
-                 "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia"]
+                 "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática en la Universidad Nacional de Colombia\n"
+                 "\nApasionado por los libros, la biologia y la musica, interesado en el proceso de desarrollo de todo lo que hoy conocemos."]
 
 # RUTAS DE LAS IMAGENES DE LOS DESARROLLADORES
 imagenes_desarrolladores = [["src/imagenes/Oky1.png","src/imagenes/Oky2.png","src/imagenes/Oky3.png","src/imagenes/Oky4.png"],
