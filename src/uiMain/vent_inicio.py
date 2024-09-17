@@ -80,7 +80,7 @@ descripcion_desarrolladores = ["Oky Ruiz De La Rosa, 18 años, de San Andrés de
                  "Daniel Zapata, 19 años, de Medellín Antioquia "
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia\n\nHabilidad para trabajar en equipo, resolver problemas de manera eficiente y mantener un enfoque en la mejora continua. Comprometido con el crecimiento profesional y la excelencia en el cumplimiento de objetivos.",
 
-                 "Nicolas Zambrano, xx años, de Medellín Antioquia "
+                 "Nicolas Zambrano, 18 años, de Medellín Zipaquira Cundinamarca "
                  "estudiante de ingeniería de sistemas en la Universidad Nacional de Colombia"]
 
 # RUTAS DE LAS IMAGENES DE LOS DESARROLLADORES

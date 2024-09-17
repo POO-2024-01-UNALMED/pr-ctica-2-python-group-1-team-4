@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from babel.dates import format_date  # Para darle formato
+#from babel.dates import format_date  # Para darle formato
 
 #DANIEL ALBERTO ZAPATA CASTAÑO
 #OKY RUIZ DE LA ROSA

@@ -1390,9 +1390,170 @@ def abrir_ventana(vent_inicio):
         inicioTienda.funAceptar(proceso_2_Tienda, "Comenzar")
 
     
-
     def socializar():
-        pass
+        clear_frame_bottom()
+
+        texto = "Si deseas encontrar nuevos amigos para ti y tu mascota, socializar te permitirá hacerlo."
+        
+        # Configuración del marco superior
+        formato_frame_top("Socializar", texto)
+        
+        # Crear un frame inicial para la selección de opción
+        listaOpciones = ["Registrarse", "Hacer Match"]
+        listaEditables = [True, True]
+        dicTipos = {"Opción": str}
+
+        frame_inicio = FieldFrame(frame_bottom, "Inicio", ["Opción"], "Selecciona una opción", listaEditables, dicTipos, listaOpciones)
+        frame_inicio.pack(expand=True, fill="both")
+
+        cliente_defecto = Cliente("Sari", 30, 123456789, True)
+        mascota_defecto = Animal("Luna", 5, "amigable,activo,calmado,jugueton,tranquilo")
+        cliente_defecto._mascota = mascota_defecto
+        
+        socializar_instance = Socializar()  # Instancia de la clase Socializar
+
+        def buscar_matches(cliente):  
+            posibles_matches = socializar_instance.buscar_posibles_matches(cliente)
+            if not posibles_matches:
+                posibles_matches.append(cliente_defecto)
+            
+            def mostrar_matches():
+                # Ocultar el frame actual de datos del cliente
+                frame_inicio.pack_forget()
+
+                # Crear un nuevo frame para mostrar los resultados de los matches
+                frame_Matches = Frame(frame_bottom)
+                frame_Matches.pack(expand=True, fill="both")
+
+                # Crear labels para los resultados
+                header_label = Label(frame_Matches, text="Resultados de Matches")
+                header_label.pack()
+
+                # Mostrar los datos de los posibles matches
+                for i, match in enumerate(posibles_matches):
+                    match_label = Label(frame_Matches, text=f"{i+1}. Cliente: {match._nombre}, Mascota: {match._mascota._nombre}")
+                    match_label.pack()
+
+                def hacer_match():
+                    seleccion = seleccion_entry.get()  # Obtener el valor del entry
+                    try:
+                        seleccion = int(seleccion) - 1
+
+                        if 0 <= seleccion < len(posibles_matches):
+                            cliente_seleccionado = posibles_matches[seleccion]
+                            if cliente_seleccionado == cliente_defecto:
+                                nueva_cita = Cita(cliente, cliente_defecto)  # Asegúrate de que ambos argumentos sean Cliente
+                            else:
+                                nueva_cita = Cita(cliente, cliente_seleccionado)  # Asegúrate de que ambos argumentos sean Cliente
+                            socializar_instance.citas.append(nueva_cita)
+                            messagebox.showinfo("Match Realizado", f"¡Has hecho match con {cliente_seleccionado._nombre} y su mascota {cliente_seleccionado._mascota._nombre}!")
+                            
+                            # Limpiar el frame de resultados de matches y volver al inicio
+                            frame_Matches.pack_forget()  # Ocultar el frame de matches
+                            socializar()  # Volver a mostrar el frame de inicio
+                        else:
+                            messagebox.showerror("Error", "Selección no válida.")
+                    except ValueError:
+                        messagebox.showerror("Error", "Entrada no válida. Debe ser un número.")
+
+
+                # Crear un label y un entry para ingresar el número del cliente
+                seleccion_label = Label(frame_Matches, text="Seleccione el número del cliente con el que desea hacer match:")
+                seleccion_label.pack()
+                seleccion_entry = Entry(frame_Matches)
+                seleccion_entry.pack()
+
+                # Configurar el botón para realizar el match
+                hacer_match_button = Button(frame_Matches, text="Match", command=hacer_match)
+                hacer_match_button.pack()
+            
+            # Crear un nuevo botón para mostrar los resultados de los matches
+            boton_buscar_matches = Button(frame_bottom, text="Buscar", command=mostrar_matches)
+            boton_buscar_matches.pack()
+        
+        def registrar_cliente():
+            clear_frame_bottom()
+
+            texto = "Por favor, completa los datos del cliente y su mascota para registrarse."
+
+            # Configuración del marco superior
+            formato_frame_top("Registrarse", texto)
+            
+            # Creación del FieldFrame para recolectar los datos del cliente
+            listaCampos = ["Nombre", "Edad", "Celular", "Deseas formar parte de socializar? (True/False)"]
+            listaEditables = [True, True, True, True]
+            listaValores = ["", "", "", ""]
+            dicTipos = {"Nombre": str, "Edad": int, "Celular": int, "Deseas formar parte de socializar? (True/False)": bool}
+
+            frame_cliente = FieldFrame(frame_bottom, "Cliente", listaCampos, "Datos del Cliente", listaEditables, dicTipos, listaValores)
+            frame_cliente.pack(expand=True, fill="both")
+
+            def guardar_cliente():
+                datos_cliente = frame_cliente.getEntradas()  # Recolectar los datos del cliente
+                if datos_cliente:  # Verificar que no sean falsos o vacíos
+                    # Crear el objeto Cliente
+                    nuevo_cliente = Cliente(datos_cliente[0], datos_cliente[1], datos_cliente[2], datos_cliente[3])
+                    
+                    # Llamar a la función registrar_mascota pasándole el nuevo cliente
+                    registrar_mascota(nuevo_cliente)
+
+            # Configurar el botón para aceptar los datos del cliente y proceder al registro de mascota
+            frame_cliente.funAceptar(guardar_cliente, "Registrar")
+
+        def registrar_mascota(cliente):
+            clear_frame_bottom()
+
+            # Crear un nuevo FieldFrame para registrar los datos de la mascota
+            listaMascota = ["Nombre", "Edad", "Características"]
+            listaEditables = [True, True, True]
+            dicTiposMascota = {"Nombre": str, "Edad": int, "Características": str}
+
+            frame_Mascota = FieldFrame(frame_bottom, "Mascota", listaMascota, "Datos de la Mascota", listaEditables, dicTiposMascota)
+            frame_Mascota.pack(expand=True, fill="both")
+
+            def guardar_mascota():
+                datos_mascota = frame_Mascota.getEntradas()  # Recolectar datos de la mascota
+                if datos_mascota:
+                    # Crear un objeto Mascota
+                    mascota = Animal(datos_mascota[0], datos_mascota[1], datos_mascota[2].split(","))
+                    
+                    # Asignar la mascota al cliente
+                    cliente._mascota = mascota
+                    
+                    # Registrar el cliente en Socializar
+                    socializar_instance.registrar_cliente(cliente)
+                    
+                    messagebox.showinfo("Registro Exitoso", f"¡Cliente {cliente._nombre} y su mascota {mascota._nombre} registrados exitosamente!")
+                    
+                    # Limpiar el frame de la mascota y proceder a buscar matches
+                    frame_Mascota.pack_forget()  # Ocultar el frame de la mascota
+                    buscar_matches(cliente)  # Proceder a buscar matches
+
+            # Configurar el botón para guardar los datos de la mascota
+            frame_Mascota.funAceptar(guardar_mascota, "Registrar")
+            frame_inicio.pack()
+
+        def seleccionar_opcion():
+            opcion = frame_inicio.getEntradas()  # Recolectar la opción seleccionada
+            if opcion:
+                if opcion[0] == "Registrarse":
+                    frame_inicio.pack_forget()
+                    registrar_cliente()
+                elif opcion[0] == "Hacer Match":
+                    frame_inicio.pack_forget()
+                    
+                    # Si no hay clientes registrados, usar el cliente por defecto
+                    if not socializar_instance.clientes:  # Acceso correcto al atributo
+                        messagebox.showinfo("Cliente por defecto", "No hay clientes registrados. Usaremos un cliente por defecto.")
+                        socializar_instance.registrar_cliente(cliente_defecto)
+                        buscar_matches(cliente_defecto)
+                    else:
+                        # Llamar a la función para buscar matches con el cliente registrado
+                        cliente_registrado = socializar_instance.clientes[-1]  # Seleccionar el último cliente registrado
+                        buscar_matches(cliente_registrado)
+
+        # Configurar el botón para continuar según la opción seleccionada
+        frame_inicio.funAceptar(seleccionar_opcion, "Continuar")
 
     def funeraria():
         texto = "Aquí va la descripción de la funcionalidad :)"

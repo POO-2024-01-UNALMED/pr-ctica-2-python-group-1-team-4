@@ -44,7 +44,11 @@ class Cita:
         self._animal2=cliente2.getMascota()
         self._fecha=fecha
         self._estado = "pendiente"
-        
+    @multimethod
+    def __init__(self, cliente1, cliente2):
+        self.cliente1 = cliente1
+        self.cliente2 = cliente2
+
     
     def actualizar_estado(self, nuevo_estado):
         if nuevo_estado in ["aceptada", "rechazada", "aplazada"]:

@@ -2,27 +2,26 @@
 from gestorAplicacion.administracion.cita import Cita
 from gestorAplicacion.componentes.animal import Animal
 from gestorAplicacion.componentes.cliente import Cliente
-
 class Socializar:
- def __init__(self):
+    def __init__(self):
         self.clientes = []  # Lista para albergar clientes participantes
         self.citas = []
 
-def registrar_cliente(self, cliente):
+    def registrar_cliente(self, cliente):
         self.clientes.append(cliente)
-        print(f"Cliente {cliente.nombre} registrado con éxito.")
+        print(f"Cliente {cliente._nombre} registrado con éxito.")
 
-def buscar_posibles_matches(self, cliente):
+    def buscar_posibles_matches(self, cliente):
         posibles_matches = []
         for otro_cliente in self.clientes:
-            if otro_cliente != cliente and self.comparar_caracteristicas(cliente.mascota, otro_cliente.mascota):
+            if otro_cliente != cliente and self.comparar_caracteristicas(cliente._mascota, otro_cliente._mascota):
                 posibles_matches.append(otro_cliente)
         return posibles_matches
 
-def comparar_caracteristicas(self, animal1, animal2):
+    def comparar_caracteristicas(self, animal1, animal2):
         return len(set(animal1.caracteristicas).intersection(set(animal2.caracteristicas))) > 0
 
-def seleccionar_y_hacer_match(self, cliente):
+    def seleccionar_y_hacer_match(self, cliente):
         posibles_matches = self.buscar_posibles_matches(cliente)
         
         if posibles_matches:
@@ -42,10 +41,9 @@ def seleccionar_y_hacer_match(self, cliente):
         else:
             print("No se encontraron posibles coincidencias para su mascota.")
 
-def eliminar_cliente(self, cliente):
+    def eliminar_cliente(self, cliente):
         if cliente in self.clientes:
             self.clientes.remove(cliente)
             print(f"Cliente {cliente.nombre} ha sido eliminado del programa.")
         else:
             print("Cliente no encontrado.")
-

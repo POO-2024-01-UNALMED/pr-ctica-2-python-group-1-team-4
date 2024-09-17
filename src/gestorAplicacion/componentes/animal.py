@@ -66,24 +66,6 @@ class Animal:
             return (f"Nombre: {self.getNombre()}, Especie: {self.getEspecie()}, "
                     f"Edad (meses): {self.getEdad()}, Sexo: {self.getSexo()}")
 
-    #Método para actualizar puntaje
-    def defpuntaje (self,calificacion):
-        if calificacion == 1:
-            penalizacion = 10
-        elif calificacion == 2:
-            penalizacion = 8
-        elif calificacion == 3:
-            penalizacion = 6
-        elif calificacion == 4:
-            penalizacion = 4
-        elif calificacion == 5:
-            penalizacion = 0
-        else:
-            penalizacion = 0
-        
-        # Aplicar la penalización al puntaje
-        self.puntaje -= penalizacion
-
 # Ejemplo de uso
 if __name__ == "__main__":
     animal1 = Animal("Rex", "Perro", 24, "Masculino", EstadoSalud.SANO) #CONSTRUCTOR 1
