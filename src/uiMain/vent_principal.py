@@ -1612,7 +1612,7 @@ def abrir_ventana(vent_inicio):
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
     def funeraria():
-        texto = "En nuestro sistema, puedes comprar o alquilar osarios y terrenos para tumbas según tus necesidades.\nSi eliges comprar, asegurarás un espacio permanente para el descanso final de tus seres queridos. \nSi prefieres alquilar, tendrás la opción de usar el espacio por un período determinado. \nAdemás, tienes la posibilidad de visitar el cementerio para rendir homenaje y agregar flores en las tumbas u osarios. \nEsta opción te permite mantener una conexión continua y significativa con tu ser querido y las demás mascotas que ya partieron al puente del arcoíris."
+        texto = "En nuestro sistema, puedes comprar o alquilar osarios y terrenos para tumbas según tus necesidades. Si eliges comprar, asegurarás un espacio permanente\n para el descanso final de tus seres queridos. Si prefieres alquilar, tendrás la opción de usar el espacio por un período determinado. Además,\n tienes la posibilidad de visitar el cementerio para rendir homenaje y agregar flores en las tumbas u osarios.  Esta opción te permite mantener una conexión continua\n y significativa con tu ser querido y las demás mascotas que ya partieron al puente del arcoíris."
         formato_frame_top("Funeraria", texto)
 
         # LIMPIAR EL CONTENIDO DEL FRAME_BOTTOM
